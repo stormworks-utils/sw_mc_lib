@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import Optional
 
+from sw_mc_lib.Component import INNER_TO_XML_RESULT
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
@@ -24,7 +25,7 @@ class Clamp(MinMaxComponent):
         min_text, max_text = Clamp._basic_min_max_parsing(obj)
         return Clamp(component_id, position, min_text, max_text, inputs.get(1))
 
-    def _inner_to_xml(self) -> str:
-        xml: str = self.indent(self._pos_in_to_xml({1: self.input_number}))
-        xml += self.indent(self._min_max_to_xml())
-        return xml
+    def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
+        children: list[XMLParserElement] = self._pos_in_to_xml({1: self.input_number})
+        children.extend(self._min_max_to_xml())
+        return {}, children

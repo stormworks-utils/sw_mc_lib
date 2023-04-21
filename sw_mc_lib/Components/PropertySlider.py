@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from sw_mc_lib.Component import INNER_TO_XML_RESULT
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
@@ -11,7 +12,7 @@ from .SubTypes.ValueComponent import ValueComponent
 class PropertySlider(MinMaxComponent, ValueComponent):
     def __init__(
         self,
-        component_id: rounding,
+        component_id: int,
         position: Position,
         min_text: str,
         max_text: str,
@@ -32,12 +33,12 @@ class PropertySlider(MinMaxComponent, ValueComponent):
         rounding_text: str = PropertySlider._basic_number_field_parsing(obj, 'int')
         return PropertySlider(component_id, position, min_text, max_text, value_text, rounding_text)
 
-    def _inner_to_xml(self) -> str:
-        xml: str = self.indent(self._pos_in_to_xml({}))
-        xml += self.indent(self._min_max_to_xml())
-        xml += self.indent(self._value_to_xml())
-        xml += self.indent(self._to_xml_number_field('int', self.rounding_text))
-        return xml
+    def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
+        children: list[XMLParserElement] = self._pos_in_to_xml({})
+        children.extend(self._min_max_to_xml())
+        children.extend(self._value_to_xml())
+        children.append(self._to_xml_number_field('int', self.rounding_text))
+        return {}, children
 
     @property
     def rounding(self) -> float:

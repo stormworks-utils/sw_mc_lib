@@ -5,10 +5,10 @@ from typing import Optional
 
 
 class XMLParserElement:
-    def __init__(self, tag: str, attributes: dict[str, str], children: list[XMLParserElement]):
+    def __init__(self, tag: str, attributes: Optional[dict[str, str]] = None, children: Optional[list[XMLParserElement]] = None):
         self.tag: str = tag
-        self.attributes: dict[str, str] = attributes
-        self.children: list[XMLParserElement] = children
+        self.attributes: dict[str, str] = attributes or {}
+        self.children: list[XMLParserElement] = children or []
 
     def __repr__(self) -> str:
         return f'XMLParserElement(tag={self.tag!r}, attributes={self.attributes!r}, children={self.children!r}'
@@ -41,13 +41,14 @@ class XMLParser:
 
     def read_name(self) -> str:
         name: str = ''
-        while self.current in self.IDENTIFIER_CHARACTERS:
+        while self.current and self.current in self.IDENTIFIER_CHARACTERS:
             name += self.current
             self.advance()
         return name
 
     def read_and_unescape_string(self) -> str:
         res_str: str = ''
+        assert self.current
         opening_char: str = self.current
         self.advance()
         while self.current and self.current != opening_char:
@@ -71,7 +72,7 @@ class XMLParser:
         tag: str = self.read_name()
         self.skip_whitespace()
         attributes: dict[str, str] = {}
-        while self.current in self.IDENTIFIER_CHARACTERS:
+        while self.current and self.current in self.IDENTIFIER_CHARACTERS:
             attr_name: str = self.read_name()
             self.eat('=')
             attr_value: str = self.read_and_unescape_string()

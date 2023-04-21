@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from sw_mc_lib.Component import Component
+from sw_mc_lib.Component import Component, INNER_TO_XML_RESULT
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
@@ -26,8 +26,7 @@ class PropertyToggle(Component):
         value: bool = obj.attributes.get('v', 'false') == 'true'
         return PropertyToggle(component_id, position, name, on_label, off_label, value)
 
-    def _inner_to_xml(self) -> str:
-        xml: str = f'n={self.escape_string(self.name)} on={self.escape_string(self.on_label)} '
-        xml += f'off={self.escape_string(self.off_label)} v={"true" if self.value else "false"}\n'
-        xml += self.indent(self._pos_in_to_xml({}))
-        return xml
+    def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
+        attributes: dict[str, str] = {'n': self.name, 'on': self.on_label, 'off': self.off_label, 'v': str(self.value).lower()}
+        children: list[XMLParserElement] = self._pos_in_to_xml({})
+        return attributes, children

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from sw_mc_lib.Component import Component
+from sw_mc_lib.Component import Component, INNER_TO_XML_RESULT
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
@@ -23,11 +23,8 @@ class DropDownOption(XMLElement):
             value_text = child.attributes.get('text', '0')
         return DropDownOption(label, value_text)
 
-    def to_xml(self) -> str:
-        xml: str = f'<i l={self.escape_string(self.label)}>\n'
-        xml += self.indent(self._to_xml_number_field('v', self.value_text))
-        xml += '</i>\n'
-        return xml
+    def to_xml(self) -> XMLParserElement:
+        return XMLParserElement('i', {'l': self.label}, [self._to_xml_number_field('v', self.value_text)])
 
     @property
     def value(self) -> float:
@@ -60,12 +57,11 @@ class PropertyDropdown(Component):
                     options.append(DropDownOption.from_xml(entry))
         return PropertyDropdown(component_id, position, selected, options)
 
-    def _inner_to_xml(self) -> str:
-        xml: str = f'i="{self.selected}"\n'
-        xml += self.indent(self._pos_in_to_xml({}))
-        items: str = '<items>\n'
+    def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
+        attributes: dict[str, str] = {'i': str(self.selected)}
+        children: list[XMLParserElement] = self._pos_in_to_xml({})
+        items: XMLParserElement = XMLParserElement('items')
         for option in self.options:
-            items += self.indent(option.to_xml())
-        items += '</items>\n'
-        xml += self.indent(items)
-        return xml
+            items.children.append(option.to_xml())
+        children.append(items)
+        return attributes, children

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from sw_mc_lib.Component import INNER_TO_XML_RESULT
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
@@ -21,7 +22,7 @@ class PropertyNumber(ValueComponent):
         value_text: str = PropertyNumber._basic_value_parsing(obj)
         return PropertyNumber(component_id, position, name, value_text)
 
-    def _inner_to_xml(self) -> str:
-        xml: str = self.indent(self._pos_in_to_xml({}))
-        xml += self.indent(self._value_to_xml())
-        return xml
+    def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
+        children: list[XMLParserElement] = self._pos_in_to_xml({})
+        children.extend(self._value_to_xml())
+        return {}, children

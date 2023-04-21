@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import Optional
 
+from sw_mc_lib.Component import INNER_TO_XML_RESULT
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
@@ -32,7 +33,7 @@ class MemoryRegister(ResetComponent):
         reset_text = MemoryRegister._basic_reset_parsing(obj)
         return MemoryRegister(component_id, position, reset_text, inputs.get(1), inputs.get(2), inputs.get(3))
 
-    def _inner_to_xml(self) -> str:
-        xml: str = self.indent(self._pos_in_to_xml({1: self.set_input, 2: self.reset_input, 3: self.number_to_store}))
-        xml += self.indent(self._reset_to_xml())
-        return xml
+    def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
+        children: list[XMLParserElement] = self._pos_in_to_xml({1: self.set_input, 2: self.reset_input, 3: self.number_to_store})
+        children.extend(self._reset_to_xml())
+        return {}, children

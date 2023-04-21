@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Optional
 
-from sw_mc_lib.Component import Component
+from sw_mc_lib.Component import Component, INNER_TO_XML_RESULT
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
@@ -34,7 +34,7 @@ class Blinker(Component):
         blink_off_duration: float = float(obj.attributes.get('off', '1'))
         return Blinker(component_id, position, inputs.get(1), blink_on_duration, blink_off_duration)
 
-    def _inner_to_xml(self) -> str:
-        xml: str = f'on="{self.blink_on_duration}" off="{self.blink_off_duration}"\n'
-        xml += self.indent(self._pos_in_to_xml({1: self.control_signal}))
-        return xml
+    def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
+        attributes: dict[str, str] = {'on': str(self.blink_on_duration), 'off': str(self.blink_off_duration)}
+        children: list[XMLParserElement] = self._pos_in_to_xml({1: self.control_signal})
+        return attributes, children

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Optional
 
-from sw_mc_lib.Component import Component
+from sw_mc_lib.Component import Component, INNER_TO_XML_RESULT
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
@@ -35,7 +35,7 @@ class ArithmeticFunction3In(Component):
         function: str = obj.attributes.get('e', '')
         return ArithmeticFunction3In(component_id, position, function, inputs.get(1), inputs.get(2), inputs.get(3))
 
-    def _inner_to_xml(self) -> str:
-        xml: str = f'e={self.escape_string(self.function)}\n'
-        xml += self.indent(self._pos_in_to_xml({1: self.x, 2: self.y, 3: self.z}))
-        return xml
+    def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
+        attributes: dict[str, str] = {'e': self.function}
+        children: list[XMLParserElement] = self._pos_in_to_xml({1: self.x, 2: self.y, 3: self.z})
+        return attributes, children

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from abc import ABC
 
-from sw_mc_lib.Component import Component
+from sw_mc_lib.Component import Component, INNER_TO_XML_RESULT
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
@@ -30,10 +30,11 @@ class MinMaxComponent(Component, ABC):
         max_text: str = MinMaxComponent._basic_number_field_parsing(element, 'max')
         return min_text, max_text
 
-    def _min_max_to_xml(self) -> str:
-        xml = self._to_xml_number_field('min', self.min_text)
-        xml += self._to_xml_number_field('max', self.max_text)
-        return xml
+    def _min_max_to_xml(self) -> list[XMLParserElement]:
+        return [
+            self._to_xml_number_field('min', self.min_text),
+            self._to_xml_number_field('max', self.max_text),
+        ]
 
     @property
     def min(self) -> float:

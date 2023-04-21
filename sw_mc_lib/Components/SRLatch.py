@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Optional
 
-from sw_mc_lib.Component import Component
+from sw_mc_lib.Component import Component, INNER_TO_XML_RESULT
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
@@ -22,5 +22,5 @@ class SRLatch(Component):
         component_id, position, inputs = SRLatch._basic_in_parsing(obj)
         return SRLatch(component_id, position, inputs.get(1), inputs.get(2))
 
-    def _inner_to_xml(self) -> str:
-        return self.indent(self._pos_in_to_xml({1: self.set_input, 2: self.reset_input}))
+    def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
+        return {}, self._pos_in_to_xml({1: self.set_input, 2: self.reset_input})

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from sw_mc_lib.Component import Component
+from sw_mc_lib.Component import Component, INNER_TO_XML_RESULT
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
@@ -21,10 +21,10 @@ class Abs(Component):
         value_text: str = Abs._basic_number_field_parsing(obj, 'n')
         return Abs(component_id, position, value_text)
 
-    def _inner_to_xml(self) -> str:
-        xml: str = self.indent(self._pos_in_to_xml({}))
-        xml += self.indent(self._to_xml_number_field('n', self.value_text))
-        return xml
+    def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
+        children: list[XMLParserElement] = self._pos_in_to_xml({})
+        children.append(self._to_xml_number_field('n', self.value_text))
+        return {}, children
 
     @property
     def value(self) -> float:

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Optional
 
-from sw_mc_lib.Component import Component
+from sw_mc_lib.Component import Component, INNER_TO_XML_RESULT
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
@@ -32,5 +32,5 @@ class NumericalSwitchbox(Component):
         component_id, position, inputs = NumericalSwitchbox._basic_in_parsing(obj)
         return NumericalSwitchbox(component_id, position, inputs.get(1), inputs.get(2), inputs.get(3))
 
-    def _inner_to_xml(self) -> str:
-        return self.indent(self._pos_in_to_xml({1: self.on_value, 2: self.off_value, 3: self.switch_signal}))
+    def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
+        return {}, self._pos_in_to_xml({1: self.on_value, 2: self.off_value, 3: self.switch_signal})

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Optional
 
-from sw_mc_lib.Component import Component
+from sw_mc_lib.Component import Component, INNER_TO_XML_RESULT
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
@@ -42,12 +42,12 @@ class PIDController(Component):
         derivative_text: str = PIDController._basic_number_field_parsing(obj, 'kd')
         return PIDController(component_id, position, inputs.get(1), inputs.get(2), inputs.get(3), proportional_text, integral_text, derivative_text)
 
-    def _inner_to_xml(self) -> str:
-        xml: str = self.indent(self._pos_in_to_xml({1: self.setpoint, 2: self.process_variable, 3: self.active}))
-        xml += self.indent(self._to_xml_number_field('kp', self.proportional_text))
-        xml += self.indent(self._to_xml_number_field('ki', self.integral_text))
-        xml += self.indent(self._to_xml_number_field('kd', self.derivative_text))
-        return xml
+    def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
+        children: list[XMLParserElement] = self._pos_in_to_xml({1: self.setpoint, 2: self.process_variable, 3: self.active})
+        children.append(self._to_xml_number_field('kp', self.proportional_text))
+        children.append(self._to_xml_number_field('ki', self.integral_text))
+        children.append(self._to_xml_number_field('kd', self.derivative_text))
+        return {}, children
 
     @property
     def proportional(self) -> float:

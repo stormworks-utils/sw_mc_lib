@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Optional
 
-from sw_mc_lib.Component import Component
+from sw_mc_lib.Component import Component, INNER_TO_XML_RESULT
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
@@ -23,7 +23,7 @@ class CompositeReadNumber(Component):
         channel: int = int(obj.attributes.get('i', '0'))
         return CompositeReadNumber(component_id, position, channel, inputs.get(1))
 
-    def _inner_to_xml(self) -> str:
-        xml: str = f'i="{self.channel}"\n'
-        xml += self.indent(self._pos_in_to_xml({1: self.composite_signal}))
-        return xml
+    def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
+        attributes: dict[str, str] = {'i': str(self.channel)}
+        children: list[XMLParserElement] = self._pos_in_to_xml({1: self.composite_signal})
+        return attributes, children

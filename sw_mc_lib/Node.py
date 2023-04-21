@@ -1,9 +1,7 @@
 from __future__ import annotations
-from typing import Optional, TYPE_CHECKING
+from typing import Optional
 
-if TYPE_CHECKING:
-    from .XMLParser import XMLParserElement
-
+from .XMLParser import XMLParserElement
 from .Types import NodeMode, SignalType
 from .XMLElement import XMLElement
 
@@ -16,22 +14,22 @@ class NodePosition(XMLElement):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> NodePosition:
-        assert element['tag'] == 'position', f'Invalid node position {element}'
+        assert element.tag == 'position', f'Invalid node position {element}'
         return NodePosition(
-            int(element['attributes'].get('x', '0')),
-            int(element['attributes'].get('y', '0')),
-            int(element['attributes'].get('z', '0')),
+            int(element.attributes.get('x', '0')),
+            int(element.attributes.get('y', '0')),
+            int(element.attributes.get('z', '0')),
         )
 
-    def to_xml(self) -> str:
-        xml: str = '<position '
+    def to_xml(self) -> XMLParserElement:
+        attributes: dict[str, str] = {}
         if self.x != 0:
-            xml += f'x="{self.x}" '
+            attributes['x'] = str(self.x)
         if self.y != 0:
-            xml += f'y="{self.y}" '
+            attributes['y'] = str(self.y)
         if self.z != 0:
-            xml += f'z="{self.z}" '
-        return xml[:-1] + '/>\n'
+            attributes['z'] = str(self.z)
+        return XMLParserElement('position', attributes)
 
 
 class Node(XMLElement):
@@ -55,31 +53,30 @@ class Node(XMLElement):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> Node:
-        assert element['tag'] == 'n', f'Invalid node {element}'
-        node = element['children'][0]
-        assert node['tag'] == 'node', f'Invalid node {element}'
+        assert element.tag == 'n', f'Invalid node {element}'
+        node = element.children[0]
+        assert node.tag == 'node', f'Invalid node {element}'
         position: Optional[NodePosition] = None
-        if node['children']:
-            position = NodePosition.from_xml(node['children'][0])
+        if node.children:
+            position = NodePosition.from_xml(node.children[0])
         return Node(
-            element['attributes'].get('id', 1),
-            element['attributes'].get('component_id', 1),
-            node['attributes'].get('label', ''),
-            int(node['attributes'].get('mode', '0')),
-            int(node['attributes'].get('type', '0')),
-            node['attributes'].get('description', ''),
+            int(element.attributes.get('id', '1')),
+            int(element.attributes.get('component_id', '1')),
+            node.attributes.get('label', ''),
+            int(node.attributes.get('mode', '0')),
+            int(node.attributes.get('type', '0')),
+            node.attributes.get('description', ''),
             position,
         )
 
-    def to_xml(self) -> str:
-        xml: str = f'<n id="{self.node_id}" component_id="{self.component_id}">\n'
-        xml += f'\t<node label={self.escape_string(self.label)} mode="{self.mode.value}" '
-        xml += f'type="{self.type.value}" description={self.escape_string(self.description)}'
+    def to_xml(self) -> XMLParserElement:
+        node_attributes: dict[str, str] = {
+            'label': self.label,
+            'mode': str(self.mode.value),
+            'type': str(self.type.value),
+            'description': self.description
+        }
+        node_element: XMLParserElement = XMLParserElement('node', node_attributes)
         if self.position:
-            xml += '>\n'
-            xml += self.indent(self.indent(self.position.to_xml()))
-            xml += '\t</node>\n'
-        else:
-            xml += '/>\n'
-        xml += '</n>\n'
-        return xml
+            node_element.children.append(self.position.to_xml())
+        return XMLParserElement('n', {'id': str(self.node_id), 'component_id': str(self.component_id)}, [node_element])

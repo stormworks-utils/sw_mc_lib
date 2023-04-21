@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from sw_mc_lib.Component import Component
+from sw_mc_lib.Component import Component, INNER_TO_XML_RESULT
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
@@ -20,5 +20,5 @@ class ConstantOn(Component):
         component_id, position, inputs = ConstantOn._basic_in_parsing(obj)
         return ConstantOn(component_id, position)
 
-    def _inner_to_xml(self) -> str:
-        return self.indent(self._pos_in_to_xml({}))
+    def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
+        return {}, self._pos_in_to_xml({})

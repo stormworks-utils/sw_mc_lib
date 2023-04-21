@@ -1,9 +1,6 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING
 
-if TYPE_CHECKING:
-    from .XMLParser import XMLParserElement
-
+from .XMLParser import XMLParserElement
 from .XMLElement import XMLElement
 
 
@@ -24,10 +21,10 @@ class Position(XMLElement):
     def empty_pos() -> Position:
         return Position(0.0, 0.0)
 
-    def to_xml(self) -> str:
-        xml: str = '<pos '
+    def to_xml(self) -> XMLParserElement:
+        attributes: dict[str, str] = {}
         if self.x != 0:
-            xml += f'x="{self.x}" '
+            attributes['x'] = str(self.x)
         if self.y != 0:
-            xml += f'y="{self.y}" '
-        return xml[:-1] + '/>\n'
+            attributes['y'] = str(self.y)
+        return XMLParserElement('pos', attributes)

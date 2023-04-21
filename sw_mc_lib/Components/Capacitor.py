@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Optional
 
-from sw_mc_lib.Component import Component
+from sw_mc_lib.Component import Component, INNER_TO_XML_RESULT
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
@@ -34,7 +34,7 @@ class Capacitor(Component):
         discharge_time: float = float(obj.attributes.get('dt', '1'))
         return Capacitor(component_id, position, inputs.get(1), charge_time, discharge_time)
 
-    def _inner_to_xml(self) -> str:
-        xml: str = f'ct="{self.charge_time}" dt="{self.discharge_time}"\n'
-        xml += self.indent(self._pos_in_to_xml({1: self.charge}))
-        return xml
+    def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
+        attributes: dict[str, str] = {'ct': str(self.charge_time), 'dt': str(self.discharge_time)}
+        children: list[XMLParserElement] = self._pos_in_to_xml({1: self.charge})
+        return attributes, children

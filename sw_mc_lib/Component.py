@@ -7,7 +7,8 @@ from .XMLParser import XMLParserElement
 from .Types import ComponentType
 from .Position import Position
 from .XMLElement import XMLElement
-from .util import string_to_sw_float
+
+INNER_TO_XML_RESULT = tuple[dict[str, str], list[XMLParserElement]]
 
 
 class Component(XMLElement, ABC):
@@ -44,24 +45,19 @@ class Component(XMLElement, ABC):
         return result or '0'
 
     @abstractmethod
-    def _inner_to_xml(self) -> str:
+    def _inner_to_xml(self) -> tuple[dict[str, str], list[XMLParserElement]]:
         ...
 
-    def to_xml(self) -> str:
-        xml: str = f'<c type="{self.type.value}">\n{self.INDENTATION_CHARACTER}<object id="{self.component_id}" '
-        inner_result = self._inner_to_xml()
-        if not inner_result.startswith(self.INDENTATION_CHARACTER + '<'):
-            lines: list[str] = inner_result.split('\n')
-            xml += lines[0]
-            inner_result = '\n'.join(lines[1:])
-        xml += '>\n'
-        xml += self.indent(inner_result)
-        xml += f'{self.INDENTATION_CHARACTER}</object>\n</c>\n'
-        return xml
+    def to_xml(self) -> XMLParserElement:
+        object_element = XMLParserElement('object', {'id': str(self.component_id)}, [])
+        inner_attributes, inner_children = self._inner_to_xml()
+        object_element.attributes.update(inner_attributes)
+        object_element.children = inner_children
+        return XMLParserElement('c', {'type': str(self.type.value)}, [object_element])
 
-    def _pos_in_to_xml(self, inputs: dict[int, int]) -> str:
-        xml: str = self.position.to_xml()
+    def _pos_in_to_xml(self, inputs: dict[int, Optional[int]]) -> list[XMLParserElement]:
+        children: list[XMLParserElement] = [self.position.to_xml()]
         for index, component_id in inputs.items():
             if component_id is not None:
-                xml += f'<in{index} component_id="{component_id}"/>\n'
-        return xml
+                children.append(XMLParserElement(f'in{index}', {'component_id': str(component_id)}))
+        return children

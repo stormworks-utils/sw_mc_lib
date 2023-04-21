@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from abc import ABC
 
-from sw_mc_lib.Component import Component
+from sw_mc_lib.Component import Component, INNER_TO_XML_RESULT
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
@@ -27,8 +27,8 @@ class ResetComponent(Component, ABC):
         reset_text: str = ResetComponent._basic_number_field_parsing(element, 'r')
         return reset_text
 
-    def _reset_to_xml(self) -> str:
-        return self._to_xml_number_field('r', self.reset_text)
+    def _reset_to_xml(self) -> list[XMLParserElement]:
+        return [self._to_xml_number_field('r', self.reset_text)]
 
     @property
     def reset(self) -> float:
