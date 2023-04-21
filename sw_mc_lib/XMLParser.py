@@ -82,7 +82,7 @@ class XMLParser:
             self.eat('>')
             self.skip_whitespace()
             self.eat('<')
-            while self.current != '/':
+            while self.current and self.current != '/':
                 children.append(self.read_element())
                 self.skip_whitespace()
                 self.eat('<')
