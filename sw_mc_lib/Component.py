@@ -41,7 +41,7 @@ class Component(XMLElement, ABC):
         for child in element.children:
             if child.tag == name:
                 result = child.attributes.get('text', '0')
-        return result
+        return result or '0'
 
     @abstractmethod
     def _inner_to_xml(self) -> str:
