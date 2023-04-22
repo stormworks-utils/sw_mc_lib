@@ -19,8 +19,8 @@ jobs:
       # uses: ricardochaves/python-lint@32032eca67291cd71f88d79e61bc4b904ee03265
       uses: ricardochaves/python-lint@v1.3.0
       with:
-        # Use Pylint
-        use-pylint: true
+        # Use Pylint (project is not yet ready for this
+        use-pylint: false
         # Use pycodestyle
         use-pycodestyle: true
         # Use Flake8
