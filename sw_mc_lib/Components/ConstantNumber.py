@@ -14,16 +14,18 @@ class Abs(Component):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> Abs:
-        assert element.tag == 'c', f'invalid Abs {element}'
-        assert element.attributes.get('type', '0') == str(ComponentType.Abs.value), f'Not an Abs {element}'
+        assert element.tag == "c", f"invalid Abs {element}"
+        assert element.attributes.get("type", "0") == str(
+            ComponentType.Abs.value
+        ), f"Not an Abs {element}"
         obj: XMLParserElement = element.children[0]
         component_id, position, inputs = Abs._basic_in_parsing(obj)
-        value_text: str = Abs._basic_number_field_parsing(obj, 'n')
+        value_text: str = Abs._basic_number_field_parsing(obj, "n")
         return Abs(component_id, position, value_text)
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
         children: list[XMLParserElement] = self._pos_in_to_xml({})
-        children.append(self._to_xml_number_field('n', self.value_text))
+        children.append(self._to_xml_number_field("n", self.value_text))
         return {}, children
 
     @property

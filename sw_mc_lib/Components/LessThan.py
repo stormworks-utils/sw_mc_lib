@@ -9,15 +9,19 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class LessThan(Component):
-    def __init__(self, component_id: int, position: Position, a: Optional[int], b: Optional[int]):
+    def __init__(
+        self, component_id: int, position: Position, a: Optional[int], b: Optional[int]
+    ):
         super().__init__(ComponentType.LessThan, component_id, position, 0.75)
         self.a: Optional[int] = a
         self.b: Optional[int] = b
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> LessThan:
-        assert element.tag == 'c', f'invalid LessThan {element}'
-        assert element.attributes.get('type', '0') == str(ComponentType.LessThan.value), f'Not an LessThan {element}'
+        assert element.tag == "c", f"invalid LessThan {element}"
+        assert element.attributes.get("type", "0") == str(
+            ComponentType.LessThan.value
+        ), f"Not an LessThan {element}"
         obj: XMLParserElement = element.children[0]
         component_id, position, inputs = LessThan._basic_in_parsing(obj)
         return LessThan(component_id, position, inputs.get(1), inputs.get(2))

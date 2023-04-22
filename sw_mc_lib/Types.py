@@ -75,4 +75,3 @@ class ComponentType(Enum):
     VideoSwitchbox: int = 57
     PropertyText: int = 58
     AudioSwitchbox: int = 59
-

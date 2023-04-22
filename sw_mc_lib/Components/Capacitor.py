@@ -24,17 +24,22 @@ class Capacitor(Component):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> Capacitor:
-        assert element.tag == 'c', f'invalid Capacitor {element}'
-        assert element.attributes.get('type', '0') == str(
+        assert element.tag == "c", f"invalid Capacitor {element}"
+        assert element.attributes.get("type", "0") == str(
             ComponentType.Capacitor.value
-            ), f'Not an Capacitor {element}'
+        ), f"Not an Capacitor {element}"
         obj: XMLParserElement = element.children[0]
         component_id, position, inputs = Capacitor._basic_in_parsing(obj)
-        charge_time: float = float(obj.attributes.get('ct', '1'))
-        discharge_time: float = float(obj.attributes.get('dt', '1'))
-        return Capacitor(component_id, position, inputs.get(1), charge_time, discharge_time)
+        charge_time: float = float(obj.attributes.get("ct", "1"))
+        discharge_time: float = float(obj.attributes.get("dt", "1"))
+        return Capacitor(
+            component_id, position, inputs.get(1), charge_time, discharge_time
+        )
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        attributes: dict[str, str] = {'ct': str(self.charge_time), 'dt': str(self.discharge_time)}
+        attributes: dict[str, str] = {
+            "ct": str(self.charge_time),
+            "dt": str(self.discharge_time),
+        }
         children: list[XMLParserElement] = self._pos_in_to_xml({1: self.charge})
         return attributes, children

@@ -15,8 +15,10 @@ class PushToToggle(Component):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> PushToToggle:
-        assert element.tag == 'c', f'invalid PushToToggle {element}'
-        assert element.attributes.get('type', '0') == str(ComponentType.PushToToggle.value), f'Not an PushToToggle {element}'
+        assert element.tag == "c", f"invalid PushToToggle {element}"
+        assert element.attributes.get("type", "0") == str(
+            ComponentType.PushToToggle.value
+        ), f"Not an PushToToggle {element}"
         obj: XMLParserElement = element.children[0]
         component_id, position, inputs = PushToToggle._basic_in_parsing(obj)
         return PushToToggle(component_id, position, inputs.get(1))

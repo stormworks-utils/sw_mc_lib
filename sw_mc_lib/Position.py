@@ -11,10 +11,10 @@ class Position(XMLElement):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> Position:
-        assert element.tag == 'pos', f'Invalid node position {element}'
+        assert element.tag == "pos", f"Invalid node position {element}"
         return Position(
-            float(element.attributes.get('x', '0')),
-            float(element.attributes.get('y', '0')),
+            float(element.attributes.get("x", "0")),
+            float(element.attributes.get("y", "0")),
         )
 
     @staticmethod
@@ -24,7 +24,7 @@ class Position(XMLElement):
     def to_xml(self) -> XMLParserElement:
         attributes: dict[str, str] = {}
         if self.x != 0:
-            attributes['x'] = str(self.x)
+            attributes["x"] = str(self.x)
         if self.y != 0:
-            attributes['y'] = str(self.y)
-        return XMLParserElement('pos', attributes)
+            attributes["y"] = str(self.y)
+        return XMLParserElement("pos", attributes)

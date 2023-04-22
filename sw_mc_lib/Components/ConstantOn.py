@@ -12,10 +12,10 @@ class ConstantOn(Component):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> ConstantOn:
-        assert element.tag == 'c', f'invalid ConstantOn {element}'
-        assert element.attributes.get('type', '0') == str(
+        assert element.tag == "c", f"invalid ConstantOn {element}"
+        assert element.attributes.get("type", "0") == str(
             ComponentType.ConstantOn.value
-            ), f'Not an ConstantOn {element}'
+        ), f"Not an ConstantOn {element}"
         obj: XMLParserElement = element.children[0]
         component_id, position, inputs = ConstantOn._basic_in_parsing(obj)
         return ConstantOn(component_id, position)

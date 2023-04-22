@@ -24,7 +24,15 @@ class UpDownCounter(MinMaxComponent, ResetComponent):
         reset_text: str,
         increment_text: str,
     ):
-        super().__init__(ComponentType.UpDownCounter, component_id, position, 1.0, min_text, max_text, reset_text=reset_text)
+        super().__init__(
+            ComponentType.UpDownCounter,
+            component_id,
+            position,
+            1.0,
+            min_text,
+            max_text,
+            reset_text=reset_text,
+        )
         self.up: Optional[int] = up
         self.down: Optional[int] = down
         self.reset_input: Optional[int] = reset_input
@@ -32,22 +40,34 @@ class UpDownCounter(MinMaxComponent, ResetComponent):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> UpDownCounter:
-        assert element.tag == 'c', f'invalid UpDownCounter {element}'
-        assert element.attributes.get('type', '0') == str(
+        assert element.tag == "c", f"invalid UpDownCounter {element}"
+        assert element.attributes.get("type", "0") == str(
             ComponentType.UpDownCounter.value
-            ), f'Not an UpDownCounter {element}'
+        ), f"Not an UpDownCounter {element}"
         obj: XMLParserElement = element.children[0]
         component_id, position, inputs = UpDownCounter._basic_in_parsing(obj)
         min_text, max_text = UpDownCounter._basic_min_max_parsing(obj)
         reset_text = UpDownCounter._basic_reset_parsing(obj)
-        increment_text: str = UpDownCounter._basic_number_field_parsing(obj, 'i')
-        return UpDownCounter(component_id, position, inputs.get(1), inputs.get(2), inputs.get(3), min_text, max_text, reset_text, increment_text)
+        increment_text: str = UpDownCounter._basic_number_field_parsing(obj, "i")
+        return UpDownCounter(
+            component_id,
+            position,
+            inputs.get(1),
+            inputs.get(2),
+            inputs.get(3),
+            min_text,
+            max_text,
+            reset_text,
+            increment_text,
+        )
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        children: list[XMLParserElement] = self._pos_in_to_xml({1: self.up, 2: self.down, 3: self.reset_input})
+        children: list[XMLParserElement] = self._pos_in_to_xml(
+            {1: self.up, 2: self.down, 3: self.reset_input}
+        )
         children.extend(self._min_max_to_xml())
         children.extend(self._reset_to_xml())
-        children.append(self._to_xml_number_field('i', self.increment_text))
+        children.append(self._to_xml_number_field("i", self.increment_text))
         return {}, children
 
     @property

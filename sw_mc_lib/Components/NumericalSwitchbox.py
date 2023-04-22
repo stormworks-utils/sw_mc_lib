@@ -24,13 +24,17 @@ class NumericalSwitchbox(Component):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> NumericalSwitchbox:
-        assert element.tag == 'c', f'invalid NumericalSwitchbox {element}'
-        assert element.attributes.get('type', '0') == str(
+        assert element.tag == "c", f"invalid NumericalSwitchbox {element}"
+        assert element.attributes.get("type", "0") == str(
             ComponentType.NumericalSwitchbox.value
-            ), f'Not an NumericalSwitchbox {element}'
+        ), f"Not an NumericalSwitchbox {element}"
         obj: XMLParserElement = element.children[0]
         component_id, position, inputs = NumericalSwitchbox._basic_in_parsing(obj)
-        return NumericalSwitchbox(component_id, position, inputs.get(1), inputs.get(2), inputs.get(3))
+        return NumericalSwitchbox(
+            component_id, position, inputs.get(1), inputs.get(2), inputs.get(3)
+        )
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        return {}, self._pos_in_to_xml({1: self.on_value, 2: self.off_value, 3: self.switch_signal})
+        return {}, self._pos_in_to_xml(
+            {1: self.on_value, 2: self.off_value, 3: self.switch_signal}
+        )

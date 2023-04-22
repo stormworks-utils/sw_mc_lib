@@ -24,11 +24,11 @@ class ValueComponent(Component, ABC):
 
     @staticmethod
     def _basic_value_parsing(element: XMLParserElement) -> str:
-        value_text: str = ValueComponent._basic_number_field_parsing(element, 'r')
+        value_text: str = ValueComponent._basic_number_field_parsing(element, "r")
         return value_text
 
     def _value_to_xml(self) -> list[XMLParserElement]:
-        return [self._to_xml_number_field('r', self.value_text)]
+        return [self._to_xml_number_field("r", self.value_text)]
 
     @property
     def value(self) -> float:

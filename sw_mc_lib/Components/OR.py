@@ -9,15 +9,19 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class OR(Component):
-    def __init__(self, component_id: int, position: Position, a: Optional[int], b: Optional[int]):
+    def __init__(
+        self, component_id: int, position: Position, a: Optional[int], b: Optional[int]
+    ):
         super().__init__(ComponentType.OR, component_id, position, 0.75)
         self.a: Optional[int] = a
         self.b: Optional[int] = b
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> OR:
-        assert element.tag == 'c', f'invalid OR {element}'
-        assert element.attributes.get('type', '0') == str(ComponentType.OR.value), f'Not an OR {element}'
+        assert element.tag == "c", f"invalid OR {element}"
+        assert element.attributes.get("type", "0") == str(
+            ComponentType.OR.value
+        ), f"Not an OR {element}"
         obj: XMLParserElement = element.children[0]
         component_id, position, inputs = OR._basic_in_parsing(obj)
         return OR(component_id, position, inputs.get(1), inputs.get(2))

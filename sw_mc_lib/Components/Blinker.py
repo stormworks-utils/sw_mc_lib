@@ -24,17 +24,22 @@ class Blinker(Component):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> Blinker:
-        assert element.tag == 'c', f'invalid Blinker {element}'
-        assert element.attributes.get('type', '0') == str(
+        assert element.tag == "c", f"invalid Blinker {element}"
+        assert element.attributes.get("type", "0") == str(
             ComponentType.Blinker.value
-            ), f'Not an Blinker {element}'
+        ), f"Not an Blinker {element}"
         obj: XMLParserElement = element.children[0]
         component_id, position, inputs = Blinker._basic_in_parsing(obj)
-        blink_on_duration: float = float(obj.attributes.get('on', '1'))
-        blink_off_duration: float = float(obj.attributes.get('off', '1'))
-        return Blinker(component_id, position, inputs.get(1), blink_on_duration, blink_off_duration)
+        blink_on_duration: float = float(obj.attributes.get("on", "1"))
+        blink_off_duration: float = float(obj.attributes.get("off", "1"))
+        return Blinker(
+            component_id, position, inputs.get(1), blink_on_duration, blink_off_duration
+        )
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        attributes: dict[str, str] = {'on': str(self.blink_on_duration), 'off': str(self.blink_off_duration)}
+        attributes: dict[str, str] = {
+            "on": str(self.blink_on_duration),
+            "off": str(self.blink_off_duration),
+        }
         children: list[XMLParserElement] = self._pos_in_to_xml({1: self.control_signal})
         return attributes, children

@@ -18,7 +18,7 @@ class MinMaxComponent(Component, ABC):
         height: float,
         min_text: str,
         max_text: str,
-        **kwargs
+        **kwargs,
     ):
         super().__init__(component_type, component_id, position, height, **kwargs)
         self.min_text: str = min_text
@@ -26,14 +26,14 @@ class MinMaxComponent(Component, ABC):
 
     @staticmethod
     def _basic_min_max_parsing(element: XMLParserElement) -> tuple[str, str]:
-        min_text: str = MinMaxComponent._basic_number_field_parsing(element, 'min')
-        max_text: str = MinMaxComponent._basic_number_field_parsing(element, 'max')
+        min_text: str = MinMaxComponent._basic_number_field_parsing(element, "min")
+        max_text: str = MinMaxComponent._basic_number_field_parsing(element, "max")
         return min_text, max_text
 
     def _min_max_to_xml(self) -> list[XMLParserElement]:
         return [
-            self._to_xml_number_field('min', self.min_text),
-            self._to_xml_number_field('max', self.max_text),
+            self._to_xml_number_field("min", self.min_text),
+            self._to_xml_number_field("max", self.max_text),
         ]
 
     @property

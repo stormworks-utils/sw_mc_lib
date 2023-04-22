@@ -31,22 +31,33 @@ class PIDController(Component):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> PIDController:
-        assert element.tag == 'c', f'invalid PIDController {element}'
-        assert element.attributes.get('type', '0') == str(
+        assert element.tag == "c", f"invalid PIDController {element}"
+        assert element.attributes.get("type", "0") == str(
             ComponentType.PIDController.value
-            ), f'Not an PIDController {element}'
+        ), f"Not an PIDController {element}"
         obj: XMLParserElement = element.children[0]
         component_id, position, inputs = PIDController._basic_in_parsing(obj)
-        proportional_text: str = PIDController._basic_number_field_parsing(obj, 'kp')
-        integral_text: str = PIDController._basic_number_field_parsing(obj, 'ki')
-        derivative_text: str = PIDController._basic_number_field_parsing(obj, 'kd')
-        return PIDController(component_id, position, inputs.get(1), inputs.get(2), inputs.get(3), proportional_text, integral_text, derivative_text)
+        proportional_text: str = PIDController._basic_number_field_parsing(obj, "kp")
+        integral_text: str = PIDController._basic_number_field_parsing(obj, "ki")
+        derivative_text: str = PIDController._basic_number_field_parsing(obj, "kd")
+        return PIDController(
+            component_id,
+            position,
+            inputs.get(1),
+            inputs.get(2),
+            inputs.get(3),
+            proportional_text,
+            integral_text,
+            derivative_text,
+        )
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        children: list[XMLParserElement] = self._pos_in_to_xml({1: self.setpoint, 2: self.process_variable, 3: self.active})
-        children.append(self._to_xml_number_field('kp', self.proportional_text))
-        children.append(self._to_xml_number_field('ki', self.integral_text))
-        children.append(self._to_xml_number_field('kd', self.derivative_text))
+        children: list[XMLParserElement] = self._pos_in_to_xml(
+            {1: self.setpoint, 2: self.process_variable, 3: self.active}
+        )
+        children.append(self._to_xml_number_field("kp", self.proportional_text))
+        children.append(self._to_xml_number_field("ki", self.integral_text))
+        children.append(self._to_xml_number_field("kd", self.derivative_text))
         return {}, children
 
     @property

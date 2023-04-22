@@ -9,15 +9,19 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class GreaterThan(Component):
-    def __init__(self, component_id: int, position: Position, a: Optional[int], b: Optional[int]):
+    def __init__(
+        self, component_id: int, position: Position, a: Optional[int], b: Optional[int]
+    ):
         super().__init__(ComponentType.GreaterThan, component_id, position, 0.75)
         self.a: Optional[int] = a
         self.b: Optional[int] = b
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> GreaterThan:
-        assert element.tag == 'c', f'invalid GreaterThan {element}'
-        assert element.attributes.get('type', '0') == str(ComponentType.GreaterThan.value), f'Not an GreaterThan {element}'
+        assert element.tag == "c", f"invalid GreaterThan {element}"
+        assert element.attributes.get("type", "0") == str(
+            ComponentType.GreaterThan.value
+        ), f"Not an GreaterThan {element}"
         obj: XMLParserElement = element.children[0]
         component_id, position, inputs = GreaterThan._basic_in_parsing(obj)
         return GreaterThan(component_id, position, inputs.get(1), inputs.get(2))

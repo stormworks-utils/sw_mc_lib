@@ -11,15 +11,24 @@ from .SubTypes.MinMaxComponent import MinMaxComponent
 
 class Threshold(MinMaxComponent):
     def __init__(
-        self, component_id: int, position: Position, min_text: str, max_text: str, input_number: Optional[int]
-        ):
-        super().__init__(ComponentType.Threshold, component_id, position, 0.5, min_text, max_text)
+        self,
+        component_id: int,
+        position: Position,
+        min_text: str,
+        max_text: str,
+        input_number: Optional[int],
+    ):
+        super().__init__(
+            ComponentType.Threshold, component_id, position, 0.5, min_text, max_text
+        )
         self.input_number: Optional[int] = input_number
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> Threshold:
-        assert element.tag == 'c', f'invalid Threshold {element}'
-        assert element.attributes.get('type', '0') == str(ComponentType.Threshold.value), f'Not an Threshold {element}'
+        assert element.tag == "c", f"invalid Threshold {element}"
+        assert element.attributes.get("type", "0") == str(
+            ComponentType.Threshold.value
+        ), f"Not an Threshold {element}"
         obj: XMLParserElement = element.children[0]
         component_id, position, inputs = Threshold._basic_in_parsing(obj)
         min_text, max_text = Threshold._basic_min_max_parsing(obj)

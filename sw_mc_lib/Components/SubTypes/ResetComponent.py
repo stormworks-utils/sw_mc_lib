@@ -24,11 +24,11 @@ class ResetComponent(Component, ABC):
 
     @staticmethod
     def _basic_reset_parsing(element: XMLParserElement) -> str:
-        reset_text: str = ResetComponent._basic_number_field_parsing(element, 'r')
+        reset_text: str = ResetComponent._basic_number_field_parsing(element, "r")
         return reset_text
 
     def _reset_to_xml(self) -> list[XMLParserElement]:
-        return [self._to_xml_number_field('r', self.reset_text)]
+        return [self._to_xml_number_field("r", self.reset_text)]
 
     @property
     def reset(self) -> float:

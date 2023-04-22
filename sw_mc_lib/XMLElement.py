@@ -17,7 +17,9 @@ class XMLElement(ABC):
 
     @staticmethod
     def _to_xml_number_field(name: str, value: str) -> XMLParserElement:
-        return XMLParserElement(name, {'text': value, 'value': str(string_to_sw_float(value))})
+        return XMLParserElement(
+            name, {"text": value, "value": str(string_to_sw_float(value))}
+        )
 
     def __repr__(self):
         return generic_str(self)

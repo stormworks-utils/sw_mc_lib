@@ -14,22 +14,22 @@ class NodePosition(XMLElement):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> NodePosition:
-        assert element.tag == 'position', f'Invalid node position {element}'
+        assert element.tag == "position", f"Invalid node position {element}"
         return NodePosition(
-            int(element.attributes.get('x', '0')),
-            int(element.attributes.get('y', '0')),
-            int(element.attributes.get('z', '0')),
+            int(element.attributes.get("x", "0")),
+            int(element.attributes.get("y", "0")),
+            int(element.attributes.get("z", "0")),
         )
 
     def to_xml(self) -> XMLParserElement:
         attributes: dict[str, str] = {}
         if self.x != 0:
-            attributes['x'] = str(self.x)
+            attributes["x"] = str(self.x)
         if self.y != 0:
-            attributes['y'] = str(self.y)
+            attributes["y"] = str(self.y)
         if self.z != 0:
-            attributes['z'] = str(self.z)
-        return XMLParserElement('position', attributes)
+            attributes["z"] = str(self.z)
+        return XMLParserElement("position", attributes)
 
 
 class Node(XMLElement):
@@ -41,7 +41,7 @@ class Node(XMLElement):
         mode: int,
         type: int,
         description: str,
-        position: Optional[NodePosition] = None
+        position: Optional[NodePosition] = None,
     ):
         self.node_id: int = node_id
         self.component_id: int = component_id
@@ -53,30 +53,34 @@ class Node(XMLElement):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> Node:
-        assert element.tag == 'n', f'Invalid node {element}'
+        assert element.tag == "n", f"Invalid node {element}"
         node = element.children[0]
-        assert node.tag == 'node', f'Invalid node {element}'
+        assert node.tag == "node", f"Invalid node {element}"
         position: Optional[NodePosition] = None
         if node.children:
             position = NodePosition.from_xml(node.children[0])
         return Node(
-            int(element.attributes.get('id', '1')),
-            int(element.attributes.get('component_id', '1')),
-            node.attributes.get('label', ''),
-            int(node.attributes.get('mode', '0')),
-            int(node.attributes.get('type', '0')),
-            node.attributes.get('description', ''),
+            int(element.attributes.get("id", "1")),
+            int(element.attributes.get("component_id", "1")),
+            node.attributes.get("label", ""),
+            int(node.attributes.get("mode", "0")),
+            int(node.attributes.get("type", "0")),
+            node.attributes.get("description", ""),
             position,
         )
 
     def to_xml(self) -> XMLParserElement:
         node_attributes: dict[str, str] = {
-            'label': self.label,
-            'mode': str(self.mode.value),
-            'type': str(self.type.value),
-            'description': self.description
+            "label": self.label,
+            "mode": str(self.mode.value),
+            "type": str(self.type.value),
+            "description": self.description,
         }
-        node_element: XMLParserElement = XMLParserElement('node', node_attributes)
+        node_element: XMLParserElement = XMLParserElement("node", node_attributes)
         if self.position:
             node_element.children.append(self.position.to_xml())
-        return XMLParserElement('n', {'id': str(self.node_id), 'component_id': str(self.component_id)}, [node_element])
+        return XMLParserElement(
+            "n",
+            {"id": str(self.node_id), "component_id": str(self.component_id)},
+            [node_element],
+        )
