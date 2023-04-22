@@ -75,5 +75,5 @@ class UpDownCounter(MinMaxComponent, ResetComponent):
         return string_to_sw_float(self.increment_text)
 
     @increment.setter
-    def increment(self, value: float):
+    def increment(self, value: float) -> None:
         self.increment_text = str(value)

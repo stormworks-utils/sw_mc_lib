@@ -57,5 +57,5 @@ class PropertySlider(MinMaxComponent, ValueComponent):
         return string_to_sw_float(self.rounding_text)
 
     @rounding.setter
-    def rounding(self, value: float):
+    def rounding(self, value: float) -> None:
         self.rounding_text = str(value)

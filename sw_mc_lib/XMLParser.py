@@ -29,7 +29,7 @@ class XMLParser:
         self.column: int = 1
         self.current: Optional[str] = content[0]
 
-    def advance(self):
+    def advance(self) -> None:
         self.pos += 1
         if self.pos >= len(self.content):
             self.current = None
@@ -40,7 +40,7 @@ class XMLParser:
             self.column = 0
         self.column += 1
 
-    def skip_whitespace(self):
+    def skip_whitespace(self) -> None:
         while self.current and self.current.isspace():
             self.advance()
 
@@ -67,7 +67,7 @@ class XMLParser:
         res_str = res_str.replace("&amp;", "&")
         return res_str
 
-    def eat(self, expected: str):
+    def eat(self, expected: str) -> None:
         if self.current == expected:
             self.advance()
         else:

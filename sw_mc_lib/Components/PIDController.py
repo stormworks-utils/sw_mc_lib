@@ -65,7 +65,7 @@ class PIDController(Component):
         return string_to_sw_float(self.proportional_text)
 
     @proportional.setter
-    def proportional(self, value: float):
+    def proportional(self, value: float) -> None:
         self.proportional_text = str(value)
 
     @property
@@ -73,7 +73,7 @@ class PIDController(Component):
         return string_to_sw_float(self.integral_text)
 
     @integral.setter
-    def integral(self, value: float):
+    def integral(self, value: float) -> None:
         self.integral_text = str(value)
 
     @property
@@ -81,5 +81,5 @@ class PIDController(Component):
         return string_to_sw_float(self.derivative_text)
 
     @derivative.setter
-    def derivative(self, value: float):
+    def derivative(self, value: float) -> None:
         self.derivative_text = str(value)

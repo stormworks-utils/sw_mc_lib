@@ -33,5 +33,5 @@ class Abs(Component):
         return string_to_sw_float(self.value_text)
 
     @value.setter
-    def value(self, value: float):
+    def value(self, value: float) -> None:
         self.value_text = str(value)

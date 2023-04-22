@@ -17,7 +17,7 @@ class ResetComponent(Component, ABC):
         position: Position,
         height: float,
         reset_text: str,
-        **kwargs,
+        **kwargs: str,
     ):
         super().__init__(component_type, component_id, position, height, **kwargs)
         self.reset_text: str = reset_text
@@ -35,5 +35,5 @@ class ResetComponent(Component, ABC):
         return string_to_sw_float(self.reset_text)
 
     @reset.setter
-    def reset(self, value: float):
+    def reset(self, value: float) -> None:
         self.reset_text = str(value)

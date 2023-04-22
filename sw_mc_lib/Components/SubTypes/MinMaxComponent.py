@@ -18,7 +18,7 @@ class MinMaxComponent(Component, ABC):
         height: float,
         min_text: str,
         max_text: str,
-        **kwargs,
+        **kwargs: str,
     ):
         super().__init__(component_type, component_id, position, height, **kwargs)
         self.min_text: str = min_text
@@ -41,7 +41,7 @@ class MinMaxComponent(Component, ABC):
         return string_to_sw_float(self.min_text)
 
     @min.setter
-    def min(self, value: float):
+    def min(self, value: float) -> None:
         self.min_text = str(value)
 
     @property
@@ -49,5 +49,5 @@ class MinMaxComponent(Component, ABC):
         return string_to_sw_float(self.max_text)
 
     @max.setter
-    def max(self, value: float):
+    def max(self, value: float) -> None:
         self.max_text = str(value)

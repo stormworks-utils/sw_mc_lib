@@ -21,5 +21,5 @@ class XMLElement(ABC):
             name, {"text": value, "value": str(string_to_sw_float(value))}
         )
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return generic_str(self)

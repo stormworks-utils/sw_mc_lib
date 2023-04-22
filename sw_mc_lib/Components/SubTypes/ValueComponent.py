@@ -17,7 +17,7 @@ class ValueComponent(Component, ABC):
         position: Position,
         height: float,
         value_text: str,
-        **kwargs,
+        **kwargs: str,
     ):
         super().__init__(component_type, component_id, position, height, **kwargs)
         self.value_text: str = value_text
@@ -35,5 +35,5 @@ class ValueComponent(Component, ABC):
         return string_to_sw_float(self.value_text)
 
     @value.setter
-    def value(self, value: float):
+    def value(self, value: float) -> None:
         self.value_text = str(value)
