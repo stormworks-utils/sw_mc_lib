@@ -1,6 +1,6 @@
 import unittest
 
-from sw_mc_lib.XMLParser import *
+from sw_mc_lib.XMLParser import XMLParser, XMLParserElement
 
 
 class TestXMLParser(unittest.TestCase):
