@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import string
-from typing import Optional
+from typing import Optional, Any
 
 
 class XMLParserElement:
@@ -15,7 +15,7 @@ class XMLParserElement:
         self.attributes: dict[str, str] = attributes or {}
         self.children: list[XMLParserElement] = children or []
 
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other: Any) -> bool:
         if isinstance(other, XMLParserElement):
             return (
                 self.tag == other.tag
@@ -83,7 +83,7 @@ class XMLParser:
         if self.current == expected:
             self.advance()
         else:
-            self.error(expected, self.current, self.line, self.column)
+            self.error(expected, self.current or "<EOL>", self.line, self.column)
 
     def read_element(self) -> XMLParserElement:
         tag: str = self.read_name()
