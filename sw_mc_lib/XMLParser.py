@@ -15,6 +15,15 @@ class XMLParserElement:
         self.attributes: dict[str, str] = attributes or {}
         self.children: list[XMLParserElement] = children or []
 
+    def __eq__(self, other) -> bool:
+        if isinstance(other, XMLParserElement):
+            return (
+                self.tag == other.tag
+                and self.attributes == other.attributes
+                and self.children == other.children
+            )
+        return False
+
     def __repr__(self) -> str:
         return f"XMLParserElement(tag={self.tag!r}, attributes={self.attributes!r}, children={self.children!r}"
 
@@ -67,13 +76,14 @@ class XMLParser:
         res_str = res_str.replace("&amp;", "&")
         return res_str
 
+    def error(self, expected: str, received: str, line: int, column: int) -> None:
+        raise NameError(f"Expected {expected} at {line}:{column}, got {received}")
+
     def eat(self, expected: str) -> None:
         if self.current == expected:
             self.advance()
         else:
-            raise NameError(
-                f"Expected {expected} at {self.line}:{self.column}, got {self.current}"
-            )
+            self.error(expected, self.current, self.line, self.column)
 
     def read_element(self) -> XMLParserElement:
         tag: str = self.read_name()
@@ -95,8 +105,10 @@ class XMLParser:
                 self.skip_whitespace()
                 self.eat("<")
             self.advance()
+            line, column = self.line, self.column
             closing_tag: str = self.read_name()
-            assert closing_tag == tag
+            if closing_tag != tag:
+                self.error(tag, closing_tag, line, column)
             self.eat(">")
         else:
             self.eat("/")
