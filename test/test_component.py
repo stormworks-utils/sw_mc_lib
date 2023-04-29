@@ -1,5 +1,5 @@
 import unittest
-from sw_mc_lib.Component import ComponentType, Component, Position, Input
+from sw_mc_lib.Component import Component, Position, Input
 from sw_mc_lib.XMLParser import XMLParserElement
 
 
