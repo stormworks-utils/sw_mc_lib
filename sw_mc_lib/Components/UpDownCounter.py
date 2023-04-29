@@ -6,6 +6,7 @@ from sw_mc_lib.Component import INNER_TO_XML_RESULT
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
+from sw_mc_lib.Input import Input
 from sw_mc_lib.util import string_to_sw_float
 from .SubTypes.ResetComponent import ResetComponent
 from .SubTypes.MinMaxComponent import MinMaxComponent
@@ -16,9 +17,9 @@ class UpDownCounter(MinMaxComponent, ResetComponent):
         self,
         component_id: int,
         position: Position,
-        up: Optional[int],
-        down: Optional[int],
-        reset_input: Optional[int],
+        up: Optional[Input],
+        down: Optional[Input],
+        reset_input: Optional[Input],
         min_text: str,
         max_text: str,
         reset_text: str,
@@ -33,9 +34,9 @@ class UpDownCounter(MinMaxComponent, ResetComponent):
             max_text,
             reset_text=reset_text,
         )
-        self.up: Optional[int] = up
-        self.down: Optional[int] = down
-        self.reset_input: Optional[int] = reset_input
+        self.up: Optional[Input] = up
+        self.down: Optional[Input] = down
+        self.reset_input: Optional[Input] = reset_input
         self.increment_text: str = increment_text
 
     @staticmethod
@@ -52,9 +53,9 @@ class UpDownCounter(MinMaxComponent, ResetComponent):
         return UpDownCounter(
             component_id,
             position,
-            inputs.get(1),
-            inputs.get(2),
-            inputs.get(3),
+            inputs.get("1"),
+            inputs.get("2"),
+            inputs.get("3"),
             min_text,
             max_text,
             reset_text,
@@ -63,7 +64,7 @@ class UpDownCounter(MinMaxComponent, ResetComponent):
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
         children: list[XMLParserElement] = self._pos_in_to_xml(
-            {1: self.up, 2: self.down, 3: self.reset_input}
+            {"1": self.up, "2": self.down, "3": self.reset_input}
         )
         children.extend(self._min_max_to_xml())
         children.extend(self._reset_to_xml())

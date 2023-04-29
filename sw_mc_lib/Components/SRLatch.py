@@ -6,6 +6,7 @@ from sw_mc_lib.Component import Component, INNER_TO_XML_RESULT
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
+from sw_mc_lib.Input import Input
 
 
 class SRLatch(Component):
@@ -13,12 +14,12 @@ class SRLatch(Component):
         self,
         component_id: int,
         position: Position,
-        set_input: Optional[int],
-        reset_input: Optional[int],
+        set_input: Optional[Input],
+        reset_input: Optional[Input],
     ):
         super().__init__(ComponentType.SRLatch, component_id, position, 0.75)
-        self.set_input: Optional[int] = set_input
-        self.reset_input: Optional[int] = reset_input
+        self.set_input: Optional[Input] = set_input
+        self.reset_input: Optional[Input] = reset_input
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> SRLatch:
@@ -28,7 +29,7 @@ class SRLatch(Component):
         ), f"Not an SRLatch {element}"
         obj: XMLParserElement = element.children[0]
         component_id, position, inputs = SRLatch._basic_in_parsing(obj)
-        return SRLatch(component_id, position, inputs.get(1), inputs.get(2))
+        return SRLatch(component_id, position, inputs.get("1"), inputs.get("2"))
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        return {}, self._pos_in_to_xml({1: self.set_input, 2: self.reset_input})
+        return {}, self._pos_in_to_xml({"1": self.set_input, "2": self.reset_input})

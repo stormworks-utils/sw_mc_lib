@@ -6,14 +6,15 @@ from sw_mc_lib.Component import Component, INNER_TO_XML_RESULT
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
+from sw_mc_lib.Input import Input
 
 
 class Delta(Component):
     def __init__(
-        self, component_id: int, position: Position, input_value: Optional[int]
+        self, component_id: int, position: Position, input_value: Optional[Input]
     ):
         super().__init__(ComponentType.Delta, component_id, position, 0.5)
-        self.input_value: Optional[int] = input_value
+        self.input_value: Optional[Input] = input_value
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> Delta:
@@ -23,7 +24,7 @@ class Delta(Component):
         ), f"Not an Delta {element}"
         obj: XMLParserElement = element.children[0]
         component_id, position, inputs = Delta._basic_in_parsing(obj)
-        return Delta(component_id, position, inputs.get(1))
+        return Delta(component_id, position, inputs.get("1"))
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        return {}, self._pos_in_to_xml({1: self.input_value})
+        return {}, self._pos_in_to_xml({"1": self.input_value})

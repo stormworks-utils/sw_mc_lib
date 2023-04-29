@@ -6,6 +6,7 @@ from sw_mc_lib.Component import Component, INNER_TO_XML_RESULT
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
+from sw_mc_lib.Input import Input
 
 
 class ArithmeticFunction3In(Component):
@@ -14,17 +15,17 @@ class ArithmeticFunction3In(Component):
         component_id: int,
         position: Position,
         function: str,
-        x: Optional[int],
-        y: Optional[int],
-        z: Optional[int],
+        x: Optional[Input],
+        y: Optional[Input],
+        z: Optional[Input],
     ):
         super().__init__(
             ComponentType.ArithmeticFunction3In, component_id, position, 1.0
         )
         self.function: str = function
-        self.x: Optional[int] = x
-        self.y: Optional[int] = y
-        self.z: Optional[int] = z
+        self.x: Optional[Input] = x
+        self.y: Optional[Input] = y
+        self.z: Optional[Input] = z
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> ArithmeticFunction3In:
@@ -39,14 +40,14 @@ class ArithmeticFunction3In(Component):
             component_id,
             position,
             function,
-            inputs.get(1),
-            inputs.get(2),
-            inputs.get(3),
+            inputs.get("1"),
+            inputs.get("2"),
+            inputs.get("3"),
         )
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
         attributes: dict[str, str] = {"e": self.function}
         children: list[XMLParserElement] = self._pos_in_to_xml(
-            {1: self.x, 2: self.y, 3: self.z}
+            {"1": self.x, "2": self.y, "3": self.z}
         )
         return attributes, children

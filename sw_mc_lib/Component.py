@@ -7,6 +7,7 @@ from .XMLParser import XMLParserElement
 from .Types import ComponentType
 from .Position import Position
 from .XMLElement import XMLElement
+from .Input import Input
 
 INNER_TO_XML_RESULT = tuple[dict[str, str], list[XMLParserElement]]
 
@@ -29,19 +30,16 @@ class Component(XMLElement, ABC):
     @staticmethod
     def _basic_in_parsing(
         element: XMLParserElement,
-    ) -> tuple[int, Position, dict[int, int]]:
+    ) -> tuple[int, Position, dict[str, Input]]:
         component_id: int = int(element.attributes.get("id", "0"))
         position: Optional[Position] = None
-        inputs: dict[int, int] = {}
+        inputs: dict[str, Input] = {}
         for child in element.children:
             if child.tag == "pos":
                 position = Position.from_xml(child)
             elif child.tag.startswith("in"):
-                index: int = int(child.tag.replace("in", ""))
-                target_component_id: int = int(
-                    child.attributes.get("component_id", "0")
-                )
-                inputs[index] = target_component_id
+                input: Input = Input.from_xml(child)
+                inputs[input.index] = input
         if not position:
             position = Position.empty_pos()
         return component_id, position, inputs
@@ -66,12 +64,10 @@ class Component(XMLElement, ABC):
         return XMLParserElement("c", {"type": str(self.type.value)}, [object_element])
 
     def _pos_in_to_xml(
-        self, inputs: dict[int, Optional[int]]
+        self, inputs: dict[str, Optional[Input]]
     ) -> list[XMLParserElement]:
         children: list[XMLParserElement] = [self.position.to_xml()]
-        for index, component_id in inputs.items():
-            if component_id is not None:
-                children.append(
-                    XMLParserElement(f"in{index}", {"component_id": str(component_id)})
-                )
+        for index, input in inputs.items():
+            if input is not None:
+                children.append(input.to_xml())
         return children

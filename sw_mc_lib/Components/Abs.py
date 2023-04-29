@@ -6,14 +6,15 @@ from sw_mc_lib.Component import Component, INNER_TO_XML_RESULT
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
+from sw_mc_lib.Input import Input
 
 
 class Abs(Component):
     def __init__(
-        self, component_id: int, position: Position, input_number: Optional[int]
+        self, component_id: int, position: Position, input_number: Optional[Input]
     ):
         super().__init__(ComponentType.Abs, component_id, position, 0.5)
-        self.input_number: Optional[int] = input_number
+        self.input_number: Optional[Input] = input_number
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> Abs:
@@ -23,7 +24,7 @@ class Abs(Component):
         ), f"Not an Abs {element}"
         obj: XMLParserElement = element.children[0]
         component_id, position, inputs = Abs._basic_in_parsing(obj)
-        return Abs(component_id, position, inputs.get(1))
+        return Abs(component_id, position, inputs.get("1"))
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        return {}, self._pos_in_to_xml({1: self.input_number})
+        return {}, self._pos_in_to_xml({"1": self.input_number})

@@ -6,6 +6,7 @@ from sw_mc_lib.Component import Component, INNER_TO_XML_RESULT
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
+from sw_mc_lib.Input import Input
 from sw_mc_lib.util import string_to_sw_float
 
 
@@ -14,17 +15,17 @@ class PIDController(Component):
         self,
         component_id: int,
         position: Position,
-        setpoint: Optional[int],
-        process_variable: Optional[int],
-        active: Optional[int],
+        setpoint: Optional[Input],
+        process_variable: Optional[Input],
+        active: Optional[Input],
         proportional_text: str,
         integral_text: str,
         derivative_text: str,
     ):
         super().__init__(ComponentType.PIDController, component_id, position, 1.0)
-        self.setpoint: Optional[int] = setpoint
-        self.process_variable: Optional[int] = process_variable
-        self.active: Optional[int] = active
+        self.setpoint: Optional[Input] = setpoint
+        self.process_variable: Optional[Input] = process_variable
+        self.active: Optional[Input] = active
         self.proportional_text: str = proportional_text
         self.integral_text: str = integral_text
         self.derivative_text: str = derivative_text
@@ -43,9 +44,9 @@ class PIDController(Component):
         return PIDController(
             component_id,
             position,
-            inputs.get(1),
-            inputs.get(2),
-            inputs.get(3),
+            inputs.get("1"),
+            inputs.get("2"),
+            inputs.get("3"),
             proportional_text,
             integral_text,
             derivative_text,
@@ -53,7 +54,7 @@ class PIDController(Component):
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
         children: list[XMLParserElement] = self._pos_in_to_xml(
-            {1: self.setpoint, 2: self.process_variable, 3: self.active}
+            {"1": self.setpoint, "2": self.process_variable, "3": self.active}
         )
         children.append(self._to_xml_number_field("kp", self.proportional_text))
         children.append(self._to_xml_number_field("ki", self.integral_text))

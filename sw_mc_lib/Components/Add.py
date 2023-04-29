@@ -6,15 +6,20 @@ from sw_mc_lib.Component import Component, INNER_TO_XML_RESULT
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
+from sw_mc_lib.Input import Input
 
 
 class Add(Component):
     def __init__(
-        self, component_id: int, position: Position, a: Optional[int], b: Optional[int]
+        self,
+        component_id: int,
+        position: Position,
+        a: Optional[Input],
+        b: Optional[Input],
     ):
         super().__init__(ComponentType.Add, component_id, position, 0.75)
-        self.a: Optional[int] = a
-        self.b: Optional[int] = b
+        self.a: Optional[Input] = a
+        self.b: Optional[Input] = b
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> Add:
@@ -24,7 +29,7 @@ class Add(Component):
         ), f"Not an Add {element}"
         obj: XMLParserElement = element.children[0]
         component_id, position, inputs = Add._basic_in_parsing(obj)
-        return Add(component_id, position, inputs.get(1), inputs.get(2))
+        return Add(component_id, position, inputs.get("1"), inputs.get("2"))
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        return {}, self._pos_in_to_xml({1: self.a, 2: self.b})
+        return {}, self._pos_in_to_xml({"1": self.a, "2": self.b})

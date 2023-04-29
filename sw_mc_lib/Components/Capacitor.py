@@ -6,6 +6,7 @@ from sw_mc_lib.Component import Component, INNER_TO_XML_RESULT
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
+from sw_mc_lib.Input import Input
 
 
 class Capacitor(Component):
@@ -13,12 +14,12 @@ class Capacitor(Component):
         self,
         component_id: int,
         position: Position,
-        charge: Optional[int],
+        charge: Optional[Input],
         charge_time: float,
         discharge_time: float,
     ):
         super().__init__(ComponentType.Capacitor, component_id, position, 1.0)
-        self.charge: Optional[int] = charge
+        self.charge: Optional[Input] = charge
         self.charge_time: float = charge_time
         self.discharge_time: float = discharge_time
 
@@ -33,7 +34,7 @@ class Capacitor(Component):
         charge_time: float = float(obj.attributes.get("ct", "1"))
         discharge_time: float = float(obj.attributes.get("dt", "1"))
         return Capacitor(
-            component_id, position, inputs.get(1), charge_time, discharge_time
+            component_id, position, inputs.get("1"), charge_time, discharge_time
         )
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
@@ -41,5 +42,5 @@ class Capacitor(Component):
             "ct": str(self.charge_time),
             "dt": str(self.discharge_time),
         }
-        children: list[XMLParserElement] = self._pos_in_to_xml({1: self.charge})
+        children: list[XMLParserElement] = self._pos_in_to_xml({"1": self.charge})
         return attributes, children

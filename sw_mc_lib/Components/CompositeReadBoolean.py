@@ -6,6 +6,7 @@ from sw_mc_lib.Component import Component, INNER_TO_XML_RESULT
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
+from sw_mc_lib.Input import Input
 
 
 class CompositeReadBoolean(Component):
@@ -14,7 +15,7 @@ class CompositeReadBoolean(Component):
         component_id: int,
         position: Position,
         channel: int,
-        composite_signal: Optional[int],
+        composite_signal: Optional[Input],
     ):
         super().__init__(
             ComponentType.CompositeReadBoolean,
@@ -23,7 +24,7 @@ class CompositeReadBoolean(Component):
             0.5 if channel >= 0 else 0.75,
         )
         self.channel: int = channel
-        self.composite_signal: Optional[int] = composite_signal
+        self.composite_signal: Optional[Input] = composite_signal
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> CompositeReadBoolean:
@@ -34,11 +35,11 @@ class CompositeReadBoolean(Component):
         obj: XMLParserElement = element.children[0]
         component_id, position, inputs = CompositeReadBoolean._basic_in_parsing(obj)
         channel: int = int(obj.attributes.get("i", "0"))
-        return CompositeReadBoolean(component_id, position, channel, inputs.get(1))
+        return CompositeReadBoolean(component_id, position, channel, inputs.get("1"))
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
         attributes: dict[str, str] = {"i": str(self.channel)}
         children: list[XMLParserElement] = self._pos_in_to_xml(
-            {1: self.composite_signal}
+            {"1": self.composite_signal}
         )
         return attributes, children

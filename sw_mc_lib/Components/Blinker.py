@@ -6,6 +6,7 @@ from sw_mc_lib.Component import Component, INNER_TO_XML_RESULT
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
+from sw_mc_lib.Input import Input
 
 
 class Blinker(Component):
@@ -13,12 +14,12 @@ class Blinker(Component):
         self,
         component_id: int,
         position: Position,
-        control_signal: Optional[int],
+        control_signal: Optional[Input],
         blink_on_duration: float,
         blink_off_duration: float,
     ):
         super().__init__(ComponentType.Blinker, component_id, position, 1.0)
-        self.control_signal: Optional[int] = control_signal
+        self.control_signal: Optional[Input] = control_signal
         self.blink_on_duration: float = blink_on_duration
         self.blink_off_duration: float = blink_off_duration
 
@@ -33,7 +34,11 @@ class Blinker(Component):
         blink_on_duration: float = float(obj.attributes.get("on", "1"))
         blink_off_duration: float = float(obj.attributes.get("off", "1"))
         return Blinker(
-            component_id, position, inputs.get(1), blink_on_duration, blink_off_duration
+            component_id,
+            position,
+            inputs.get("1"),
+            blink_on_duration,
+            blink_off_duration,
         )
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
@@ -41,5 +46,7 @@ class Blinker(Component):
             "on": str(self.blink_on_duration),
             "off": str(self.blink_off_duration),
         }
-        children: list[XMLParserElement] = self._pos_in_to_xml({1: self.control_signal})
+        children: list[XMLParserElement] = self._pos_in_to_xml(
+            {"1": self.control_signal}
+        )
         return attributes, children
