@@ -65,7 +65,9 @@ class Component(XMLElement, ABC):
         return XMLParserElement("c", {"type": str(self.type.value)}, [object_element])
 
     def _pos_in_to_xml(
-        self, *inputs: Optional[Input], named_inputs: Optional[dict[str, Input]] = None
+        self,
+        *inputs: Optional[Input],
+        named_inputs: Optional[dict[str, Optional[Input]]] = None,
     ) -> list[XMLParserElement]:
         """
         Turn the position and inputs into an element. Will strip all None inputs. Will also rename all numbered inputs
@@ -77,5 +79,8 @@ class Component(XMLElement, ABC):
             if input is not None:
                 if isinstance(i, int):
                     input.index = str(i + 1)
+                else:
+                    assert isinstance(i, str)
+                    input.index = i
                 children.append(input.to_xml())
         return children

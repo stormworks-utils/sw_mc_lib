@@ -19,11 +19,15 @@ class TestingComponent(Component):
 
     def _inner_to_xml(self) -> tuple[dict[str, str], list[XMLParserElement]]:
         input_list: list[Optional[Input]] = []
+        named_inputs: dict[str, Optional[Input]] = {}
         for name, input in self.inputs.items():
-            while len(input_list) < int(name):
-                input_list.append(None)
-            input_list[int(name) - 1] = input
-        return {}, self._pos_in_to_xml(*input_list)
+            if name.isdigit():
+                while len(input_list) < int(name):
+                    input_list.append(None)
+                input_list[int(name) - 1] = input
+            else:
+                named_inputs[name] = input
+        return {}, self._pos_in_to_xml(*input_list, named_inputs=named_inputs or None)
 
 
 class TestComponent(unittest.TestCase):
@@ -46,5 +50,17 @@ class TestComponent(unittest.TestCase):
         pos: Position = Position(10, 5)
         test_comp: TestingComponent = TestingComponent(100, pos, {})
         expected: list[XMLParserElement] = [pos.to_xml()]
+        _, children = test_comp._inner_to_xml()
+        self.assertEqual(children, expected)
+        test_comp.inputs["1"] = Input(10)
+        expected.append(Input(10, 0, "1").to_xml())
+        _, children = test_comp._inner_to_xml()
+        self.assertEqual(children, expected)
+        test_comp.inputs["5"] = Input(500, 2)
+        expected.append(Input(500, 2, "5").to_xml())
+        _, children = test_comp._inner_to_xml()
+        self.assertEqual(children, expected)
+        test_comp.inputs["abc"] = Input(30)
+        expected.append(Input(30, 0, "abc").to_xml())
         _, children = test_comp._inner_to_xml()
         self.assertEqual(children, expected)
