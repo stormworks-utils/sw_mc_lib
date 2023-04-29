@@ -1,6 +1,29 @@
+from __future__ import annotations
 import unittest
-from sw_mc_lib.Component import Component, Position, Input
+from typing import Optional
+
+from sw_mc_lib.Component import Component, ComponentType, Position, Input
 from sw_mc_lib.XMLParser import XMLParserElement
+
+
+class TestingComponent(Component):
+    def __init__(self, component_id: int, position: Position, inputs: dict[str, Input]):
+        super().__init__(ComponentType.Abs, component_id, position, 1.0)
+        self.inputs: dict[str, Input] = inputs
+
+    @staticmethod
+    def from_xml(element: XMLParserElement) -> TestingComponent:
+        obj: XMLParserElement = element.children[0]
+        component_id, position, inputs = TestingComponent._basic_in_parsing(obj)
+        return TestingComponent(component_id, position, inputs)
+
+    def _inner_to_xml(self) -> tuple[dict[str, str], list[XMLParserElement]]:
+        input_list: list[Optional[Input]] = []
+        for name, input in self.inputs.items():
+            while len(input_list) < int(name):
+                input_list.append(None)
+            input_list[int(name) - 1] = input
+        return {}, self._pos_in_to_xml(*input_list)
 
 
 class TestComponent(unittest.TestCase):
@@ -21,3 +44,7 @@ class TestComponent(unittest.TestCase):
 
     def test_pos_in_to_xml(self) -> None:
         pos: Position = Position(10, 5)
+        test_comp: TestingComponent = TestingComponent(100, pos, {})
+        expected: list[XMLParserElement] = [pos.to_xml()]
+        _, children = test_comp._inner_to_xml()
+        self.assertEqual(children, expected)
