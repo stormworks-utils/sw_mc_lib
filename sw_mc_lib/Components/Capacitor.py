@@ -14,14 +14,14 @@ class Capacitor(Component):
         self,
         component_id: int,
         position: Position,
-        charge: Optional[Input],
-        charge_time: float,
-        discharge_time: float,
+        charge_input: Optional[Input],
+        charge_time_property: float,
+        discharge_time_property: float,
     ):
         super().__init__(ComponentType.Capacitor, component_id, position, 1.0)
-        self.charge: Optional[Input] = charge
-        self.charge_time: float = charge_time
-        self.discharge_time: float = discharge_time
+        self.charge_input: Optional[Input] = charge_input
+        self.charge_time_property: float = charge_time_property
+        self.discharge_time_property: float = discharge_time_property
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> Capacitor:
@@ -31,16 +31,20 @@ class Capacitor(Component):
         ), f"Not an Capacitor {element}"
         obj: XMLParserElement = element.children[0]
         component_id, position, inputs, properties = Capacitor._basic_in_parsing(obj)
-        charge_time: float = float(obj.attributes.get("ct", "1"))
-        discharge_time: float = float(obj.attributes.get("dt", "1"))
+        charge_time_property: float = float(obj.attributes.get("ct", "1"))
+        discharge_time_property: float = float(obj.attributes.get("dt", "1"))
         return Capacitor(
-            component_id, position, inputs.get("1"), charge_time, discharge_time
+            component_id,
+            position,
+            inputs.get("1"),
+            charge_time_property,
+            discharge_time_property,
         )
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
         attributes: dict[str, str] = {
-            "ct": str(self.charge_time),
-            "dt": str(self.discharge_time),
+            "ct": str(self.charge_time_property),
+            "dt": str(self.discharge_time_property),
         }
-        children: list[XMLParserElement] = self._pos_in_to_xml(self.charge)
+        children: list[XMLParserElement] = self._pos_in_to_xml(self.charge_input)
         return attributes, children

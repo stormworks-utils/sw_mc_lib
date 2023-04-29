@@ -15,20 +15,20 @@ class PIDController(Component):
         self,
         component_id: int,
         position: Position,
-        setpoint: Optional[Input],
-        process_variable: Optional[Input],
-        active: Optional[Input],
-        proportional: NumberProperty,
-        integral: NumberProperty,
-        derivative: NumberProperty,
+        setpoint_input: Optional[Input],
+        process_variable_input: Optional[Input],
+        active_input: Optional[Input],
+        proportional_property: NumberProperty,
+        integral_property: NumberProperty,
+        derivative_property: NumberProperty,
     ):
         super().__init__(ComponentType.PIDController, component_id, position, 1.0)
-        self.setpoint: Optional[Input] = setpoint
-        self.process_variable: Optional[Input] = process_variable
-        self.active: Optional[Input] = active
-        self.proportional: NumberProperty = proportional
-        self.integral: NumberProperty = integral
-        self.derivative: NumberProperty = derivative
+        self.setpoint_input: Optional[Input] = setpoint_input
+        self.process_variable_input: Optional[Input] = process_variable_input
+        self.active_input: Optional[Input] = active_input
+        self.proportional_property: NumberProperty = proportional_property
+        self.integral_property: NumberProperty = integral_property
+        self.derivative_property: NumberProperty = derivative_property
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> PIDController:
@@ -40,25 +40,31 @@ class PIDController(Component):
         component_id, position, inputs, properties = PIDController._basic_in_parsing(
             obj
         )
-        proportional: NumberProperty = properties.get("kp", NumberProperty("0", "kp"))
-        integral: NumberProperty = properties.get("ki", NumberProperty("0", "ki"))
-        derivative: NumberProperty = properties.get("kd", NumberProperty("0", "kd"))
+        proportional_property: NumberProperty = properties.get(
+            "kp", NumberProperty("0", "kp")
+        )
+        integral_property: NumberProperty = properties.get(
+            "ki", NumberProperty("0", "ki")
+        )
+        derivative_property: NumberProperty = properties.get(
+            "kd", NumberProperty("0", "kd")
+        )
         return PIDController(
             component_id,
             position,
             inputs.get("1"),
             inputs.get("2"),
             inputs.get("3"),
-            proportional,
-            integral,
-            derivative,
+            proportional_property,
+            integral_property,
+            derivative_property,
         )
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
         children: list[XMLParserElement] = self._pos_in_to_xml(
-            self.setpoint, self.process_variable, self.active
+            self.setpoint_input, self.process_variable_input, self.active_input
         )
-        children.append(self.proportional.to_xml())
-        children.append(self.integral.to_xml())
-        children.append(self.derivative.to_xml())
+        children.append(self.proportional_property.to_xml())
+        children.append(self.integral_property.to_xml())
+        children.append(self.derivative_property.to_xml())
         return {}, children

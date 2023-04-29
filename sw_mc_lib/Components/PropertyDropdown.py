@@ -9,22 +9,22 @@ from sw_mc_lib.NumberProperty import NumberProperty
 
 
 class DropDownOption(XMLElement):
-    def __init__(self, label: str, value: NumberProperty):
+    def __init__(self, label: str, value_property: NumberProperty):
         self.label: str = label
-        self.value: NumberProperty = value
+        self.value_property: NumberProperty = value_property
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> DropDownOption:
         assert element.tag == "i", f"invalid DropDownOption {element}"
         label: str = element.attributes.get("l", "")
-        value: NumberProperty = NumberProperty("0", "v")
+        value_property: NumberProperty = NumberProperty("0", "v")
         for child in element.children:
             assert child.tag == "v", f"invalid value field for DropDownOption {element}"
-            value = NumberProperty.from_xml(child)
-        return DropDownOption(label, value)
+            value_property = NumberProperty.from_xml(child)
+        return DropDownOption(label, value_property)
 
     def to_xml(self) -> XMLParserElement:
-        return XMLParserElement("i", {"l": self.label}, [self.value.to_xml()])
+        return XMLParserElement("i", {"l": self.label}, [self.value_property.to_xml()])
 
 
 class PropertyDropdown(Component):
@@ -32,11 +32,11 @@ class PropertyDropdown(Component):
         self,
         component_id: int,
         position: Position,
-        selected: int,
+        selected_property: int,
         options: list[DropDownOption],
     ):
         super().__init__(ComponentType.PropertyDropdown, component_id, position, 0.5)
-        self.selected: int = selected
+        self.selected: int = selected_property
         self.options: list[DropDownOption] = options
 
     @staticmethod
@@ -49,13 +49,13 @@ class PropertyDropdown(Component):
         component_id, position, inputs, properties = PropertyDropdown._basic_in_parsing(
             obj
         )
-        selected: int = int(obj.attributes.get("i", "0"))
+        selected_property: int = int(obj.attributes.get("i", "0"))
         options: list[DropDownOption] = []
         for child in obj.children:
             if child.tag == "items":
                 for entry in child.children:
                     options.append(DropDownOption.from_xml(entry))
-        return PropertyDropdown(component_id, position, selected, options)
+        return PropertyDropdown(component_id, position, selected_property, options)
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
         attributes: dict[str, str] = {"i": str(self.selected)}

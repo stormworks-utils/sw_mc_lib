@@ -14,17 +14,17 @@ class CompositeReadNumber(Component):
         self,
         component_id: int,
         position: Position,
-        channel: int,
-        composite_signal: Optional[Input],
+        channel_property: int,
+        composite_signal_input: Optional[Input],
     ):
         super().__init__(
             ComponentType.CompositeReadNumber,
             component_id,
             position,
-            0.5 if channel >= 0 else 0.75,
+            0.5 if channel_property >= 0 else 0.75,
         )
-        self.channel: int = channel
-        self.composite_signal: Optional[Input] = composite_signal
+        self.channel_property: int = channel_property
+        self.composite_signal_input: Optional[Input] = composite_signal_input
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> CompositeReadNumber:
@@ -39,10 +39,14 @@ class CompositeReadNumber(Component):
             inputs,
             properties,
         ) = CompositeReadNumber._basic_in_parsing(obj)
-        channel: int = int(obj.attributes.get("i", "0"))
-        return CompositeReadNumber(component_id, position, channel, inputs.get("1"))
+        channel_property: int = int(obj.attributes.get("i", "0"))
+        return CompositeReadNumber(
+            component_id, position, channel_property, inputs.get("1")
+        )
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        attributes: dict[str, str] = {"i": str(self.channel)}
-        children: list[XMLParserElement] = self._pos_in_to_xml(self.composite_signal)
+        attributes: dict[str, str] = {"i": str(self.channel_property)}
+        children: list[XMLParserElement] = self._pos_in_to_xml(
+            self.composite_signal_input
+        )
         return attributes, children

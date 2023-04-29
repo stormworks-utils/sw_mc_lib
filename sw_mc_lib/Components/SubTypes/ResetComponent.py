@@ -16,16 +16,16 @@ class ResetComponent(Component, ABC):
         component_id: int,
         position: Position,
         height: float,
-        reset: NumberProperty,
+        reset_property: NumberProperty,
         **kwargs: NumberProperty,
     ):
         super().__init__(component_type, component_id, position, height, **kwargs)
-        self.reset: NumberProperty = reset
+        self.reset_property: NumberProperty = reset_property
 
     @staticmethod
     def _basic_reset_parsing(properties: dict[str, NumberProperty]) -> NumberProperty:
-        reset: NumberProperty = properties.get("r", NumberProperty("0", "r"))
-        return reset
+        reset_property: NumberProperty = properties.get("r", NumberProperty("0", "r"))
+        return reset_property
 
     def _reset_to_xml(self) -> list[XMLParserElement]:
-        return [self.reset.to_xml()]
+        return [self.reset_property.to_xml()]

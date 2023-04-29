@@ -14,21 +14,21 @@ class PropertySlider(MinMaxComponent, ValueComponent):
         self,
         component_id: int,
         position: Position,
-        min: NumberProperty,
-        max: NumberProperty,
-        value: NumberProperty,
-        rounding: NumberProperty,
+        min_property: NumberProperty,
+        max_property: NumberProperty,
+        value_property: NumberProperty,
+        rounding_property: NumberProperty,
     ):
         super().__init__(
             ComponentType.PropertySlider,
             component_id,
             position,
             0.5,
-            min,
-            max,
-            value=value,
+            min_property,
+            max_property,
+            value_property=value_property,
         )
-        self.rounding: NumberProperty = rounding
+        self.rounding_property: NumberProperty = rounding_property
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> PropertySlider:
@@ -40,18 +40,23 @@ class PropertySlider(MinMaxComponent, ValueComponent):
         component_id, position, inputs, properties = PropertySlider._basic_in_parsing(
             obj
         )
-        min_text, max_text = PropertySlider._basic_min_max_parsing(properties)
-        value_text: NumberProperty = PropertySlider._basic_value_parsing(properties)
-        rounding_text: NumberProperty = properties.get(
+        min_property, max_property = PropertySlider._basic_min_max_parsing(properties)
+        value_property: NumberProperty = PropertySlider._basic_value_parsing(properties)
+        rounding_property: NumberProperty = properties.get(
             "int", NumberProperty("0", "int")
         )
         return PropertySlider(
-            component_id, position, min_text, max_text, value_text, rounding_text
+            component_id,
+            position,
+            min_property,
+            max_property,
+            value_property,
+            rounding_property,
         )
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
         children: list[XMLParserElement] = self._pos_in_to_xml()
         children.extend(self._min_max_to_xml())
         children.extend(self._value_to_xml())
-        children.append(self.rounding.to_xml())
+        children.append(self.rounding_property.to_xml())
         return {}, children

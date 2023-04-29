@@ -14,12 +14,12 @@ class Add(Component):
         self,
         component_id: int,
         position: Position,
-        a: Optional[Input],
-        b: Optional[Input],
+        a_input: Optional[Input],
+        b_input: Optional[Input],
     ):
         super().__init__(ComponentType.Add, component_id, position, 0.75)
-        self.a: Optional[Input] = a
-        self.b: Optional[Input] = b
+        self.a_input: Optional[Input] = a_input
+        self.b_input: Optional[Input] = b_input
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> Add:
@@ -32,4 +32,4 @@ class Add(Component):
         return Add(component_id, position, inputs.get("1"), inputs.get("2"))
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        return {}, self._pos_in_to_xml(self.a, self.b)
+        return {}, self._pos_in_to_xml(self.a_input, self.b_input)

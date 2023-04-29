@@ -14,13 +14,13 @@ class PropertyToggle(Component):
         name: str,
         on_label: str,
         off_label: str,
-        value: bool,
+        value_property: bool,
     ):
         super().__init__(ComponentType.PropertyToggle, component_id, position, 0.5)
         self.name: str = name
         self.on_label: str = on_label
         self.off_label: str = off_label
-        self.value: bool = value
+        self.value_property: bool = value_property
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> PropertyToggle:
@@ -35,15 +35,17 @@ class PropertyToggle(Component):
         name: str = obj.attributes.get("n", "toggle")
         on_label: str = obj.attributes.get("on", "on")
         off_label: str = obj.attributes.get("off", "off")
-        value: bool = obj.attributes.get("v", "false") == "true"
-        return PropertyToggle(component_id, position, name, on_label, off_label, value)
+        value_property: bool = obj.attributes.get("v", "false") == "true"
+        return PropertyToggle(
+            component_id, position, name, on_label, off_label, value_property
+        )
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
         attributes: dict[str, str] = {
             "n": self.name,
             "on": self.on_label,
             "off": self.off_label,
-            "v": str(self.value).lower(),
+            "v": str(self.value_property).lower(),
         }
         children: list[XMLParserElement] = self._pos_in_to_xml()
         return attributes, children

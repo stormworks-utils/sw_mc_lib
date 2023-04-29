@@ -14,14 +14,14 @@ class NumericalSwitchbox(Component):
         self,
         component_id: int,
         position: Position,
-        on_value: Optional[Input],
-        off_value: Optional[Input],
-        switch_signal: Optional[Input],
+        on_value_input: Optional[Input],
+        off_value_input: Optional[Input],
+        switch_signal_input: Optional[Input],
     ):
         super().__init__(ComponentType.NumericalSwitchbox, component_id, position, 1.0)
-        self.on_value: Optional[Input] = on_value
-        self.off_value: Optional[Input] = off_value
-        self.switch_signal: Optional[Input] = switch_signal
+        self.on_value_input: Optional[Input] = on_value_input
+        self.off_value_input: Optional[Input] = off_value_input
+        self.switch_signal_input: Optional[Input] = switch_signal_input
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> NumericalSwitchbox:
@@ -42,5 +42,5 @@ class NumericalSwitchbox(Component):
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
         return {}, self._pos_in_to_xml(
-            self.on_value, self.off_value, self.switch_signal
+            self.on_value_input, self.off_value_input, self.switch_signal_input
         )

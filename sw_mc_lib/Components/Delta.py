@@ -11,10 +11,10 @@ from sw_mc_lib.Input import Input
 
 class Delta(Component):
     def __init__(
-        self, component_id: int, position: Position, input_value: Optional[Input]
+        self, component_id: int, position: Position, value_input: Optional[Input]
     ):
         super().__init__(ComponentType.Delta, component_id, position, 0.5)
-        self.input_value: Optional[Input] = input_value
+        self.value_input: Optional[Input] = value_input
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> Delta:
@@ -27,4 +27,4 @@ class Delta(Component):
         return Delta(component_id, position, inputs.get("1"))
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        return {}, self._pos_in_to_xml(self.input_value)
+        return {}, self._pos_in_to_xml(self.value_input)

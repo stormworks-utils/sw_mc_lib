@@ -14,14 +14,14 @@ class Blinker(Component):
         self,
         component_id: int,
         position: Position,
-        control_signal: Optional[Input],
-        blink_on_duration: float,
-        blink_off_duration: float,
+        control_signal_input: Optional[Input],
+        blink_on_duration_property: float,
+        blink_off_duration_property: float,
     ):
         super().__init__(ComponentType.Blinker, component_id, position, 1.0)
-        self.control_signal: Optional[Input] = control_signal
-        self.blink_on_duration: float = blink_on_duration
-        self.blink_off_duration: float = blink_off_duration
+        self.control_signal_input: Optional[Input] = control_signal_input
+        self.blink_on_duration_property: float = blink_on_duration_property
+        self.blink_off_duration_property: float = blink_off_duration_property
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> Blinker:
@@ -31,20 +31,22 @@ class Blinker(Component):
         ), f"Not an Blinker {element}"
         obj: XMLParserElement = element.children[0]
         component_id, position, inputs, properties = Blinker._basic_in_parsing(obj)
-        blink_on_duration: float = float(obj.attributes.get("on", "1"))
-        blink_off_duration: float = float(obj.attributes.get("off", "1"))
+        blink_on_duration_property: float = float(obj.attributes.get("on", "1"))
+        blink_off_duration_property: float = float(obj.attributes.get("off", "1"))
         return Blinker(
             component_id,
             position,
             inputs.get("1"),
-            blink_on_duration,
-            blink_off_duration,
+            blink_on_duration_property,
+            blink_off_duration_property,
         )
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
         attributes: dict[str, str] = {
-            "on": str(self.blink_on_duration),
-            "off": str(self.blink_off_duration),
+            "on": str(self.blink_on_duration_property),
+            "off": str(self.blink_off_duration_property),
         }
-        children: list[XMLParserElement] = self._pos_in_to_xml(self.control_signal)
+        children: list[XMLParserElement] = self._pos_in_to_xml(
+            self.control_signal_input
+        )
         return attributes, children

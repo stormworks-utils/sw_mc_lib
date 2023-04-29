@@ -14,12 +14,12 @@ class NumericalJunction(Component):
         self,
         component_id: int,
         position: Position,
-        value_to_pass_through: Optional[Input],
-        switch_signal: Optional[Input],
+        value_to_pass_through_input: Optional[Input],
+        switch_signal_input: Optional[Input],
     ):
         super().__init__(ComponentType.NumericalJunction, component_id, position, 0.75)
-        self.value_to_pass_through: Optional[Input] = value_to_pass_through
-        self.switch_signal: Optional[Input] = switch_signal
+        self.value_to_pass_through_input: Optional[Input] = value_to_pass_through_input
+        self.switch_signal_input: Optional[Input] = switch_signal_input
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> NumericalJunction:
@@ -39,4 +39,6 @@ class NumericalJunction(Component):
         )
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        return {}, self._pos_in_to_xml(self.value_to_pass_through, self.switch_signal)
+        return {}, self._pos_in_to_xml(
+            self.value_to_pass_through_input, self.switch_signal_input
+        )

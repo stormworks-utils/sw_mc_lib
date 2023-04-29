@@ -10,9 +10,9 @@ from sw_mc_lib.Input import Input
 
 
 class PushToToggle(Component):
-    def __init__(self, component_id: int, position: Position, a: Optional[Input]):
+    def __init__(self, component_id: int, position: Position, a_input: Optional[Input]):
         super().__init__(ComponentType.PushToToggle, component_id, position, 0.5)
-        self.a: Optional[Input] = a
+        self.a_input: Optional[Input] = a_input
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> PushToToggle:
@@ -25,4 +25,4 @@ class PushToToggle(Component):
         return PushToToggle(component_id, position, inputs.get("1"))
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        return {}, self._pos_in_to_xml(self.a)
+        return {}, self._pos_in_to_xml(self.a_input)

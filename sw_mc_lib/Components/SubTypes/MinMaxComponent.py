@@ -16,21 +16,21 @@ class MinMaxComponent(Component, ABC):
         component_id: int,
         position: Position,
         height: float,
-        min: NumberProperty,
-        max: NumberProperty,
+        min_property: NumberProperty,
+        max_property: NumberProperty,
         **kwargs: NumberProperty,
     ):
         super().__init__(component_type, component_id, position, height, **kwargs)
-        self.min: NumberProperty = min
-        self.max: NumberProperty = max
+        self.min_property: NumberProperty = min_property
+        self.max_property: NumberProperty = max_property
 
     @staticmethod
     def _basic_min_max_parsing(
         properties: dict[str, NumberProperty]
     ) -> tuple[NumberProperty, NumberProperty]:
-        min: NumberProperty = properties.get("min", NumberProperty("0", "min"))
-        max: NumberProperty = properties.get("max", NumberProperty("0", "max"))
-        return min, max
+        min_property: NumberProperty = properties.get("min", NumberProperty("0", "min"))
+        max_property: NumberProperty = properties.get("max", NumberProperty("0", "max"))
+        return min_property, max_property
 
     def _min_max_to_xml(self) -> list[XMLParserElement]:
-        return [self.min.to_xml(), self.max.to_xml()]
+        return [self.min_property.to_xml(), self.max_property.to_xml()]

@@ -17,27 +17,27 @@ class UpDownCounter(MinMaxComponent, ResetComponent):
         self,
         component_id: int,
         position: Position,
-        up: Optional[Input],
-        down: Optional[Input],
+        up_input: Optional[Input],
+        down_input: Optional[Input],
         reset_input: Optional[Input],
-        min: NumberProperty,
-        max: NumberProperty,
-        reset: NumberProperty,
-        increment: NumberProperty,
+        min_property: NumberProperty,
+        max_property: NumberProperty,
+        reset_property: NumberProperty,
+        increment_property: NumberProperty,
     ):
         super().__init__(
             ComponentType.UpDownCounter,
             component_id,
             position,
             1.0,
-            min,
-            max,
-            reset=reset,
+            min_property,
+            max_property,
+            reset_property=reset_property,
         )
-        self.up: Optional[Input] = up
-        self.down: Optional[Input] = down
+        self.up_input: Optional[Input] = up_input
+        self.down_input: Optional[Input] = down_input
         self.reset_input: Optional[Input] = reset_input
-        self.increment: NumberProperty = increment
+        self.increment_property: NumberProperty = increment_property
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> UpDownCounter:
@@ -49,26 +49,28 @@ class UpDownCounter(MinMaxComponent, ResetComponent):
         component_id, position, inputs, properties = UpDownCounter._basic_in_parsing(
             obj
         )
-        min, max = UpDownCounter._basic_min_max_parsing(properties)
-        reset = UpDownCounter._basic_reset_parsing(properties)
-        increment: NumberProperty = properties.get("i", NumberProperty("0", "i"))
+        min_property, max_property = UpDownCounter._basic_min_max_parsing(properties)
+        reset_property = UpDownCounter._basic_reset_parsing(properties)
+        increment_property: NumberProperty = properties.get(
+            "i", NumberProperty("0", "i")
+        )
         return UpDownCounter(
             component_id,
             position,
             inputs.get("1"),
             inputs.get("2"),
             inputs.get("3"),
-            min,
-            max,
-            reset,
-            increment,
+            min_property,
+            max_property,
+            reset_property,
+            increment_property,
         )
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
         children: list[XMLParserElement] = self._pos_in_to_xml(
-            self.up, self.down, self.reset_input
+            self.up_input, self.down_input, self.reset_input
         )
         children.extend(self._min_max_to_xml())
         children.extend(self._reset_to_xml())
-        children.append(self.increment.to_xml())
+        children.append(self.increment_property.to_xml())
         return {}, children

@@ -15,27 +15,27 @@ class ArithmeticFunction8In(Component):
         component_id: int,
         position: Position,
         function: str,
-        x: Optional[Input],
-        y: Optional[Input],
-        z: Optional[Input],
-        w: Optional[Input],
-        a: Optional[Input],
-        b: Optional[Input],
-        c: Optional[Input],
-        d: Optional[Input],
+        x_input: Optional[Input],
+        y_input: Optional[Input],
+        z_input: Optional[Input],
+        w_input: Optional[Input],
+        a_input: Optional[Input],
+        b_input: Optional[Input],
+        c_input: Optional[Input],
+        d_input: Optional[Input],
     ):
         super().__init__(
             ComponentType.ArithmeticFunction8In, component_id, position, 2.25
         )
         self.function: str = function
-        self.x: Optional[Input] = x
-        self.y: Optional[Input] = y
-        self.z: Optional[Input] = z
-        self.w: Optional[Input] = w
-        self.a: Optional[Input] = a
-        self.b: Optional[Input] = b
-        self.c: Optional[Input] = c
-        self.d: Optional[Input] = d
+        self.x_input: Optional[Input] = x_input
+        self.y_input: Optional[Input] = y_input
+        self.z_input: Optional[Input] = z_input
+        self.w_input: Optional[Input] = w_input
+        self.a_input: Optional[Input] = a_input
+        self.b_input: Optional[Input] = b_input
+        self.c_input: Optional[Input] = c_input
+        self.d_input: Optional[Input] = d_input
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> ArithmeticFunction8In:
@@ -68,6 +68,13 @@ class ArithmeticFunction8In(Component):
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
         attributes: dict[str, str] = {"e": self.function}
         children: list[XMLParserElement] = self._pos_in_to_xml(
-            self.x, self.y, self.z, self.w, self.a, self.b, self.c, self.d
+            self.x_input,
+            self.y_input,
+            self.z_input,
+            self.w_input,
+            self.a_input,
+            self.b_input,
+            self.c_input,
+            self.d_input,
         )
         return attributes, children

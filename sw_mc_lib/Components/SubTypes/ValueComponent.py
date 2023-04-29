@@ -16,16 +16,16 @@ class ValueComponent(Component, ABC):
         component_id: int,
         position: Position,
         height: float,
-        value: NumberProperty,
+        value_property: NumberProperty,
         **kwargs: NumberProperty,
     ):
         super().__init__(component_type, component_id, position, height, **kwargs)
-        self.value: NumberProperty = value
+        self.value_property: NumberProperty = value_property
 
     @staticmethod
     def _basic_value_parsing(properties: dict[str, NumberProperty]) -> NumberProperty:
-        value: NumberProperty = properties.get("v", NumberProperty("0", "v"))
-        return value
+        value_property: NumberProperty = properties.get("v", NumberProperty("0", "v"))
+        return value_property
 
     def _value_to_xml(self) -> list[XMLParserElement]:
-        return [self.value.to_xml()]
+        return [self.value_property.to_xml()]

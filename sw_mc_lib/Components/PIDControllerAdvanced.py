@@ -14,22 +14,22 @@ class PIDControllerAdvanced(Component):
         self,
         component_id: int,
         position: Position,
-        setpoint: Optional[Input],
-        process_variable: Optional[Input],
-        proportional: Optional[Input],
-        integral: Optional[Input],
-        derivative: Optional[Input],
-        active: Optional[Input],
+        setpoint_input: Optional[Input],
+        process_variable_input: Optional[Input],
+        proportional_input: Optional[Input],
+        integral_input: Optional[Input],
+        derivative_input: Optional[Input],
+        active_input: Optional[Input],
     ):
         super().__init__(
             ComponentType.PIDControllerAdvanced, component_id, position, 2.25
         )
-        self.setpoint: Optional[Input] = setpoint
-        self.process_variable: Optional[Input] = process_variable
-        self.proportional: Optional[Input] = proportional
-        self.integral: Optional[Input] = integral
-        self.derivative: Optional[Input] = derivative
-        self.active: Optional[Input] = active
+        self.setpoint_input: Optional[Input] = setpoint_input
+        self.process_variable_input: Optional[Input] = process_variable_input
+        self.proportional_input: Optional[Input] = proportional_input
+        self.integral_input: Optional[Input] = integral_input
+        self.derivative_input: Optional[Input] = derivative_input
+        self.active_input: Optional[Input] = active_input
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> PIDControllerAdvanced:
@@ -57,10 +57,10 @@ class PIDControllerAdvanced(Component):
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
         return {}, self._pos_in_to_xml(
-            self.setpoint,
-            self.process_variable,
-            self.proportional,
-            self.integral,
-            self.derivative,
-            self.active,
+            self.setpoint_input,
+            self.process_variable_input,
+            self.proportional_input,
+            self.integral_input,
+            self.derivative_input,
+            self.active_input,
         )

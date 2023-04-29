@@ -10,10 +10,14 @@ from .SubTypes.ValueComponent import ValueComponent
 
 class PropertyNumber(ValueComponent):
     def __init__(
-        self, component_id: int, position: Position, name: str, value: NumberProperty
+        self,
+        component_id: int,
+        position: Position,
+        name: str,
+        value_property: NumberProperty,
     ):
         super().__init__(
-            ComponentType.PropertyNumber, component_id, position, 0.5, value
+            ComponentType.PropertyNumber, component_id, position, 0.5, value_property
         )
         self.name: str = name
 
@@ -28,8 +32,8 @@ class PropertyNumber(ValueComponent):
             obj
         )
         name: str = obj.attributes.get("n", "number")
-        value: NumberProperty = PropertyNumber._basic_value_parsing(properties)
-        return PropertyNumber(component_id, position, name, value)
+        value_property: NumberProperty = PropertyNumber._basic_value_parsing(properties)
+        return PropertyNumber(component_id, position, name, value_property)
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
         children: list[XMLParserElement] = self._pos_in_to_xml()

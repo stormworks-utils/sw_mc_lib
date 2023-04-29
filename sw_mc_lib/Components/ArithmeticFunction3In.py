@@ -15,17 +15,17 @@ class ArithmeticFunction3In(Component):
         component_id: int,
         position: Position,
         function: str,
-        x: Optional[Input],
-        y: Optional[Input],
-        z: Optional[Input],
+        x_input: Optional[Input],
+        y_input: Optional[Input],
+        z_input: Optional[Input],
     ):
         super().__init__(
             ComponentType.ArithmeticFunction3In, component_id, position, 1.0
         )
         self.function: str = function
-        self.x: Optional[Input] = x
-        self.y: Optional[Input] = y
-        self.z: Optional[Input] = z
+        self.x_input: Optional[Input] = x_input
+        self.y_input: Optional[Input] = y_input
+        self.z_input: Optional[Input] = z_input
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> ArithmeticFunction3In:
@@ -52,5 +52,7 @@ class ArithmeticFunction3In(Component):
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
         attributes: dict[str, str] = {"e": self.function}
-        children: list[XMLParserElement] = self._pos_in_to_xml(self.x, self.y, self.z)
+        children: list[XMLParserElement] = self._pos_in_to_xml(
+            self.x_input, self.y_input, self.z_input
+        )
         return attributes, children
