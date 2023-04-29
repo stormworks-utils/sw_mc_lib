@@ -1,5 +1,5 @@
 import unittest
-from sw_mc_lib.Components.Abs import Abs
+from sw_mc_lib.Components.Abs import Abs, Input
 from sw_mc_lib.XMLParser import XMLParser, XMLParserElement
 from sw_mc_lib.Position import Position
 
@@ -20,7 +20,7 @@ class TestAbs(unittest.TestCase):
             '<c type="14"><object id="123"><pos x="13" y="32.75"/><in1 component_id="1"/></object></c>'
         ).parse()
         abs_elem = Abs.from_xml(elem)
-        self.assertEqual(abs_elem, Abs(123, Position(13.0, 32.75), 1))
+        self.assertEqual(abs_elem, Abs(123, Position(13.0, 32.75), Input("1", 1, 0)))
         self.assertNotEqual(abs_elem, elem)
 
     def test_wrong_id(self) -> None:
