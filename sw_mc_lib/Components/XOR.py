@@ -28,7 +28,7 @@ class XOR(Component):
             ComponentType.XOR.value
         ), f"Not an XOR {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs = XOR._basic_in_parsing(obj)
+        component_id, position, inputs, properties = XOR._basic_in_parsing(obj)
         return XOR(component_id, position, inputs.get("1"), inputs.get("2"))
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:

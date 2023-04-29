@@ -21,7 +21,7 @@ class PushToToggle(Component):
             ComponentType.PushToToggle.value
         ), f"Not an PushToToggle {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs = PushToToggle._basic_in_parsing(obj)
+        component_id, position, inputs, properties = PushToToggle._basic_in_parsing(obj)
         return PushToToggle(component_id, position, inputs.get("1"))
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:

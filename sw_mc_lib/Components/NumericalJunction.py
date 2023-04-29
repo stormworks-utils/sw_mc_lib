@@ -28,7 +28,12 @@ class NumericalJunction(Component):
             ComponentType.NumericalJunction.value
         ), f"Not an NumericalJunction {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs = NumericalJunction._basic_in_parsing(obj)
+        (
+            component_id,
+            position,
+            inputs,
+            properties,
+        ) = NumericalJunction._basic_in_parsing(obj)
         return NumericalJunction(
             component_id, position, inputs.get("1"), inputs.get("2")
         )

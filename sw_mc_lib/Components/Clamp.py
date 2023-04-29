@@ -7,6 +7,7 @@ from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
 from sw_mc_lib.Input import Input
+from sw_mc_lib.NumberProperty import NumberProperty
 from .SubTypes.MinMaxComponent import MinMaxComponent
 
 
@@ -15,13 +16,11 @@ class Clamp(MinMaxComponent):
         self,
         component_id: int,
         position: Position,
-        min_text: str,
-        max_text: str,
+        min: NumberProperty,
+        max: NumberProperty,
         input_number: Optional[Input],
     ):
-        super().__init__(
-            ComponentType.Clamp, component_id, position, 0.5, min_text, max_text
-        )
+        super().__init__(ComponentType.Clamp, component_id, position, 0.5, min, max)
         self.input_number: Optional[Input] = input_number
 
     @staticmethod
@@ -31,8 +30,8 @@ class Clamp(MinMaxComponent):
             ComponentType.Clamp.value
         ), f"Not an Clamp {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs = Clamp._basic_in_parsing(obj)
-        min_text, max_text = Clamp._basic_min_max_parsing(obj)
+        component_id, position, inputs, properties = Clamp._basic_in_parsing(obj)
+        min_text, max_text = Clamp._basic_min_max_parsing(properties)
         return Clamp(component_id, position, min_text, max_text, inputs.get("1"))
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:

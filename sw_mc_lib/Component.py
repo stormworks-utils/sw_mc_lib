@@ -9,6 +9,7 @@ from .Types import ComponentType
 from .Position import Position
 from .XMLElement import XMLElement
 from .Input import Input
+from .NumberProperty import NumberProperty
 
 INNER_TO_XML_RESULT = tuple[dict[str, str], list[XMLParserElement]]
 
@@ -31,27 +32,22 @@ class Component(XMLElement, ABC):
     @staticmethod
     def _basic_in_parsing(
         element: XMLParserElement,
-    ) -> tuple[int, Position, dict[str, Input]]:
+    ) -> tuple[int, Position, dict[str, Input], dict[str, NumberProperty]]:
         component_id: int = int(element.attributes.get("id", "0"))
         position: Optional[Position] = None
         inputs: dict[str, Input] = {}
+        properties: dict[str, NumberProperty] = {}
         for child in element.children:
             if child.tag == "pos":
                 position = Position.from_xml(child)
             elif child.tag.startswith("in"):
                 input: Input = Input.from_xml(child)
                 inputs[input.index] = input
+            else:
+                properties[child.tag] = NumberProperty.from_xml(child)
         if not position:
             position = Position.empty_pos()
-        return component_id, position, inputs
-
-    @staticmethod
-    def _basic_number_field_parsing(element: XMLParserElement, name: str) -> str:
-        result: str = "0"
-        for child in element.children:
-            if child.tag == name:
-                result = child.attributes.get("text", "0")
-        return result or "0"
+        return component_id, position, inputs, properties
 
     @abstractmethod
     def _inner_to_xml(self) -> tuple[dict[str, str], list[XMLParserElement]]:
@@ -68,12 +64,14 @@ class Component(XMLElement, ABC):
         self,
         *inputs: Optional[Input],
         named_inputs: Optional[dict[str, Optional[Input]]] = None,
+        properties: Optional[dict[str, NumberProperty]] = None,
     ) -> list[XMLParserElement]:
         """
         Turn the position and inputs into an element. Will strip all None inputs. Will also rename all numbered inputs
         to their according supplied index, and all named inputs to the supplied name.
         """
         named_inputs = named_inputs or {}
+        properties = properties or {}
         children: list[XMLParserElement] = [self.position.to_xml()]
         for i, input in chain(enumerate(inputs), named_inputs.items()):
             if input is not None:
@@ -83,4 +81,7 @@ class Component(XMLElement, ABC):
                     assert isinstance(i, str)
                     input.index = i
                 children.append(input.to_xml())
+        for name, property in properties.items():
+            property.name = name
+            children.append(property.to_xml())
         return children

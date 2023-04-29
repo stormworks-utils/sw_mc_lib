@@ -29,7 +29,9 @@ class PropertyToggle(Component):
             ComponentType.PropertyToggle.value
         ), f"Not an PropertyToggle {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs = PropertyToggle._basic_in_parsing(obj)
+        component_id, position, inputs, properties = PropertyToggle._basic_in_parsing(
+            obj
+        )
         name: str = obj.attributes.get("n", "toggle")
         on_label: str = obj.attributes.get("on", "on")
         off_label: str = obj.attributes.get("off", "off")

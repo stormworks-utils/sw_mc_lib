@@ -7,7 +7,7 @@ from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
 from sw_mc_lib.Input import Input
-from sw_mc_lib.util import string_to_sw_float
+from sw_mc_lib.NumberProperty import NumberProperty
 
 
 class PIDController(Component):
@@ -18,17 +18,17 @@ class PIDController(Component):
         setpoint: Optional[Input],
         process_variable: Optional[Input],
         active: Optional[Input],
-        proportional_text: str,
-        integral_text: str,
-        derivative_text: str,
+        proportional: NumberProperty,
+        integral: NumberProperty,
+        derivative: NumberProperty,
     ):
         super().__init__(ComponentType.PIDController, component_id, position, 1.0)
         self.setpoint: Optional[Input] = setpoint
         self.process_variable: Optional[Input] = process_variable
         self.active: Optional[Input] = active
-        self.proportional_text: str = proportional_text
-        self.integral_text: str = integral_text
-        self.derivative_text: str = derivative_text
+        self.proportional: NumberProperty = proportional
+        self.integral: NumberProperty = integral
+        self.derivative: NumberProperty = derivative
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> PIDController:
@@ -37,50 +37,28 @@ class PIDController(Component):
             ComponentType.PIDController.value
         ), f"Not an PIDController {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs = PIDController._basic_in_parsing(obj)
-        proportional_text: str = PIDController._basic_number_field_parsing(obj, "kp")
-        integral_text: str = PIDController._basic_number_field_parsing(obj, "ki")
-        derivative_text: str = PIDController._basic_number_field_parsing(obj, "kd")
+        component_id, position, inputs, properties = PIDController._basic_in_parsing(
+            obj
+        )
+        proportional: NumberProperty = properties.get("kp", NumberProperty("0", "kp"))
+        integral: NumberProperty = properties.get("ki", NumberProperty("0", "ki"))
+        derivative: NumberProperty = properties.get("kd", NumberProperty("0", "kd"))
         return PIDController(
             component_id,
             position,
             inputs.get("1"),
             inputs.get("2"),
             inputs.get("3"),
-            proportional_text,
-            integral_text,
-            derivative_text,
+            proportional,
+            integral,
+            derivative,
         )
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
         children: list[XMLParserElement] = self._pos_in_to_xml(
             self.setpoint, self.process_variable, self.active
         )
-        children.append(self._to_xml_number_field("kp", self.proportional_text))
-        children.append(self._to_xml_number_field("ki", self.integral_text))
-        children.append(self._to_xml_number_field("kd", self.derivative_text))
+        children.append(self.proportional.to_xml())
+        children.append(self.integral.to_xml())
+        children.append(self.derivative.to_xml())
         return {}, children
-
-    @property
-    def proportional(self) -> float:
-        return string_to_sw_float(self.proportional_text)
-
-    @proportional.setter
-    def proportional(self, value: float) -> None:
-        self.proportional_text = str(value)
-
-    @property
-    def integral(self) -> float:
-        return string_to_sw_float(self.integral_text)
-
-    @integral.setter
-    def integral(self, value: float) -> None:
-        self.integral_text = str(value)
-
-    @property
-    def derivative(self) -> float:
-        return string_to_sw_float(self.derivative_text)
-
-    @derivative.setter
-    def derivative(self, value: float) -> None:
-        self.derivative_text = str(value)

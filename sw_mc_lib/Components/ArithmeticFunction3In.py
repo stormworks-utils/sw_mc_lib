@@ -34,7 +34,12 @@ class ArithmeticFunction3In(Component):
             ComponentType.ArithmeticFunction3In.value
         ), f"Not an ArithmeticFunction3In {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs = ArithmeticFunction3In._basic_in_parsing(obj)
+        (
+            component_id,
+            position,
+            inputs,
+            properties,
+        ) = ArithmeticFunction3In._basic_in_parsing(obj)
         function: str = obj.attributes.get("e", "")
         return ArithmeticFunction3In(
             component_id,

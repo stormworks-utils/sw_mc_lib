@@ -30,7 +30,12 @@ class NumericalSwitchbox(Component):
             ComponentType.NumericalSwitchbox.value
         ), f"Not an NumericalSwitchbox {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs = NumericalSwitchbox._basic_in_parsing(obj)
+        (
+            component_id,
+            position,
+            inputs,
+            properties,
+        ) = NumericalSwitchbox._basic_in_parsing(obj)
         return NumericalSwitchbox(
             component_id, position, inputs.get("1"), inputs.get("2"), inputs.get("3")
         )

@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from typing import Generator, Any
 
 from .XMLParser import XMLParserElement
-from .util import generic_str, string_to_sw_float
+from .util import generic_str
 
 
 class XMLElement(ABC):
@@ -15,12 +15,6 @@ class XMLElement(ABC):
     @abstractmethod
     def from_xml(element: XMLParserElement) -> XMLElement:
         ...
-
-    @staticmethod
-    def _to_xml_number_field(name: str, value: str) -> XMLParserElement:
-        return XMLParserElement(
-            name, {"text": value, "value": str(string_to_sw_float(value))}
-        )
 
     def __repr__(self) -> str:
         return generic_str(self)

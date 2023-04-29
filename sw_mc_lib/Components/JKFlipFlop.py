@@ -28,7 +28,7 @@ class JKFlipFlop(Component):
             ComponentType.JKFlipFlop.value
         ), f"Not an JKFlipFlop {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs = JKFlipFlop._basic_in_parsing(obj)
+        component_id, position, inputs, properties = JKFlipFlop._basic_in_parsing(obj)
         return JKFlipFlop(component_id, position, inputs.get("1"), inputs.get("2"))
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:

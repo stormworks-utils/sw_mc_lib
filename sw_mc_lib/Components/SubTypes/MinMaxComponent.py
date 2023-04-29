@@ -6,7 +6,7 @@ from sw_mc_lib.Component import Component
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
-from sw_mc_lib.util import string_to_sw_float
+from sw_mc_lib.NumberProperty import NumberProperty
 
 
 class MinMaxComponent(Component, ABC):
@@ -16,38 +16,21 @@ class MinMaxComponent(Component, ABC):
         component_id: int,
         position: Position,
         height: float,
-        min_text: str,
-        max_text: str,
-        **kwargs: str,
+        min: NumberProperty,
+        max: NumberProperty,
+        **kwargs: NumberProperty,
     ):
         super().__init__(component_type, component_id, position, height, **kwargs)
-        self.min_text: str = min_text
-        self.max_text: str = max_text
+        self.min: NumberProperty = min
+        self.max: NumberProperty = max
 
     @staticmethod
-    def _basic_min_max_parsing(element: XMLParserElement) -> tuple[str, str]:
-        min_text: str = MinMaxComponent._basic_number_field_parsing(element, "min")
-        max_text: str = MinMaxComponent._basic_number_field_parsing(element, "max")
-        return min_text, max_text
+    def _basic_min_max_parsing(
+        properties: dict[str, NumberProperty]
+    ) -> tuple[NumberProperty, NumberProperty]:
+        min: NumberProperty = properties.get("min", NumberProperty("0", "min"))
+        max: NumberProperty = properties.get("max", NumberProperty("0", "max"))
+        return min, max
 
     def _min_max_to_xml(self) -> list[XMLParserElement]:
-        return [
-            self._to_xml_number_field("min", self.min_text),
-            self._to_xml_number_field("max", self.max_text),
-        ]
-
-    @property
-    def min(self) -> float:
-        return string_to_sw_float(self.min_text)
-
-    @min.setter
-    def min(self, value: float) -> None:
-        self.min_text = str(value)
-
-    @property
-    def max(self) -> float:
-        return string_to_sw_float(self.max_text)
-
-    @max.setter
-    def max(self, value: float) -> None:
-        self.max_text = str(value)
+        return [self.min.to_xml(), self.max.to_xml()]

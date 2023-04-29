@@ -44,7 +44,12 @@ class ArithmeticFunction8In(Component):
             ComponentType.ArithmeticFunction8In.value
         ), f"Not an ArithmeticFunction8In {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs = ArithmeticFunction8In._basic_in_parsing(obj)
+        (
+            component_id,
+            position,
+            inputs,
+            properties,
+        ) = ArithmeticFunction8In._basic_in_parsing(obj)
         function: str = obj.attributes.get("e", "")
         return ArithmeticFunction8In(
             component_id,

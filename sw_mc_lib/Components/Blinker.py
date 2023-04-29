@@ -30,7 +30,7 @@ class Blinker(Component):
             ComponentType.Blinker.value
         ), f"Not an Blinker {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs = Blinker._basic_in_parsing(obj)
+        component_id, position, inputs, properties = Blinker._basic_in_parsing(obj)
         blink_on_duration: float = float(obj.attributes.get("on", "1"))
         blink_off_duration: float = float(obj.attributes.get("off", "1"))
         return Blinker(

@@ -28,7 +28,7 @@ class SRLatch(Component):
             ComponentType.SRLatch.value
         ), f"Not an SRLatch {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs = SRLatch._basic_in_parsing(obj)
+        component_id, position, inputs, properties = SRLatch._basic_in_parsing(obj)
         return SRLatch(component_id, position, inputs.get("1"), inputs.get("2"))
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:

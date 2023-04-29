@@ -33,7 +33,12 @@ class CompositeReadNumber(Component):
             ComponentType.CompositeReadNumber.value
         ), f"Not an CompositeReadNumber {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs = CompositeReadNumber._basic_in_parsing(obj)
+        (
+            component_id,
+            position,
+            inputs,
+            properties,
+        ) = CompositeReadNumber._basic_in_parsing(obj)
         channel: int = int(obj.attributes.get("i", "0"))
         return CompositeReadNumber(component_id, position, channel, inputs.get("1"))
 

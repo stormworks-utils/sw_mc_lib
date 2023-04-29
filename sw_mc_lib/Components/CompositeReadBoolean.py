@@ -33,7 +33,12 @@ class CompositeReadBoolean(Component):
             ComponentType.CompositeReadBoolean.value
         ), f"Not an CompositeReadBoolean {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs = CompositeReadBoolean._basic_in_parsing(obj)
+        (
+            component_id,
+            position,
+            inputs,
+            properties,
+        ) = CompositeReadBoolean._basic_in_parsing(obj)
         channel: int = int(obj.attributes.get("i", "0"))
         return CompositeReadBoolean(component_id, position, channel, inputs.get("1"))
 

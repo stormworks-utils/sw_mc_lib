@@ -1,12 +1,5 @@
-import math
 from inspect import signature, Signature
 from typing import List, Optional, Any
-
-import numpy as np
-
-
-def string_to_sw_float(to_convert: str) -> float:
-    return math.floor(np.float32(to_convert) * 10_000_000) / 10_000_000
 
 
 def generic_str(

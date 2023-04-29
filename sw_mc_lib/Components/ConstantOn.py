@@ -17,7 +17,7 @@ class ConstantOn(Component):
             ComponentType.ConstantOn.value
         ), f"Not an ConstantOn {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs = ConstantOn._basic_in_parsing(obj)
+        component_id, position, inputs, properties = ConstantOn._basic_in_parsing(obj)
         return ConstantOn(component_id, position)
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:

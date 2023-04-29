@@ -38,7 +38,12 @@ class PIDControllerAdvanced(Component):
             ComponentType.PIDControllerAdvanced.value
         ), f"Not an PIDControllerAdvanced {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs = PIDControllerAdvanced._basic_in_parsing(obj)
+        (
+            component_id,
+            position,
+            inputs,
+            properties,
+        ) = PIDControllerAdvanced._basic_in_parsing(obj)
         return PIDControllerAdvanced(
             component_id,
             position,

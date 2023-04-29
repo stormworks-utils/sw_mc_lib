@@ -6,7 +6,7 @@ from sw_mc_lib.Component import Component
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
-from sw_mc_lib.util import string_to_sw_float
+from sw_mc_lib.NumberProperty import NumberProperty
 
 
 class ResetComponent(Component, ABC):
@@ -16,24 +16,16 @@ class ResetComponent(Component, ABC):
         component_id: int,
         position: Position,
         height: float,
-        reset_text: str,
-        **kwargs: str,
+        reset: NumberProperty,
+        **kwargs: NumberProperty,
     ):
         super().__init__(component_type, component_id, position, height, **kwargs)
-        self.reset_text: str = reset_text
+        self.reset: NumberProperty = reset
 
     @staticmethod
-    def _basic_reset_parsing(element: XMLParserElement) -> str:
-        reset_text: str = ResetComponent._basic_number_field_parsing(element, "r")
-        return reset_text
+    def _basic_reset_parsing(properties: dict[str, NumberProperty]) -> NumberProperty:
+        reset: NumberProperty = properties.get("r", NumberProperty("0", "r"))
+        return reset
 
     def _reset_to_xml(self) -> list[XMLParserElement]:
-        return [self._to_xml_number_field("r", self.reset_text)]
-
-    @property
-    def reset(self) -> float:
-        return string_to_sw_float(self.reset_text)
-
-    @reset.setter
-    def reset(self, value: float) -> None:
-        self.reset_text = str(value)
+        return [self.reset.to_xml()]

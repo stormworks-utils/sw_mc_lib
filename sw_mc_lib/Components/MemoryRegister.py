@@ -7,6 +7,7 @@ from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
 from sw_mc_lib.Input import Input
+from sw_mc_lib.NumberProperty import NumberProperty
 from .SubTypes.ResetComponent import ResetComponent
 
 
@@ -15,13 +16,13 @@ class MemoryRegister(ResetComponent):
         self,
         component_id: int,
         position: Position,
-        reset_text: str,
+        reset: NumberProperty,
         set_input: Optional[Input],
         reset_input: Optional[Input],
         number_to_store: Optional[Input],
     ):
         super().__init__(
-            ComponentType.MemoryRegister, component_id, position, 1.0, reset_text
+            ComponentType.MemoryRegister, component_id, position, 1.0, reset
         )
         self.set_input: Optional[Input] = set_input
         self.reset_input: Optional[Input] = reset_input
@@ -34,12 +35,14 @@ class MemoryRegister(ResetComponent):
             ComponentType.MemoryRegister.value
         ), f"Not an MemoryRegister {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs = MemoryRegister._basic_in_parsing(obj)
-        reset_text = MemoryRegister._basic_reset_parsing(obj)
+        component_id, position, inputs, properties = MemoryRegister._basic_in_parsing(
+            obj
+        )
+        reset = MemoryRegister._basic_reset_parsing(properties)
         return MemoryRegister(
             component_id,
             position,
-            reset_text,
+            reset,
             inputs.get("1"),
             inputs.get("2"),
             inputs.get("3"),
