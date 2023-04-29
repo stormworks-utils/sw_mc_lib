@@ -46,7 +46,5 @@ class Blinker(Component):
             "on": str(self.blink_on_duration),
             "off": str(self.blink_off_duration),
         }
-        children: list[XMLParserElement] = self._pos_in_to_xml(
-            {"1": self.control_signal}
-        )
+        children: list[XMLParserElement] = self._pos_in_to_xml(self.control_signal)
         return attributes, children

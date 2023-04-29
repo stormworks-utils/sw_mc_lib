@@ -32,4 +32,4 @@ class SRLatch(Component):
         return SRLatch(component_id, position, inputs.get("1"), inputs.get("2"))
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        return {}, self._pos_in_to_xml({"1": self.set_input, "2": self.reset_input})
+        return {}, self._pos_in_to_xml(self.set_input, self.reset_input)

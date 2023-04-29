@@ -32,4 +32,4 @@ class OR(Component):
         return OR(component_id, position, inputs.get("1"), inputs.get("2"))
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        return {}, self._pos_in_to_xml({"1": self.a, "2": self.b})
+        return {}, self._pos_in_to_xml(self.a, self.b)

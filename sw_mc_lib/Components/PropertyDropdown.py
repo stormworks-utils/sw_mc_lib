@@ -67,7 +67,7 @@ class PropertyDropdown(Component):
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
         attributes: dict[str, str] = {"i": str(self.selected)}
-        children: list[XMLParserElement] = self._pos_in_to_xml({})
+        children: list[XMLParserElement] = self._pos_in_to_xml()
         items: XMLParserElement = XMLParserElement("items")
         for option in self.options:
             items.children.append(option.to_xml())

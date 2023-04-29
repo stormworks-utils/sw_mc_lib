@@ -42,5 +42,5 @@ class Capacitor(Component):
             "ct": str(self.charge_time),
             "dt": str(self.discharge_time),
         }
-        children: list[XMLParserElement] = self._pos_in_to_xml({"1": self.charge})
+        children: list[XMLParserElement] = self._pos_in_to_xml(self.charge)
         return attributes, children

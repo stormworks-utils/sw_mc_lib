@@ -64,7 +64,7 @@ class UpDownCounter(MinMaxComponent, ResetComponent):
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
         children: list[XMLParserElement] = self._pos_in_to_xml(
-            {"1": self.up, "2": self.down, "3": self.reset_input}
+            self.up, self.down, self.reset_input
         )
         children.extend(self._min_max_to_xml())
         children.extend(self._reset_to_xml())

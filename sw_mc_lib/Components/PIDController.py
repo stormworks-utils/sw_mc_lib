@@ -54,7 +54,7 @@ class PIDController(Component):
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
         children: list[XMLParserElement] = self._pos_in_to_xml(
-            {"1": self.setpoint, "2": self.process_variable, "3": self.active}
+            self.setpoint, self.process_variable, self.active
         )
         children.append(self._to_xml_number_field("kp", self.proportional_text))
         children.append(self._to_xml_number_field("ki", self.integral_text))

@@ -21,4 +21,4 @@ class ConstantOn(Component):
         return ConstantOn(component_id, position)
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        return {}, self._pos_in_to_xml({})
+        return {}, self._pos_in_to_xml()

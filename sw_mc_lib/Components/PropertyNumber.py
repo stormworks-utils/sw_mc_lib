@@ -29,6 +29,6 @@ class PropertyNumber(ValueComponent):
         return PropertyNumber(component_id, position, name, value_text)
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        children: list[XMLParserElement] = self._pos_in_to_xml({})
+        children: list[XMLParserElement] = self._pos_in_to_xml()
         children.extend(self._value_to_xml())
         return {}, children

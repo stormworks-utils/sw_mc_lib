@@ -20,7 +20,7 @@ class TestAbs(unittest.TestCase):
             '<c type="14"><object id="123"><pos x="13" y="32.75"/><in1 component_id="1"/></object></c>'
         ).parse()
         abs_elem = Abs.from_xml(elem)
-        self.assertEqual(abs_elem, Abs(123, Position(13.0, 32.75), Input("1", 1, 0)))
+        self.assertEqual(abs_elem, Abs(123, Position(13.0, 32.75), Input(1, 0, "1")))
         self.assertNotEqual(abs_elem, elem)
 
     def test_wrong_id(self) -> None:

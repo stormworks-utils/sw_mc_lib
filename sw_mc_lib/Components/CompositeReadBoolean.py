@@ -39,7 +39,5 @@ class CompositeReadBoolean(Component):
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
         attributes: dict[str, str] = {"i": str(self.channel)}
-        children: list[XMLParserElement] = self._pos_in_to_xml(
-            {"1": self.composite_signal}
-        )
+        children: list[XMLParserElement] = self._pos_in_to_xml(self.composite_signal)
         return attributes, children

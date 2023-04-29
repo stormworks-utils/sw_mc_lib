@@ -43,5 +43,5 @@ class PropertyToggle(Component):
             "off": self.off_label,
             "v": str(self.value).lower(),
         }
-        children: list[XMLParserElement] = self._pos_in_to_xml({})
+        children: list[XMLParserElement] = self._pos_in_to_xml()
         return attributes, children

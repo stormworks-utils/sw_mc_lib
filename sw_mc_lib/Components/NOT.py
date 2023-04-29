@@ -25,4 +25,4 @@ class NOT(Component):
         return NOT(component_id, position, inputs.get("1"))
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        return {}, self._pos_in_to_xml({"1": self.a})
+        return {}, self._pos_in_to_xml(self.a)

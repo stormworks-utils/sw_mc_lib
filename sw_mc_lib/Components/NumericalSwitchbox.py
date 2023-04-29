@@ -37,5 +37,5 @@ class NumericalSwitchbox(Component):
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
         return {}, self._pos_in_to_xml(
-            {"1": self.on_value, "2": self.off_value, "3": self.switch_signal}
+            self.on_value, self.off_value, self.switch_signal
         )

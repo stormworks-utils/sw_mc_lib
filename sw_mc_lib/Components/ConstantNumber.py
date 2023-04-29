@@ -24,7 +24,7 @@ class Abs(Component):
         return Abs(component_id, position, value_text)
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        children: list[XMLParserElement] = self._pos_in_to_xml({})
+        children: list[XMLParserElement] = self._pos_in_to_xml()
         children.append(self._to_xml_number_field("n", self.value_text))
         return {}, children
 

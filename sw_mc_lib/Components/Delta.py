@@ -27,4 +27,4 @@ class Delta(Component):
         return Delta(component_id, position, inputs.get("1"))
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        return {}, self._pos_in_to_xml({"1": self.input_value})
+        return {}, self._pos_in_to_xml(self.input_value)

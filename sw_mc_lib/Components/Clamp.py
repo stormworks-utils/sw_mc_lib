@@ -36,6 +36,6 @@ class Clamp(MinMaxComponent):
         return Clamp(component_id, position, min_text, max_text, inputs.get("1"))
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        children: list[XMLParserElement] = self._pos_in_to_xml({"1": self.input_number})
+        children: list[XMLParserElement] = self._pos_in_to_xml(self.input_number)
         children.extend(self._min_max_to_xml())
         return {}, children

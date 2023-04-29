@@ -47,7 +47,7 @@ class MemoryRegister(ResetComponent):
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
         children: list[XMLParserElement] = self._pos_in_to_xml(
-            {"1": self.set_input, "2": self.reset_input, "3": self.number_to_store}
+            self.set_input, self.reset_input, self.number_to_store
         )
         children.extend(self._reset_to_xml())
         return {}, children

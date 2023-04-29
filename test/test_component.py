@@ -13,8 +13,11 @@ class TestComponent(unittest.TestCase):
         )
         self.assertEqual(Component._basic_in_parsing(elem), expected)
         elem.children.append(XMLParserElement("in1", {"component_id": "1"}))
-        expected[2]["1"] = Input("1", 1, 0)
+        expected[2]["1"] = Input(1, 0, "1")
         self.assertEqual(Component._basic_in_parsing(elem), expected)
         elem.children.append(XMLParserElement("in3", {"component_id": "145"}))
-        expected[2]["3"] = Input("3", 145, 0)
+        expected[2]["3"] = Input(145, 0, "3")
         self.assertEqual(Component._basic_in_parsing(elem), expected)
+
+    def test_pos_in_to_xml(self) -> None:
+        pos: Position = Position(10, 5)

@@ -63,15 +63,6 @@ class ArithmeticFunction8In(Component):
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
         attributes: dict[str, str] = {"e": self.function}
         children: list[XMLParserElement] = self._pos_in_to_xml(
-            {
-                "1": self.x,
-                "2": self.y,
-                "3": self.z,
-                "4": self.w,
-                "5": self.a,
-                "6": self.b,
-                "7": self.c,
-                "8": self.d,
-            }
+            self.x, self.y, self.z, self.w, self.a, self.b, self.c, self.d
         )
         return attributes, children

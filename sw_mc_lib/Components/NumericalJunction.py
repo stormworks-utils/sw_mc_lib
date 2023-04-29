@@ -34,6 +34,4 @@ class NumericalJunction(Component):
         )
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        return {}, self._pos_in_to_xml(
-            {"1": self.value_to_pass_through, "2": self.switch_signal}
-        )
+        return {}, self._pos_in_to_xml(self.value_to_pass_through, self.switch_signal)

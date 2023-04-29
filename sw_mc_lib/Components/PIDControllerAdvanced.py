@@ -52,12 +52,10 @@ class PIDControllerAdvanced(Component):
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
         return {}, self._pos_in_to_xml(
-            {
-                "1": self.setpoint,
-                "2": self.process_variable,
-                "3": self.proportional,
-                "4": self.integral,
-                "5": self.derivative,
-                "6": self.active,
-            }
+            self.setpoint,
+            self.process_variable,
+            self.proportional,
+            self.integral,
+            self.derivative,
+            self.active,
         )

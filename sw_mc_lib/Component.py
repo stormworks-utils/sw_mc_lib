@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from typing import Optional
+from itertools import chain
 
 from .XMLParser import XMLParserElement
 from .Types import ComponentType
@@ -64,10 +65,17 @@ class Component(XMLElement, ABC):
         return XMLParserElement("c", {"type": str(self.type.value)}, [object_element])
 
     def _pos_in_to_xml(
-        self, inputs: dict[str, Optional[Input]]
+        self, *inputs: Optional[Input], named_inputs: Optional[dict[str, Input]] = None
     ) -> list[XMLParserElement]:
+        """
+        Turn the position and inputs into an element. Will strip all None inputs. Will also rename all numbered inputs
+        to their according supplied index, and all named inputs to the supplied name.
+        """
+        named_inputs = named_inputs or {}
         children: list[XMLParserElement] = [self.position.to_xml()]
-        for index, input in inputs.items():
+        for i, input in chain(enumerate(inputs), named_inputs.items()):
             if input is not None:
+                if isinstance(i, int):
+                    input.index = str(i + 1)
                 children.append(input.to_xml())
         return children
