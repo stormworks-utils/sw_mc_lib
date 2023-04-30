@@ -3,13 +3,10 @@ from __future__ import annotations
 import unittest
 from typing import Optional
 
-from sw_mc_lib.Component import (
-    Component,
-    ComponentType,
-    Input,
-    NumberProperty,
-    Position,
-)
+from sw_mc_lib.Component import Component, ComponentType
+from sw_mc_lib.Input import Input
+from sw_mc_lib.NumberProperty import NumberProperty
+from sw_mc_lib.Position import Position
 from sw_mc_lib.XMLParser import XMLParserElement
 
 

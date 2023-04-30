@@ -1,10 +1,7 @@
 import unittest
 
-from sw_mc_lib.NumberProperty import (
-    NumberProperty,
-    XMLParserElement,
-    string_to_sw_float,
-)
+from sw_mc_lib.NumberProperty import NumberProperty, string_to_sw_float
+from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class TestNumberProperty(unittest.TestCase):
