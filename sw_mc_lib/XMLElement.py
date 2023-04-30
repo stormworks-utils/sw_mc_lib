@@ -1,9 +1,10 @@
 from __future__ import annotations
-from abc import ABC, abstractmethod
-from typing import Generator, Any
 
-from .XMLParser import XMLParserElement
+from abc import ABC, abstractmethod
+from typing import Any, Generator
+
 from .util import generic_str
+from .XMLParser import XMLParserElement
 
 
 class XMLElement(ABC):

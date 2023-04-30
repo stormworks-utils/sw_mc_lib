@@ -1,6 +1,6 @@
-from sw_mc_lib.XMLParser import XMLParserElement
-from sw_mc_lib.Position import Position
 from sw_mc_lib.Input import Input
+from sw_mc_lib.Position import Position
+from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class BinopHelper:

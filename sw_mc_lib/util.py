@@ -1,5 +1,5 @@
-from inspect import signature, Signature
-from typing import List, Optional, Any
+from inspect import Signature, signature
+from typing import Any, List, Optional
 
 
 def generic_str(

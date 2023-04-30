@@ -1,15 +1,15 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Optional
 from itertools import chain
+from typing import Optional
 
-from .XMLParser import XMLParserElement
-from .Types import ComponentType
-from .Position import Position
-from .XMLElement import XMLElement
 from .Input import Input
 from .NumberProperty import NumberProperty
+from .Position import Position
+from .Types import ComponentType
+from .XMLElement import XMLElement
+from .XMLParser import XMLParserElement
 
 INNER_TO_XML_RESULT = tuple[dict[str, str], list[XMLParserElement]]
 

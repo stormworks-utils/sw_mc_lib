@@ -1,7 +1,7 @@
 import unittest
 
-from sw_mc_lib.XMLParser import XMLParserElement
 from sw_mc_lib.XMLFormatter import format
+from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class TestXMLFormatter(unittest.TestCase):

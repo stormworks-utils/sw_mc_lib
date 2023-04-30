@@ -1,7 +1,8 @@
 import unittest
 
+from sw_mc_lib.Components.GreaterThan import ComponentType, GreaterThan
 from sw_mc_lib.XMLParser import XMLParser, XMLParserElement
-from sw_mc_lib.Components.GreaterThan import GreaterThan, ComponentType
+
 from .test_utils import BinopHelper, Input, Position
 
 

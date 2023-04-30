@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from .XMLParser import XMLParserElement
 from .XMLElement import XMLElement
+from .XMLParser import XMLParserElement
 
 
 class Position(XMLElement):

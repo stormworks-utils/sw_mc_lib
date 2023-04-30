@@ -1,9 +1,10 @@
 from __future__ import annotations
+
 from typing import Optional
 
-from .XMLParser import XMLParserElement
 from .Types import NodeMode, SignalType
 from .XMLElement import XMLElement
+from .XMLParser import XMLParserElement
 
 
 class NodePosition(XMLElement):

@@ -1,12 +1,13 @@
 from __future__ import annotations
+
 from typing import Optional
 
-from sw_mc_lib.Component import Component, INNER_TO_XML_RESULT
+from sw_mc_lib.Component import INNER_TO_XML_RESULT, Component
+from sw_mc_lib.NumberProperty import NumberProperty
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
-from sw_mc_lib.XMLParser import XMLParserElement
 from sw_mc_lib.XMLElement import XMLElement
-from sw_mc_lib.NumberProperty import NumberProperty
+from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class DropDownOption(XMLElement):

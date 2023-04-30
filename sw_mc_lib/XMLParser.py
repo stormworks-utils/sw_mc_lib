@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import string
-from typing import Optional, Any
+from typing import Any, Optional
 
 
 class XMLParserElement:

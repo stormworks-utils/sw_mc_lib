@@ -4,10 +4,10 @@ from abc import ABC
 from typing import Optional
 
 from sw_mc_lib.Component import Component
+from sw_mc_lib.NumberProperty import NumberProperty
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
-from sw_mc_lib.NumberProperty import NumberProperty
 
 
 class MinMaxComponent(Component, ABC):

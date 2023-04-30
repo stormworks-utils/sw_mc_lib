@@ -1,7 +1,8 @@
 import unittest
 
-from sw_mc_lib.XMLParser import XMLParser, XMLParserElement
 from sw_mc_lib.Components.XOR import XOR, ComponentType
+from sw_mc_lib.XMLParser import XMLParser, XMLParserElement
+
 from .test_utils import BinopHelper, Input, Position
 
 
