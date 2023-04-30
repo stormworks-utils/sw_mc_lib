@@ -14,8 +14,8 @@ class SRLatch(Component):
         self,
         component_id: int,
         position: Position,
-        set_input: Optional[Input],
-        reset_input: Optional[Input],
+        set_input: Optional[Input] = None,
+        reset_input: Optional[Input] = None,
     ):
         super().__init__(ComponentType.SRLatch, component_id, position, 0.75)
         self.set_input: Optional[Input] = set_input

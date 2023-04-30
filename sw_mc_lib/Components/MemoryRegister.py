@@ -16,10 +16,10 @@ class MemoryRegister(ResetComponent):
         self,
         component_id: int,
         position: Position,
-        reset_property: NumberProperty,
-        set_input: Optional[Input],
-        reset_input: Optional[Input],
-        number_to_store_input: Optional[Input],
+        reset_property: Optional[NumberProperty] = None,
+        set_input: Optional[Input] = None,
+        reset_input: Optional[Input] = None,
+        number_to_store_input: Optional[Input] = None,
     ):
         super().__init__(
             ComponentType.MemoryRegister, component_id, position, 1.0, reset_property

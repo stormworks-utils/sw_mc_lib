@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from abc import ABC
+from typing import Optional
 
 from sw_mc_lib.Component import Component
 from sw_mc_lib.Position import Position
@@ -16,16 +17,17 @@ class ValueComponent(Component, ABC):
         component_id: int,
         position: Position,
         height: float,
-        value_property: NumberProperty,
-        **kwargs: NumberProperty,
+        value_property: Optional[NumberProperty] = None,
+        **kwargs: Optional[NumberProperty],
     ):
         super().__init__(component_type, component_id, position, height, **kwargs)
-        self.value_property: NumberProperty = value_property
+        self.value_property: NumberProperty = value_property or NumberProperty("0", "v")
 
     @staticmethod
-    def _basic_value_parsing(properties: dict[str, NumberProperty]) -> NumberProperty:
-        value_property: NumberProperty = properties.get("v", NumberProperty("0", "v"))
-        return value_property
+    def _basic_value_parsing(
+        properties: dict[str, NumberProperty]
+    ) -> Optional[NumberProperty]:
+        return properties.get("v")
 
     def _value_to_xml(self) -> list[XMLParserElement]:
         return [self.value_property.to_xml()]

@@ -15,7 +15,7 @@ class TestModulo(BinopHelper, unittest.TestCase):
 
     def test_from_xml(self) -> None:
         elem: Modulo = Modulo.from_xml(self.get_empty_obj())
-        expected: Modulo = Modulo(self.COMPONENT_ID, Position.empty_pos(), None, None)
+        expected: Modulo = Modulo(self.COMPONENT_ID, Position.empty_pos())
         self.assertEqual(elem, expected)
         elem = Modulo.from_xml(self.get_2_arg())
         expected.a_input = Input(self.INPUT_1, 0, "1")
@@ -24,7 +24,7 @@ class TestModulo(BinopHelper, unittest.TestCase):
 
     def test_to_xml(self) -> None:
         elem: Modulo = Modulo(
-            self.COMPONENT_ID, Position.empty_pos(), Input(self.INPUT_1), None
+            self.COMPONENT_ID, Position.empty_pos(), Input(self.INPUT_1)
         )
         expected: XMLParserElement = self.get_1_arg()
         self.assertEqual(elem.to_xml(), expected)

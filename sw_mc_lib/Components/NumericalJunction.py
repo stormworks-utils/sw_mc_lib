@@ -14,8 +14,8 @@ class NumericalJunction(Component):
         self,
         component_id: int,
         position: Position,
-        value_to_pass_through_input: Optional[Input],
-        switch_signal_input: Optional[Input],
+        value_to_pass_through_input: Optional[Input] = None,
+        switch_signal_input: Optional[Input] = None,
     ):
         super().__init__(ComponentType.NumericalJunction, component_id, position, 0.75)
         self.value_to_pass_through_input: Optional[Input] = value_to_pass_through_input

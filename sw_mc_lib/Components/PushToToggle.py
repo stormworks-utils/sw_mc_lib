@@ -10,7 +10,9 @@ from sw_mc_lib.Input import Input
 
 
 class PushToToggle(Component):
-    def __init__(self, component_id: int, position: Position, a_input: Optional[Input]):
+    def __init__(
+        self, component_id: int, position: Position, a_input: Optional[Input] = None
+    ):
         super().__init__(ComponentType.PushToToggle, component_id, position, 0.5)
         self.a_input: Optional[Input] = a_input
 

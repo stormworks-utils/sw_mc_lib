@@ -15,9 +15,9 @@ class ArithmeticFunction3In(Component):
         component_id: int,
         position: Position,
         function: str,
-        x_input: Optional[Input],
-        y_input: Optional[Input],
-        z_input: Optional[Input],
+        x_input: Optional[Input] = None,
+        y_input: Optional[Input] = None,
+        z_input: Optional[Input] = None,
     ):
         super().__init__(
             ComponentType.ArithmeticFunction3In, component_id, position, 1.0

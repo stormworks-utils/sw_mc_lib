@@ -1,4 +1,5 @@
 from __future__ import annotations
+from typing import Optional
 
 from sw_mc_lib.Component import INNER_TO_XML_RESULT
 from sw_mc_lib.Position import Position
@@ -14,10 +15,10 @@ class PropertySlider(MinMaxComponent, ValueComponent):
         self,
         component_id: int,
         position: Position,
-        min_property: NumberProperty,
-        max_property: NumberProperty,
-        value_property: NumberProperty,
-        rounding_property: NumberProperty,
+        min_property: Optional[NumberProperty] = None,
+        max_property: Optional[NumberProperty] = None,
+        value_property: Optional[NumberProperty] = None,
+        rounding_property: Optional[NumberProperty] = None,
     ):
         super().__init__(
             ComponentType.PropertySlider,
@@ -28,7 +29,9 @@ class PropertySlider(MinMaxComponent, ValueComponent):
             max_property,
             value_property=value_property,
         )
-        self.rounding_property: NumberProperty = rounding_property
+        self.rounding_property: NumberProperty = rounding_property or NumberProperty(
+            "0", "int"
+        )
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> PropertySlider:
@@ -39,10 +42,8 @@ class PropertySlider(MinMaxComponent, ValueComponent):
         obj: XMLParserElement = element.children[0]
         component_id, position, _, properties = PropertySlider._basic_in_parsing(obj)
         min_property, max_property = PropertySlider._basic_min_max_parsing(properties)
-        value_property: NumberProperty = PropertySlider._basic_value_parsing(properties)
-        rounding_property: NumberProperty = properties.get(
-            "int", NumberProperty("0", "int")
-        )
+        value_property = PropertySlider._basic_value_parsing(properties)
+        rounding_property: Optional[NumberProperty] = properties.get("int")
         return PropertySlider(
             component_id,
             position,

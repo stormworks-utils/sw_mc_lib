@@ -1,4 +1,5 @@
 from __future__ import annotations
+from typing import Optional
 
 from sw_mc_lib.Component import INNER_TO_XML_RESULT
 from sw_mc_lib.Position import Position
@@ -10,7 +11,10 @@ from .SubTypes.ValueComponent import ValueComponent
 
 class ConstantNumber(ValueComponent):
     def __init__(
-        self, component_id: int, position: Position, value_property: NumberProperty
+        self,
+        component_id: int,
+        position: Position,
+        value_property: Optional[NumberProperty] = None,
     ):
         super().__init__(
             ComponentType.ConstantNumber, component_id, position, 0.5, value_property
@@ -24,7 +28,7 @@ class ConstantNumber(ValueComponent):
         ), f"Not an ConstantNumber {element}"
         obj: XMLParserElement = element.children[0]
         component_id, position, _, properties = ConstantNumber._basic_in_parsing(obj)
-        value_property: NumberProperty = ValueComponent._basic_value_parsing(properties)
+        value_property = ValueComponent._basic_value_parsing(properties)
         return ConstantNumber(component_id, position, value_property)
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:

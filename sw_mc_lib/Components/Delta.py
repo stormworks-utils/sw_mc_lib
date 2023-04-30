@@ -11,7 +11,7 @@ from sw_mc_lib.Input import Input
 
 class Delta(Component):
     def __init__(
-        self, component_id: int, position: Position, value_input: Optional[Input]
+        self, component_id: int, position: Position, value_input: Optional[Input] = None
     ):
         super().__init__(ComponentType.Delta, component_id, position, 0.5)
         self.value_input: Optional[Input] = value_input

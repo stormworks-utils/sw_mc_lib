@@ -14,12 +14,12 @@ class PIDControllerAdvanced(Component):
         self,
         component_id: int,
         position: Position,
-        setpoint_input: Optional[Input],
-        process_variable_input: Optional[Input],
-        proportional_input: Optional[Input],
-        integral_input: Optional[Input],
-        derivative_input: Optional[Input],
-        active_input: Optional[Input],
+        setpoint_input: Optional[Input] = None,
+        process_variable_input: Optional[Input] = None,
+        proportional_input: Optional[Input] = None,
+        integral_input: Optional[Input] = None,
+        derivative_input: Optional[Input] = None,
+        active_input: Optional[Input] = None,
     ):
         super().__init__(
             ComponentType.PIDControllerAdvanced, component_id, position, 2.25

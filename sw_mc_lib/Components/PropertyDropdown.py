@@ -1,4 +1,5 @@
 from __future__ import annotations
+from typing import Optional
 
 from sw_mc_lib.Component import Component, INNER_TO_XML_RESULT
 from sw_mc_lib.Position import Position
@@ -9,15 +10,15 @@ from sw_mc_lib.NumberProperty import NumberProperty
 
 
 class DropDownOption(XMLElement):
-    def __init__(self, label: str, value_property: NumberProperty):
+    def __init__(self, label: str, value_property: Optional[NumberProperty]):
         self.label: str = label
-        self.value_property: NumberProperty = value_property
+        self.value_property: NumberProperty = value_property or NumberProperty("0", "v")
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> DropDownOption:
         assert element.tag == "i", f"invalid DropDownOption {element}"
         label: str = element.attributes.get("l", "")
-        value_property: NumberProperty = NumberProperty("0", "v")
+        value_property: Optional[NumberProperty] = None
         for child in element.children:
             assert child.tag == "v", f"invalid value field for DropDownOption {element}"
             value_property = NumberProperty.from_xml(child)
@@ -32,12 +33,12 @@ class PropertyDropdown(Component):
         self,
         component_id: int,
         position: Position,
-        selected_property: int,
-        options: list[DropDownOption],
+        selected_property: int = 0,
+        options: Optional[list[DropDownOption]] = None,
     ):
         super().__init__(ComponentType.PropertyDropdown, component_id, position, 0.5)
         self.selected: int = selected_property
-        self.options: list[DropDownOption] = options
+        self.options: list[DropDownOption] = options or []
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> PropertyDropdown:

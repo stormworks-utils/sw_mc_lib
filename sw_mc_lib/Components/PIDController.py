@@ -15,20 +15,26 @@ class PIDController(Component):
         self,
         component_id: int,
         position: Position,
-        setpoint_input: Optional[Input],
-        process_variable_input: Optional[Input],
-        active_input: Optional[Input],
-        proportional_property: NumberProperty,
-        integral_property: NumberProperty,
-        derivative_property: NumberProperty,
+        setpoint_input: Optional[Input] = None,
+        process_variable_input: Optional[Input] = None,
+        active_input: Optional[Input] = None,
+        proportional_property: Optional[NumberProperty] = None,
+        integral_property: Optional[NumberProperty] = None,
+        derivative_property: Optional[NumberProperty] = None,
     ):
         super().__init__(ComponentType.PIDController, component_id, position, 1.0)
         self.setpoint_input: Optional[Input] = setpoint_input
         self.process_variable_input: Optional[Input] = process_variable_input
         self.active_input: Optional[Input] = active_input
-        self.proportional_property: NumberProperty = proportional_property
-        self.integral_property: NumberProperty = integral_property
-        self.derivative_property: NumberProperty = derivative_property
+        self.proportional_property: NumberProperty = (
+            proportional_property or NumberProperty("0", "kp")
+        )
+        self.integral_property: NumberProperty = integral_property or NumberProperty(
+            "0", "ki"
+        )
+        self.derivative_property: NumberProperty = (
+            derivative_property or NumberProperty("0", "kd")
+        )
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> PIDController:
@@ -40,15 +46,9 @@ class PIDController(Component):
         component_id, position, inputs, properties = PIDController._basic_in_parsing(
             obj
         )
-        proportional_property: NumberProperty = properties.get(
-            "kp", NumberProperty("0", "kp")
-        )
-        integral_property: NumberProperty = properties.get(
-            "ki", NumberProperty("0", "ki")
-        )
-        derivative_property: NumberProperty = properties.get(
-            "kd", NumberProperty("0", "kd")
-        )
+        proportional_property: Optional[NumberProperty] = properties.get("kp")
+        integral_property: Optional[NumberProperty] = properties.get("ki")
+        derivative_property: Optional[NumberProperty] = properties.get("kd")
         return PIDController(
             component_id,
             position,

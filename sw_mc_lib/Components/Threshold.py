@@ -16,9 +16,9 @@ class Threshold(MinMaxComponent):
         self,
         component_id: int,
         position: Position,
-        min_property: NumberProperty,
-        max_property: NumberProperty,
-        number_input: Optional[Input],
+        min_property: Optional[NumberProperty] = None,
+        max_property: Optional[NumberProperty] = None,
+        number_input: Optional[Input] = None,
     ):
         super().__init__(
             ComponentType.Threshold,

@@ -11,7 +11,10 @@ from sw_mc_lib.Input import Input
 
 class Abs(Component):
     def __init__(
-        self, component_id: int, position: Position, number_input: Optional[Input]
+        self,
+        component_id: int,
+        position: Position,
+        number_input: Optional[Input] = None,
     ):
         super().__init__(ComponentType.Abs, component_id, position, 0.5)
         self.number_input: Optional[Input] = number_input

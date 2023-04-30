@@ -14,9 +14,9 @@ class Blinker(Component):
         self,
         component_id: int,
         position: Position,
-        control_signal_input: Optional[Input],
-        blink_on_duration_property: float,
-        blink_off_duration_property: float,
+        control_signal_input: Optional[Input] = None,
+        blink_on_duration_property: float = 1.0,
+        blink_off_duration_property: float = 1.0,
     ):
         super().__init__(ComponentType.Blinker, component_id, position, 1.0)
         self.control_signal_input: Optional[Input] = control_signal_input

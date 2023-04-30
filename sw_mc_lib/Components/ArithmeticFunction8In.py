@@ -15,14 +15,14 @@ class ArithmeticFunction8In(Component):
         component_id: int,
         position: Position,
         function: str,
-        x_input: Optional[Input],
-        y_input: Optional[Input],
-        z_input: Optional[Input],
-        w_input: Optional[Input],
-        a_input: Optional[Input],
-        b_input: Optional[Input],
-        c_input: Optional[Input],
-        d_input: Optional[Input],
+        x_input: Optional[Input] = None,
+        y_input: Optional[Input] = None,
+        z_input: Optional[Input] = None,
+        w_input: Optional[Input] = None,
+        a_input: Optional[Input] = None,
+        b_input: Optional[Input] = None,
+        c_input: Optional[Input] = None,
+        d_input: Optional[Input] = None,
     ):
         super().__init__(
             ComponentType.ArithmeticFunction8In, component_id, position, 2.25

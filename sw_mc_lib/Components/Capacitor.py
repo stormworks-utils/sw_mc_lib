@@ -14,9 +14,9 @@ class Capacitor(Component):
         self,
         component_id: int,
         position: Position,
-        charge_input: Optional[Input],
-        charge_time_property: float,
-        discharge_time_property: float,
+        charge_input: Optional[Input] = None,
+        charge_time_property: float = 1.0,
+        discharge_time_property: float = 1.0,
     ):
         super().__init__(ComponentType.Capacitor, component_id, position, 1.0)
         self.charge_input: Optional[Input] = charge_input

@@ -11,10 +11,10 @@ class PropertyToggle(Component):
         self,
         component_id: int,
         position: Position,
-        name: str,
-        on_label: str,
-        off_label: str,
-        value_property: bool,
+        name: str = "toggle",
+        on_label: str = "on",
+        off_label: str = "off",
+        value_property: bool = False,
     ):
         super().__init__(ComponentType.PropertyToggle, component_id, position, 0.5)
         self.name: str = name

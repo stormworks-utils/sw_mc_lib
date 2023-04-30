@@ -15,7 +15,7 @@ class TestAbs(BinopHelper, unittest.TestCase):
 
     def test_from_xml(self) -> None:
         elem: Abs = Abs.from_xml(self.get_empty_obj())
-        expected: Abs = Abs(self.COMPONENT_ID, Position.empty_pos(), None)
+        expected: Abs = Abs(self.COMPONENT_ID, Position.empty_pos())
         self.assertEqual(elem, expected)
         elem = Abs.from_xml(self.get_2_arg())
         expected.number_input = Input(self.INPUT_1, 0, "1")

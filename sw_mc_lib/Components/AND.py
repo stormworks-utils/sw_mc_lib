@@ -14,8 +14,8 @@ class AND(Component):
         self,
         component_id: int,
         position: Position,
-        a_input: Optional[Input],
-        b_input: Optional[Input],
+        a_input: Optional[Input] = None,
+        b_input: Optional[Input] = None,
     ):
         super().__init__(ComponentType.AND, component_id, position, 0.75)
         self.a_input: Optional[Input] = a_input

@@ -15,7 +15,7 @@ class TestAdd(BinopHelper, unittest.TestCase):
 
     def test_from_xml(self) -> None:
         elem: Add = Add.from_xml(self.get_empty_obj())
-        expected: Add = Add(self.COMPONENT_ID, Position.empty_pos(), None, None)
+        expected: Add = Add(self.COMPONENT_ID, Position.empty_pos())
         self.assertEqual(elem, expected)
         elem = Add.from_xml(self.get_2_arg())
         expected.a_input = Input(self.INPUT_1, 0, "1")
@@ -24,7 +24,7 @@ class TestAdd(BinopHelper, unittest.TestCase):
 
     def test_to_xml(self) -> None:
         elem: Add = Add(
-            self.COMPONENT_ID, Position.empty_pos(), Input(self.INPUT_1), None
+            self.COMPONENT_ID, Position.empty_pos(), Input(self.INPUT_1)
         )
         expected: XMLParserElement = self.get_1_arg()
         self.assertEqual(elem.to_xml(), expected)

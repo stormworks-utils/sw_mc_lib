@@ -15,7 +15,7 @@ class TestNOT(BinopHelper, unittest.TestCase):
 
     def test_from_xml(self) -> None:
         elem: NOT = NOT.from_xml(self.get_empty_obj())
-        expected: NOT = NOT(self.COMPONENT_ID, Position.empty_pos(), None)
+        expected: NOT = NOT(self.COMPONENT_ID, Position.empty_pos())
         self.assertEqual(elem, expected)
         elem = NOT.from_xml(self.get_2_arg())
         expected.a_input = Input(self.INPUT_1, 0, "1")

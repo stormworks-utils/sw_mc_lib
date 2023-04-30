@@ -16,7 +16,7 @@ class TestLessThan(BinopHelper, unittest.TestCase):
     def test_from_xml(self) -> None:
         elem: LessThan = LessThan.from_xml(self.get_empty_obj())
         expected: LessThan = LessThan(
-            self.COMPONENT_ID, Position.empty_pos(), None, None
+            self.COMPONENT_ID, Position.empty_pos()
         )
         self.assertEqual(elem, expected)
         elem = LessThan.from_xml(self.get_2_arg())
@@ -26,7 +26,7 @@ class TestLessThan(BinopHelper, unittest.TestCase):
 
     def test_to_xml(self) -> None:
         elem: LessThan = LessThan(
-            self.COMPONENT_ID, Position.empty_pos(), Input(self.INPUT_1), None
+            self.COMPONENT_ID, Position.empty_pos(), Input(self.INPUT_1)
         )
         expected: XMLParserElement = self.get_1_arg()
         self.assertEqual(elem.to_xml(), expected)

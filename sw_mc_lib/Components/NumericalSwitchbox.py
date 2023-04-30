@@ -14,9 +14,9 @@ class NumericalSwitchbox(Component):
         self,
         component_id: int,
         position: Position,
-        on_value_input: Optional[Input],
-        off_value_input: Optional[Input],
-        switch_signal_input: Optional[Input],
+        on_value_input: Optional[Input] = None,
+        off_value_input: Optional[Input] = None,
+        switch_signal_input: Optional[Input] = None,
     ):
         super().__init__(ComponentType.NumericalSwitchbox, component_id, position, 1.0)
         self.on_value_input: Optional[Input] = on_value_input
