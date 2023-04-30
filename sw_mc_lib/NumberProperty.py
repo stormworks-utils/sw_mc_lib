@@ -8,7 +8,7 @@ from .XMLElement import XMLElement, XMLParserElement
 
 
 def string_to_sw_float(to_convert: str) -> float:
-    return math.floor(np.float32(to_convert) * 10_000_000) / 10_000_000
+    return float(f"{np.float32(to_convert):0.6f}")
 
 
 class NumberProperty(XMLElement):
