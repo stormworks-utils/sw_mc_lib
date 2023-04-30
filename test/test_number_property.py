@@ -39,6 +39,10 @@ class TestNumberProperty(unittest.TestCase):
         self.assertEqual(elem.value, 1234)
         elem.text = "1234567.1234567"
         self.assertEqual(elem.value, 1234567.125)
+        elem.value = 1234
+        self.assertEqual(elem.text, "1234")
+        elem.value = 1234.567
+        self.assertEqual(elem.text, "1234.567")
 
     def test_string_to_sw_float(self) -> None:
         self.assertEqual(string_to_sw_float("0"), 0)
