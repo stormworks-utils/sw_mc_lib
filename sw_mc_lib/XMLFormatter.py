@@ -18,6 +18,7 @@ def _escape_string(to_escape: str) -> str:
     else:
         to_escape = to_escape.replace('"', "&quot;")
         to_escape = f'"{to_escape}"'
+    to_escape = to_escape.replace('\r\n', '\n')
     return to_escape
 
 
@@ -28,11 +29,27 @@ def _indent(to_indent: str, indentation_character: str, line_breaks: str) -> str
     `<node/>` -> `\t<node/>\n`
     """
     return (
-        "\n".join(
-            indentation_character + line for line in to_indent.rstrip().split("\n")
+        "\r\n".join(
+            indentation_character + line for line in to_indent.rstrip().split("\r\n")
         )
         + line_breaks
     )
+
+
+def _inner_format(element: XMLParserElement, indentation: str, line_breaks: str) -> str:
+    xml: str = f"<{element.tag}"
+    for name, value in element.attributes.items():
+        xml += f" {name}={_escape_string(value)}"
+    if element.children:
+        xml += f">{line_breaks}"
+        for child in element.children:
+            xml += _indent(
+                _inner_format(child, indentation, line_breaks), indentation, line_breaks
+            )
+        xml += f"</{element.tag}>{line_breaks}"
+    else:
+        xml += f"/>{line_breaks}"
+    return xml
 
 
 def format(
@@ -42,19 +59,8 @@ def format(
     Formats a XMLParserElement into a xml string. If indentation is None, there will be no line breaks or indentation.
     If header is true, it will add a xml declaration at the top of the document
     """
-    line_breaks: str = "\n" if indentation is not None else ""
+    line_breaks: str = "\r\n" if indentation is not None else ""
     indentation_character = indentation or ""
     xml: str = f'<?xml version="1.0" encoding="UTF-8"?>{line_breaks}' if header else ""
-    xml += f"<{element.tag}"
-    for name, value in element.attributes.items():
-        xml += f" {name}={_escape_string(value)}"
-    if element.children:
-        xml += f">{line_breaks}"
-        for child in element.children:
-            xml += _indent(
-                format(child, indentation), indentation_character, line_breaks
-            )
-        xml += f"</{element.tag}>{line_breaks}"
-    else:
-        xml += f"/>{line_breaks}"
-    return xml
+    xml += _inner_format(element, indentation_character, line_breaks)
+    return xml.replace('\r\n', '\n')

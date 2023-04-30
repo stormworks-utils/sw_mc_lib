@@ -71,3 +71,7 @@ class TestXMLFormatter(unittest.TestCase):
         self.assertEqual(res, "<abc def='g&apos;h\"\"i'/>\n")
         res = format(XMLParserElement("abc", {"def": "g\"h''i"}))
         self.assertEqual(res, "<abc def=\"g&quot;h''i\"/>\n")
+
+    def test_attributes_with_newlines_indent(self) -> None:
+        res: str = format(XMLParserElement("abc", {}, [XMLParserElement('def', {"def": "ghi\njkl"})]))
+        self.assertEqual(res, '<abc>\n\t<def def="ghi\njkl"/>\n</abc>\n')
