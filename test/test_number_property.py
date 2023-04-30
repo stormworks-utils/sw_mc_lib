@@ -1,6 +1,10 @@
 import unittest
 
-from sw_mc_lib.NumberProperty import NumberProperty, XMLParserElement, string_to_sw_float
+from sw_mc_lib.NumberProperty import (
+    NumberProperty,
+    XMLParserElement,
+    string_to_sw_float,
+)
 
 
 class TestNumberProperty(unittest.TestCase):
@@ -16,7 +20,9 @@ class TestNumberProperty(unittest.TestCase):
 
     def test_to_xml(self) -> None:
         elem: NumberProperty = NumberProperty("0")
-        expected: XMLParserElement = XMLParserElement('temp', {"text": "0", "value": "0.0"})
+        expected: XMLParserElement = XMLParserElement(
+            "temp", {"text": "0", "value": "0.0"}
+        )
         self.assertEqual(elem.to_xml(), expected)
         elem.name = "abc"
         expected.tag = "abc"
