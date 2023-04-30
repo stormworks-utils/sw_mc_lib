@@ -25,8 +25,3 @@ class Input(XMLElement):
         if self.node_index != 0:
             attributes["node_index"] = str(self.node_index)
         return XMLParserElement(f"in{self.index}", attributes)
-
-    @staticmethod
-    def set_index_optional(input: Optional[Input], new_index: str) -> None:
-        if input:
-            input.index = new_index
