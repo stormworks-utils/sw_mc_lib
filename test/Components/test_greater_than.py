@@ -15,9 +15,7 @@ class TestGreaterThan(BinopHelper, unittest.TestCase):
 
     def test_from_xml(self) -> None:
         elem: GreaterThan = GreaterThan.from_xml(self.get_empty_obj())
-        expected: GreaterThan = GreaterThan(
-            self.COMPONENT_ID, Position.empty_pos()
-        )
+        expected: GreaterThan = GreaterThan(self.COMPONENT_ID, Position.empty_pos())
         self.assertEqual(elem, expected)
         elem = GreaterThan.from_xml(self.get_2_arg())
         expected.a_input = Input(self.INPUT_1, 0, "1")

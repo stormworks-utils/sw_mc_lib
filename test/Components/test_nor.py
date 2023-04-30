@@ -23,8 +23,6 @@ class TestNOR(BinopHelper, unittest.TestCase):
         self.assertEqual(elem, expected)
 
     def test_to_xml(self) -> None:
-        elem: NOR = NOR(
-            self.COMPONENT_ID, Position.empty_pos(), Input(self.INPUT_1)
-        )
+        elem: NOR = NOR(self.COMPONENT_ID, Position.empty_pos(), Input(self.INPUT_1))
         expected: XMLParserElement = self.get_1_arg()
         self.assertEqual(elem.to_xml(), expected)

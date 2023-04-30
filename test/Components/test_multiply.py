@@ -15,9 +15,7 @@ class TestMultiply(BinopHelper, unittest.TestCase):
 
     def test_from_xml(self) -> None:
         elem: Multiply = Multiply.from_xml(self.get_empty_obj())
-        expected: Multiply = Multiply(
-            self.COMPONENT_ID, Position.empty_pos()
-        )
+        expected: Multiply = Multiply(self.COMPONENT_ID, Position.empty_pos())
         self.assertEqual(elem, expected)
         elem = Multiply.from_xml(self.get_2_arg())
         expected.a_input = Input(self.INPUT_1, 0, "1")
