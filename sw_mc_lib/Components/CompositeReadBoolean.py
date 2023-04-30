@@ -21,7 +21,7 @@ class CompositeReadBoolean(Component):
             ComponentType.CompositeReadBoolean,
             component_id,
             position,
-            0.5 if channel_property >= 0 else 0.75,
+            0.5 if channel_property >= 1 else 0.75,
         )
         self.channel_property: int = channel_property
         self.composite_signal_input: Optional[Input] = composite_signal_input
