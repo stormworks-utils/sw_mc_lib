@@ -18,7 +18,7 @@ def _escape_string(to_escape: str) -> str:
     else:
         to_escape = to_escape.replace('"', "&quot;")
         to_escape = f'"{to_escape}"'
-    to_escape = to_escape.replace('\r\n', '\n')
+    to_escape = to_escape.replace("\r\n", "\n")
     return to_escape
 
 
@@ -63,4 +63,4 @@ def format(
     indentation_character = indentation or ""
     xml: str = f'<?xml version="1.0" encoding="UTF-8"?>{line_breaks}' if header else ""
     xml += _inner_format(element, indentation_character, line_breaks)
-    return xml.replace('\r\n', '\n')
+    return xml.replace("\r\n", "\n")
