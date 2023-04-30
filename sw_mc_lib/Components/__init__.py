@@ -17,6 +17,7 @@ from .CompositeSwitchbox import CompositeSwitchbox
 from .CompositeWriteBoolean import CompositeWriteBoolean
 from .CompositeWriteNumber import CompositeWriteNumber
 from .ConstantNumber import ConstantNumber
+from .ConstantOn import ConstantOn
 from .Delta import Delta
 from .Divide import Divide
 from .Equal import Equal
