@@ -14,6 +14,23 @@ class NodeMode(Enum):
     Input: int = 1
 
 
+class TooltipMode(Enum):
+    Always: int = 0
+    IfOn: int = 1
+    IfOff: int = 2
+
+
+class PulseMode(Enum):
+    OnToOff: int = 0
+    OffToOn: int = 1
+    Always: int = 2
+
+
+class TimerUnit(Enum):
+    Seconds: int = 0
+    Ticks: int = 1
+
+
 class ComponentType(Enum):
     NOT: int = 0
     AND: int = 1
@@ -67,7 +84,7 @@ class ComponentType(Enum):
     TimerTON: int = 49
     TimerTOF: int = 50
     TimerRTO: int = 51
-    TimerRtF: int = 52
+    TimerRTF: int = 52
     CompositeSwitchbox: int = 53
     NumberToCompositeBinary: int = 54
     CompositeBinaryToNumber: int = 55
