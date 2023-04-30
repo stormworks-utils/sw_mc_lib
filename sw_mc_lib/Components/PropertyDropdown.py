@@ -46,9 +46,7 @@ class PropertyDropdown(Component):
             ComponentType.PropertyDropdown.value
         ), f"Not an PropertyDropdown {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs, properties = PropertyDropdown._basic_in_parsing(
-            obj
-        )
+        component_id, position, _, _ = PropertyDropdown._basic_in_parsing(obj)
         selected_property: int = int(obj.attributes.get("i", "0"))
         options: list[DropDownOption] = []
         for child in obj.children:

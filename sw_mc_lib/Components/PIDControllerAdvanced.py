@@ -42,7 +42,7 @@ class PIDControllerAdvanced(Component):
             component_id,
             position,
             inputs,
-            properties,
+            _,
         ) = PIDControllerAdvanced._basic_in_parsing(obj)
         return PIDControllerAdvanced(
             component_id,

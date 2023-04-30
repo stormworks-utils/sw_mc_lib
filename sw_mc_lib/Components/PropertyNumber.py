@@ -28,9 +28,7 @@ class PropertyNumber(ValueComponent):
             ComponentType.PropertyNumber.value
         ), f"Not an PropertyNumber {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs, properties = PropertyNumber._basic_in_parsing(
-            obj
-        )
+        component_id, position, _, properties = PropertyNumber._basic_in_parsing(obj)
         name: str = obj.attributes.get("n", "number")
         value_property: NumberProperty = PropertyNumber._basic_value_parsing(properties)
         return PropertyNumber(component_id, position, name, value_property)

@@ -34,7 +34,7 @@ class NumericalSwitchbox(Component):
             component_id,
             position,
             inputs,
-            properties,
+            _,
         ) = NumericalSwitchbox._basic_in_parsing(obj)
         return NumericalSwitchbox(
             component_id, position, inputs.get("1"), inputs.get("2"), inputs.get("3")

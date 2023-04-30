@@ -48,7 +48,7 @@ class ArithmeticFunction8In(Component):
             component_id,
             position,
             inputs,
-            properties,
+            _,
         ) = ArithmeticFunction8In._basic_in_parsing(obj)
         function: str = obj.attributes.get("e", "")
         return ArithmeticFunction8In(

@@ -30,7 +30,7 @@ class Capacitor(Component):
             ComponentType.Capacitor.value
         ), f"Not an Capacitor {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs, properties = Capacitor._basic_in_parsing(obj)
+        component_id, position, inputs, _ = Capacitor._basic_in_parsing(obj)
         charge_time_property: float = float(obj.attributes.get("ct", "1"))
         discharge_time_property: float = float(obj.attributes.get("dt", "1"))
         return Capacitor(

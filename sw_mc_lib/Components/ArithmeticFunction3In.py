@@ -38,7 +38,7 @@ class ArithmeticFunction3In(Component):
             component_id,
             position,
             inputs,
-            properties,
+            _,
         ) = ArithmeticFunction3In._basic_in_parsing(obj)
         function: str = obj.attributes.get("e", "")
         return ArithmeticFunction3In(

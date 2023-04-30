@@ -28,7 +28,7 @@ class Multiply(Component):
             ComponentType.Multiply.value
         ), f"Not an Multiply {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs, properties = Multiply._basic_in_parsing(obj)
+        component_id, position, inputs, _ = Multiply._basic_in_parsing(obj)
         return Multiply(component_id, position, inputs.get("1"), inputs.get("2"))
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:

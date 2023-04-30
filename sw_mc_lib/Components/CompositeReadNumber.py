@@ -37,7 +37,7 @@ class CompositeReadNumber(Component):
             component_id,
             position,
             inputs,
-            properties,
+            _,
         ) = CompositeReadNumber._basic_in_parsing(obj)
         channel_property: int = int(obj.attributes.get("i", "0"))
         return CompositeReadNumber(

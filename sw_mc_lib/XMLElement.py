@@ -28,4 +28,4 @@ class XMLElement(ABC):
         )
 
     def __dir(self) -> Generator[str, None, None]:
-        return (i for i in self.__dir__() if not i.startswith("__"))
+        return (i for i in dir(self) if not i.startswith("__"))

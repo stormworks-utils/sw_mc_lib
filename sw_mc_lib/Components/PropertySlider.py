@@ -37,9 +37,7 @@ class PropertySlider(MinMaxComponent, ValueComponent):
             ComponentType.PropertySlider.value
         ), f"Not an PropertySlider {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs, properties = PropertySlider._basic_in_parsing(
-            obj
-        )
+        component_id, position, _, properties = PropertySlider._basic_in_parsing(obj)
         min_property, max_property = PropertySlider._basic_min_max_parsing(properties)
         value_property: NumberProperty = PropertySlider._basic_value_parsing(properties)
         rounding_property: NumberProperty = properties.get(

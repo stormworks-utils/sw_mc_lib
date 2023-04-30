@@ -23,7 +23,7 @@ class Delta(Component):
             ComponentType.Delta.value
         ), f"Not an Delta {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs, properties = Delta._basic_in_parsing(obj)
+        component_id, position, inputs, _ = Delta._basic_in_parsing(obj)
         return Delta(component_id, position, inputs.get("1"))
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:

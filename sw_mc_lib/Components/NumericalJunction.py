@@ -32,7 +32,7 @@ class NumericalJunction(Component):
             component_id,
             position,
             inputs,
-            properties,
+            _,
         ) = NumericalJunction._basic_in_parsing(obj)
         return NumericalJunction(
             component_id, position, inputs.get("1"), inputs.get("2")

@@ -23,9 +23,7 @@ class ConstantNumber(ValueComponent):
             ComponentType.ConstantNumber.value
         ), f"Not an ConstantNumber {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs, properties = ConstantNumber._basic_in_parsing(
-            obj
-        )
+        component_id, position, _, properties = ConstantNumber._basic_in_parsing(obj)
         value_property: NumberProperty = ValueComponent._basic_value_parsing(properties)
         return ConstantNumber(component_id, position, value_property)
 

@@ -37,7 +37,7 @@ class CompositeReadBoolean(Component):
             component_id,
             position,
             inputs,
-            properties,
+            _,
         ) = CompositeReadBoolean._basic_in_parsing(obj)
         channel_property: int = int(obj.attributes.get("i", "0"))
         return CompositeReadBoolean(

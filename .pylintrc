@@ -1,0 +1,25 @@
+[MAIN]
+
+ignore=.venv,test
+
+jobs=0
+
+suggestion-mode=yes
+
+py-version = 3.10.0
+
+[MESSAGES CONTROL]
+
+disable=
+    line-too-long,
+    invalid-name,
+    redefined-builtin,
+    missing-function-docstring,
+    missing-module-docstring,
+    missing-class-docstring,
+
+[DESIGN]
+
+max-args=12
+
+max-attributes=10
