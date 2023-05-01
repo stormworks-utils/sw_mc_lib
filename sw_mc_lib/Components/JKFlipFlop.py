@@ -10,6 +10,10 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class JKFlipFlop(Component):
+    """
+    An JK flip flop that can be set and reset using two on/off inputs.
+    """
+
     def __init__(
         self,
         component_id: int,

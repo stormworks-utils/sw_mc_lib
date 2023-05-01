@@ -13,6 +13,11 @@ from .SubTypes.ResetComponent import ResetComponent
 
 
 class MemoryRegister(ResetComponent):
+    """
+    "Remembers the input value when receiving a signal to the Set node. When the Reset node receives a signal,
+    the stored number is cleared to a value that can be customised in the properties panel.
+    """
+
     def __init__(
         self,
         component_id: int,

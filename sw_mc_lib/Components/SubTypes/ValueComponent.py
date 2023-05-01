@@ -11,6 +11,10 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class ValueComponent(Component, ABC):
+    """
+    A Component that has a value property.
+    """
+
     def __init__(
         self,
         component_type: ComponentType,

@@ -10,6 +10,10 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class NOR(Component):
+    """
+    Outputs the logical NOR of its two input signals.
+    """
+
     def __init__(
         self,
         component_id: int,

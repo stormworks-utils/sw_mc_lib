@@ -12,6 +12,10 @@ from .SubTypes.ValueComponent import ValueComponent
 
 
 class PropertyNumber(ValueComponent):
+    """
+    Adds a custom number input that will be seen on the microcontroller's property panel when placed on a vehicle.
+    """
+
     def __init__(
         self,
         component_id: int,

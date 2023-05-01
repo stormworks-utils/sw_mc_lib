@@ -10,6 +10,10 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class CompositeBinaryToNumber(Component):
+    """
+    Reads the on/off signals of a composite link and encodes them in the bits of an output number.
+    """
+
     def __init__(
         self,
         component_id: int,

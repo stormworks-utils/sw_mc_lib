@@ -10,6 +10,10 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class NumberToCompositeBinary(Component):
+    """
+    Converts a number (rounded) to binary and outputs the bits as composite on/off signals.
+    """
+
     def __init__(
         self,
         component_id: int,

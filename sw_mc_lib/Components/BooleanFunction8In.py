@@ -10,6 +10,10 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class BooleanFunction8In(Component):
+    """
+    Evaluates a logical expression with up to 8 input variables and outputs the result.
+    """
+
     def __init__(
         self,
         component_id: int,

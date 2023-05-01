@@ -57,7 +57,7 @@ class TestComponent(unittest.TestCase):
         elem: XMLParserElement = XMLParserElement("object", {"id": "123"})
         expected: tuple[int, Position, dict[str, Input], dict[str, NumberProperty]] = (
             123,
-            Position.empty_pos(),
+            Position(),
             {},
             {},
         )

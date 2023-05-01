@@ -10,6 +10,10 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class Multiply(Component):
+    """
+    Multiplies the two input values and outputs the result.
+    """
+
     def __init__(
         self,
         component_id: int,

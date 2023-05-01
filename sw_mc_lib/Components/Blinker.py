@@ -10,6 +10,10 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class Blinker(Component):
+    """
+    Outputs a value that blinks between on and off at a set rate.
+    """
+
     def __init__(
         self,
         component_id: int,

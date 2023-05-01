@@ -7,6 +7,11 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class PropertyText(Component):
+    """
+    Adds a custom text input that will be seen on the microcontroller's property panel when placed on a vehicle,
+    for showing player-defined text within a lua script.
+    """
+
     def __init__(
         self,
         component_id: int,

@@ -10,6 +10,11 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class NumericalJunction(Component):
+    """
+    Outputs the input number to one of the outputs depending on whether or not the Switch Signal is on.
+    The path that the input doesn't take will output a value of 0.
+    """
+
     def __init__(
         self,
         component_id: int,

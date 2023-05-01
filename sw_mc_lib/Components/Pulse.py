@@ -10,6 +10,12 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class Pulse(Component):
+    """
+    A switch that outputs a single tick pulse.
+    It can be configured to pulse when being switched from off to on (default), on to off,
+    or always when the input signal changes.
+    """
+
     def __init__(
         self,
         component_id: int,

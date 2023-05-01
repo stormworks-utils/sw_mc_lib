@@ -10,6 +10,10 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class VideoSwitchbox(Component):
+    """
+    Outputs the first input video when receiving an on signal, and the second when receiving an off signal.
+    """
+
     def __init__(
         self,
         component_id: int,

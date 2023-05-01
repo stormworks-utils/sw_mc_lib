@@ -10,6 +10,10 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class Subtract(Component):
+    """
+    Subtracts the second input from the first and outputs the result.
+    """
+
     def __init__(
         self,
         component_id: int,

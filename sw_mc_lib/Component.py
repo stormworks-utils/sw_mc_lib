@@ -15,6 +15,10 @@ INNER_TO_XML_RESULT = tuple[dict[str, str], list[XMLParserElement]]
 
 
 class Component(XMLElement, ABC):
+    """
+    A generic Component
+    """
+
     width: float = 1
 
     def __init__(
@@ -34,7 +38,7 @@ class Component(XMLElement, ABC):
         element: XMLParserElement,
     ) -> tuple[int, Position, dict[str, Input], dict[str, NumberProperty]]:
         component_id: int = int(element.attributes.get("id", "0"))
-        position: Optional[Position] = None
+        position: Position = Position()
         inputs: dict[str, Input] = {}
         properties: dict[str, NumberProperty] = {}
         for child in element.children:
@@ -46,8 +50,6 @@ class Component(XMLElement, ABC):
                     inputs[input.index] = input
             else:
                 properties[child.tag] = NumberProperty.from_xml(child)
-        if not position:
-            position = Position.empty_pos()
         return component_id, position, inputs, properties
 
     @abstractmethod
@@ -62,6 +64,11 @@ class Component(XMLElement, ABC):
         return XMLParserElement("c", {"type": str(self.type.value)}, [object_element])
 
     def to_state_xml(self, index: int) -> XMLParserElement:
+        """
+        Convert this Component to a XML state entity
+        :param index: The zero based index of the entity
+        :return: XML state representation
+        """
         c_element: XMLParserElement = XMLParserElement(
             f"c{index}", {"id": str(self.component_id)}
         )
@@ -98,6 +105,12 @@ class Component(XMLElement, ABC):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> Component:
+        """
+        Convert the XML element to a matching Component
+        :param element: The XML representation of the component
+        :return: the contained Component
+        """
+        # pylint: disable=too-many-statements
         component_type: ComponentType = ComponentType(
             int(element.attributes.get("type", "0"))
         )
@@ -226,4 +239,4 @@ class Component(XMLElement, ABC):
         return element_class.from_xml(element)
 
 
-from .Components import *  # noqa: ignore=F403
+from .Components import *  # noqa: ignore=F403 pylint: disable=wildcard-import,wrong-import-position

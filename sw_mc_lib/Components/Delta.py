@@ -10,6 +10,10 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class Delta(Component):
+    """
+    Outputs the difference between the input and the input from the previous tick.
+    """
+
     def __init__(
         self, component_id: int, position: Position, value_input: Optional[Input] = None
     ):

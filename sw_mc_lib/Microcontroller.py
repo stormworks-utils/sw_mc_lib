@@ -8,6 +8,10 @@ from .XMLElement import XMLElement, XMLParserElement
 
 
 class Microcontroller(XMLElement):
+    """
+    A Stormworks Microcontroller
+    """
+
     def __init__(
         self,
         name: str,
@@ -79,11 +83,19 @@ class Microcontroller(XMLElement):
 
     @property
     def id_counter(self) -> int:
+        """
+        Stormworks internal counter of what the largest component_id is.
+        :return: The currently largest component_id
+        """
         components = (comp.component_id for comp in self.components)
         nodes = (node.component_id for node in self.nodes)
         return max(chain(components, nodes, (0,)))
 
     @property
     def node_counter(self) -> int:
+        """
+        Stormworks internal counter of what the largest node_id is.
+        :return: The currently largest node_id
+        """
         nodes = (node.node_id for node in self.nodes)
         return max(chain(nodes, (0,)))

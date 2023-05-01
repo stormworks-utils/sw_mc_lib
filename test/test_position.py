@@ -16,7 +16,7 @@ class TestPosition(unittest.TestCase):
         self.assertEqual(Position.from_xml(elem), expected)
 
     def test_empty_pos(self) -> None:
-        self.assertEqual(Position.empty_pos(), Position(0, 0))
+        self.assertEqual(Position(), Position(0, 0))
 
     def test_to_xml(self) -> None:
         elem: Position = Position(0, 0)

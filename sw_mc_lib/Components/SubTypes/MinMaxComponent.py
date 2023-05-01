@@ -11,6 +11,10 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class MinMaxComponent(Component, ABC):
+    """
+    A Component that has a min and max Property.
+    """
+
     def __init__(
         self,
         component_type: ComponentType,

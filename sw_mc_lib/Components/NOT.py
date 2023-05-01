@@ -10,6 +10,10 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class NOT(Component):
+    """
+    Outputs the logical NOT of its input signal.
+    """
+
     def __init__(
         self, component_id: int, position: Position, a_input: Optional[Input] = None
     ):

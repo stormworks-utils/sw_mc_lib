@@ -10,6 +10,10 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class LessThan(Component):
+    """
+    Outputs an on signal if the first value is less than the second.
+    """
+
     def __init__(
         self,
         component_id: int,

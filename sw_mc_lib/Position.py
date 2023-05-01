@@ -5,7 +5,11 @@ from .XMLParser import XMLParserElement
 
 
 class Position(XMLElement):
-    def __init__(self, x: float, y: float):
+    """
+    Position of a Component. Used in 0.25 intervals.
+    """
+
+    def __init__(self, x: float = 0.0, y: float = 0.0):
         self.x: float = x
         self.y: float = y
 
@@ -16,10 +20,6 @@ class Position(XMLElement):
             float(element.attributes.get("x", "0")),
             float(element.attributes.get("y", "0")),
         )
-
-    @staticmethod
-    def empty_pos() -> Position:
-        return Position(0.0, 0.0)
 
     def to_xml(self) -> XMLParserElement:
         attributes: dict[str, str] = {}

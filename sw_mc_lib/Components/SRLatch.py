@@ -10,6 +10,10 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class SRLatch(Component):
+    """
+    An SR latch that can be set and reset using two on/off inputs.
+    """
+
     def __init__(
         self,
         component_id: int,

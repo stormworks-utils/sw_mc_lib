@@ -14,6 +14,10 @@ from .SubTypes.ResetComponent import ResetComponent
 
 
 class UpDownCounter(MinMaxComponent, ResetComponent):
+    """
+    Has an internal value that will increase and decrease when receiving different signals.
+    """
+
     def __init__(
         self,
         component_id: int,

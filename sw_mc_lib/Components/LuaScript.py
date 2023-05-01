@@ -24,6 +24,10 @@ end"""
 
 
 class LuaScript(Component):
+    """
+    Runs a custom lua script for advanced logic and drawing to monitors.
+    """
+
     def __init__(
         self,
         component_id: int,

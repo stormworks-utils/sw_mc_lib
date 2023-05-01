@@ -10,6 +10,10 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class Divide(Component):
+    """
+    Divides the first input by the second and outputs the result.
+    """
+
     def __init__(
         self,
         component_id: int,

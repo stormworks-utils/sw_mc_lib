@@ -13,6 +13,10 @@ from .SubTypes.MinMaxComponent import MinMaxComponent
 
 
 class Clamp(MinMaxComponent):
+    """
+    Clamps the input value between a set min and max and outputs the result.
+    """
+
     def __init__(
         self,
         component_id: int,

@@ -10,6 +10,10 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class Equal(Component):
+    """
+    Compares whether or not two numbers are equal within a set accuracy.
+    """
+
     def __init__(
         self,
         component_id: int,

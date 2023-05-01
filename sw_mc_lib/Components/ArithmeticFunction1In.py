@@ -10,6 +10,10 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class ArithmeticFunction1In(Component):
+    """
+    Evaluates a mathematical expression with 1 input variable and outputs the result.
+    """
+
     def __init__(
         self,
         component_id: int,

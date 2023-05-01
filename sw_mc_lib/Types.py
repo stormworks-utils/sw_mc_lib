@@ -1,7 +1,16 @@
 from enum import Enum
 
 
-class SignalType(Enum):
+class _Enum(Enum):
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}.{self.name}"
+
+
+class SignalType(_Enum):
+    """
+    Signal types
+    """
+
     Boolean: int = 0
     Number: int = 1
     Composite: int = 5
@@ -9,29 +18,49 @@ class SignalType(Enum):
     Audio: int = 7
 
 
-class NodeMode(Enum):
+class NodeMode(_Enum):
+    """
+    Modes of nodes (in/out connections)
+    """
+
     Output: int = 0
     Input: int = 1
 
 
-class TooltipMode(Enum):
+class TooltipMode(_Enum):
+    """
+    Modes of Tooltips, depending on the error/signal input
+    """
+
     Always: int = 0
     IfOn: int = 1
     IfOff: int = 2
 
 
-class PulseMode(Enum):
+class PulseMode(_Enum):
+    """
+    Modes of the Pulse Component, note that OffToOn is the default mode
+    """
+
     OnToOff: int = 0
     OffToOn: int = 1
     Always: int = 2
 
 
-class TimerUnit(Enum):
+class TimerUnit(_Enum):
+    """
+    Units of timer Components
+    """
+
     Seconds: int = 0
     Ticks: int = 1
 
 
-class ComponentType(Enum):
+class ComponentType(_Enum):
+    """
+    Types of Components and their respective ids
+    """
+
     NOT: int = 0
     AND: int = 1
     OR: int = 2

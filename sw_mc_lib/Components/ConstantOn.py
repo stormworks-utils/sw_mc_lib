@@ -7,6 +7,10 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class ConstantOn(Component):
+    """
+    Outputs a constant on signal.
+    """
+
     def __init__(self, component_id: int, position: Position):
         super().__init__(ComponentType.ConstantOn, component_id, position, 0.5)
 

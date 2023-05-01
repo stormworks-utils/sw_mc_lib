@@ -10,6 +10,10 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class Add(Component):
+    """
+    Adds the two input values together and outputs the result.
+    """
+
     def __init__(
         self,
         component_id: int,

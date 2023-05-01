@@ -10,6 +10,11 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class TimerRTF(Component):
+    """
+    Variable input timer. Outputs an on signal when the timer is less than its duration.
+    The timer will not reset until it is signalled.
+    """
+
     def __init__(
         self,
         component_id: int,

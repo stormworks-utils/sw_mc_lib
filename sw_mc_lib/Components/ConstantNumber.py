@@ -12,6 +12,10 @@ from .SubTypes.ValueComponent import ValueComponent
 
 
 class ConstantNumber(ValueComponent):
+    """
+    Outputs a constant number that is set on the properties panel.
+    """
+
     def __init__(
         self,
         component_id: int,

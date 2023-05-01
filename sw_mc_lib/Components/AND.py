@@ -10,6 +10,10 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class AND(Component):
+    """
+    Outputs the logical AND of its two input signals.
+    """
+
     def __init__(
         self,
         component_id: int,

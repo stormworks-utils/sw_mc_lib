@@ -10,6 +10,10 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class CompositeReadNumber(Component):
+    """
+    Reads the number value from a selected channel of a composite input.
+    """
+
     def __init__(
         self,
         component_id: int,

@@ -10,6 +10,10 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class Abs(Component):
+    """
+    Outputs the absolute value of the input value (negative numbers become positive).
+    """
+
     def __init__(
         self,
         component_id: int,

@@ -10,6 +10,11 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class CompositeWriteBoolean(Component):
+    """
+    Writes up to 32 on/off signals to a composite link in a single logic tick.
+    Only connected channels will be modified. The number of inputs and channel to begin writing at can be configured.
+    """
+
     def __init__(
         self,
         component_id: int,

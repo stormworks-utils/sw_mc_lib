@@ -10,6 +10,10 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class NAND(Component):
+    """
+    Outputs the logical NAND of its two input signals.
+    """
+
     def __init__(
         self,
         component_id: int,

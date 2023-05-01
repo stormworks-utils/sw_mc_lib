@@ -11,6 +11,10 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class DropDownOption(XMLElement):
+    """
+    A single Option for :class:`sw_mc_lib.Components.PropertyDropDown.PropertyDropDown`
+    """
+
     def __init__(self, label: str, value_property: Optional[NumberProperty]):
         self.label: str = label
         self.value_property: NumberProperty = value_property or NumberProperty("0", "v")
@@ -30,6 +34,10 @@ class DropDownOption(XMLElement):
 
 
 class PropertyDropdown(Component):
+    """
+    Adds a custom dropdown list that will be seen on the microcontroller's property panel when placed on a vehicle.
+    """
+
     def __init__(
         self,
         component_id: int,

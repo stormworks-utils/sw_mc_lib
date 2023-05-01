@@ -11,6 +11,10 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class PIDController(Component):
+    """
+    A basic PID controller. The proportional, integral and derivative gains can be set in the property panel.
+    """
+
     def __init__(
         self,
         component_id: int,

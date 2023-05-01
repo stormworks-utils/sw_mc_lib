@@ -8,6 +8,11 @@ from .XMLParser import XMLParserElement
 
 
 class NodePosition(XMLElement):
+    """
+    A Position for a node. This is distinct from :class:`sw_mc_lib.Position.Position` in that it has x, y and z, and
+    that they are integers instead of floats. You probably never need to use y.
+    """
+
     def __init__(self, x: int, y: int, z: int):
         self.x: int = x
         self.y: int = y
@@ -34,6 +39,10 @@ class NodePosition(XMLElement):
 
 
 class Node(XMLElement):
+    """
+    A Microcontroller node. Interface between Microcontroller and the rest of the Vehicle.
+    """
+
     def __init__(
         self,
         node_id: int,

@@ -20,17 +20,15 @@ class BinopHelper:
         )
 
     def get_empty_obj(self) -> XMLParserElement:
-        return self.embed([Position.empty_pos().to_xml()])
+        return self.embed([Position().to_xml()])
 
     def get_1_arg(self) -> XMLParserElement:
-        return self.embed(
-            [Position.empty_pos().to_xml(), Input(self.INPUT_1, 0, "1").to_xml()]
-        )
+        return self.embed([Position().to_xml(), Input(self.INPUT_1, 0, "1").to_xml()])
 
     def get_2_arg(self) -> XMLParserElement:
         return self.embed(
             [
-                Position.empty_pos().to_xml(),
+                Position().to_xml(),
                 Input(self.INPUT_1, 0, "1").to_xml(),
                 Input(self.INPUT_2, 0, "2").to_xml(),
             ]

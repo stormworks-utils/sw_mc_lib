@@ -10,6 +10,10 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class PIDControllerAdvanced(Component):
+    """
+    A PID controller with variable proportional, integral and derivative gains.
+    """
+
     def __init__(
         self,
         component_id: int,

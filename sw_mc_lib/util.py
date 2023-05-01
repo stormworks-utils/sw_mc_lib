@@ -1,26 +1,33 @@
 from inspect import Signature, signature
-from typing import Any, List, Optional
+from typing import Any, Optional
 
 
 def generic_str(
     self: Any,
-    ignored_keywords: Optional[List[str]] = None,
-    explicit_keywords: Optional[List[str]] = None,
+    ignored_keywords: Optional[list[str]] = None,
+    explicit_keywords: Optional[list[str]] = None,
+    newlines: bool = True,
 ) -> str:
-    newlines: bool = True
+    """
+    Return a representation of a class that is valid python, and optionally also indented
+    :param self: The class that needs a representation
+    :param ignored_keywords: Ignore these attributes
+    :param explicit_keywords: Include these attributes, regardless of ignores and signatures
+    :param newlines: use newlines and indentation
+    :return: The representation
+    """
     newline_or_space: str = "\n" if newlines else " "
     newline_or_nothing: str = "\n" if newlines else ""
     string: str = f"{self.__class__.__name__}({newline_or_nothing}"
-    dir: List[str] = []
+    dir: set[str] = set()
     self_signature: Signature = signature(self.__init__)
     ignored_keywords = (ignored_keywords or []) + ["self"]
     for i in self_signature.parameters:
         if i not in ignored_keywords:
-            dir.append(i)
+            dir.update(i)
     if explicit_keywords:
         for i in explicit_keywords:
-            if i not in self_signature.parameters:
-                dir.append(i)
+            dir.update(i)
     if dir:
         for i in dir:
             string += f'{"    " if newlines else ""}{i}='

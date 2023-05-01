@@ -5,6 +5,10 @@ from typing import Any, Optional
 
 
 class XMLParserElement:
+    """
+    An element that is similar to XML elements.
+    """
+
     def __init__(
         self,
         tag: str,
@@ -29,6 +33,10 @@ class XMLParserElement:
 
 
 class XMLParser:
+    """
+    Parser to parse strings into XML elements
+    """
+
     IDENTIFIER_CHARACTERS: str = string.ascii_letters + string.digits + "_"
 
     def __init__(self, content: str):
@@ -39,6 +47,10 @@ class XMLParser:
         self.current: Optional[str] = content[0]
 
     def advance(self) -> None:
+        """
+        Advance the pointer by one and update line, column and current
+        :return: None
+        """
         self.pos += 1
         if self.pos >= len(self.content):
             self.current = None
@@ -50,10 +62,18 @@ class XMLParser:
         self.column += 1
 
     def skip_whitespace(self) -> None:
+        """
+        Skip all kinds of whitespace characters
+        :return: None
+        """
         while self.current and self.current.isspace():
             self.advance()
 
     def read_name(self) -> str:
+        """
+        Read a name (so a string consisting of IDENTIFIER_CHARACTERS until current is not such a character
+        :return: name
+        """
         name: str = ""
         while self.current and self.current in self.IDENTIFIER_CHARACTERS:
             name += self.current
@@ -61,6 +81,10 @@ class XMLParser:
         return name
 
     def read_and_unescape_string(self) -> str:
+        """
+        Read a n attribute string, so a string constrained either by `'` or `"`
+        :return: The unescaped resulting string
+        """
         res_str: str = ""
         assert self.current
         opening_char: str = self.current
@@ -77,15 +101,32 @@ class XMLParser:
         return res_str
 
     def error(self, expected: str, received: str, line: int, column: int) -> None:
+        """
+        Raise an error
+        :param expected: The character or string that has been expected at the position
+        :param received: The character or string that has been received instead
+        :param line: The line it occurred on
+        :param column: The column it occurred on
+        :return: None
+        """
         raise NameError(f"Expected {expected} at {line}:{column}, got {received}")
 
     def eat(self, expected: str) -> None:
+        """
+        Eat a character, throwing an error if it is unlike the expected character
+        :param expected: The expected character
+        :return: None
+        """
         if self.current == expected:
             self.advance()
         else:
             self.error(expected, self.current or "<EOL>", self.line, self.column)
 
     def read_element(self) -> XMLParserElement:
+        """
+        Read an XML element, with a tag, attributes and children
+        :return: XML element
+        """
         tag: str = self.read_name()
         self.skip_whitespace()
         attributes: dict[str, str] = {}
@@ -116,6 +157,10 @@ class XMLParser:
         return XMLParserElement(tag, attributes, children)
 
     def parse(self) -> XMLParserElement:
+        """
+        Parse the string, discarding the XML declaration
+        :return:
+        """
         self.eat("<")
         if self.current == "?":
             self.advance()
@@ -126,3 +171,12 @@ class XMLParser:
             self.skip_whitespace()
             self.eat("<")
         return self.read_element()
+
+
+def parse(content: str) -> XMLParserElement:
+    """
+    Parse a string to XML elements
+    :param content: The string to parse
+    :return: The root XML element
+    """
+    return XMLParser(content).parse()

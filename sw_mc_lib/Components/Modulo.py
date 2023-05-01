@@ -10,6 +10,10 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class Modulo(Component):
+    """
+    Outputs the modulo of input A by input B.
+    """
+
     def __init__(
         self,
         component_id: int,

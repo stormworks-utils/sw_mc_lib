@@ -10,6 +10,10 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class Capacitor(Component):
+    """
+    Charges up when receiving an on signal, then discharges over a period of time.
+    """
+
     def __init__(
         self,
         component_id: int,

@@ -13,6 +13,10 @@ from .SubTypes.ValueComponent import ValueComponent
 
 
 class PropertySlider(MinMaxComponent, ValueComponent):
+    """
+    Adds a custom slider that will be seen on the microcontroller's property panel when placed on a vehicle.
+    """
+
     def __init__(
         self,
         component_id: int,

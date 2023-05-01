@@ -10,6 +10,10 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class PushToToggle(Component):
+    """
+    An on/off switch that is toggled every time a new on signal is sent to its input.
+    """
+
     def __init__(
         self, component_id: int, position: Position, a_input: Optional[Input] = None
     ):

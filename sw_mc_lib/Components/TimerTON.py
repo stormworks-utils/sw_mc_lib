@@ -10,6 +10,10 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class TimerTON(Component):
+    """
+    Variable input timer. Outputs an on signal when the timer reaches its duration. The timer will reset when off.
+    """
+
     def __init__(
         self,
         component_id: int,

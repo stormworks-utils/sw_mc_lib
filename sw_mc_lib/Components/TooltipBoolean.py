@@ -10,6 +10,11 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class TooltipBoolean(Component):
+    """
+    Displays an on/off signal on this microcontroller's tooltip when it is looked at by the player
+    on a spawned vehicle.
+    """
+
     def __init__(
         self,
         component_id: int,

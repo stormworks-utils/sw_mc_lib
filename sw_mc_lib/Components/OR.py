@@ -10,6 +10,10 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class OR(Component):
+    """
+    Outputs the logical OR of its two input signals.
+    """
+
     def __init__(
         self,
         component_id: int,

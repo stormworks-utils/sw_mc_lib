@@ -11,6 +11,10 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class ResetComponent(Component, ABC):
+    """
+    A Component that has a reset value property.
+    """
+
     def __init__(
         self,
         component_type: ComponentType,

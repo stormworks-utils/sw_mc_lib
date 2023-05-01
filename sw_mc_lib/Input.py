@@ -6,6 +6,10 @@ from .XMLElement import XMLElement, XMLParserElement
 
 
 class Input(XMLElement):
+    """
+    An input for a Component. Contains both component_id as well as node_index of the source.
+    """
+
     def __init__(
         self, component_id: int, node_index: int = 0, index: Optional[str] = None
     ):

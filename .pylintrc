@@ -14,9 +14,7 @@ disable=
     line-too-long,
     invalid-name,
     redefined-builtin,
-    missing-function-docstring,
     missing-module-docstring,
-    missing-class-docstring,
 
 [DESIGN]
 

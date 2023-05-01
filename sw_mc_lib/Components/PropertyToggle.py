@@ -7,6 +7,10 @@ from sw_mc_lib.XMLParser import XMLParserElement
 
 
 class PropertyToggle(Component):
+    """
+    Adds a custom on/off toggle that will be seen on the microcontroller's property panel when placed on a vehicle.
+    """
+
     def __init__(
         self,
         component_id: int,

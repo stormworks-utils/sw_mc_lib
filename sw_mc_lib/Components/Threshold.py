@@ -13,6 +13,10 @@ from .SubTypes.MinMaxComponent import MinMaxComponent
 
 
 class Threshold(MinMaxComponent):
+    """
+    Outputs an on/off signal indicating whether or not the input value is within a set threshold.
+    """
+
     def __init__(
         self,
         component_id: int,
