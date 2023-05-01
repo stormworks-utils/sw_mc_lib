@@ -5,36 +5,24 @@ Types
 
 ComponentType
 -------------
-.. autoclass:: ComponentType
-   :members:
-   :inherited-members:
+.. autoenum:: ComponentType
 
 SignalType
 ----------
-.. autoclass:: SignalType
-   :members:
-   :inherited-members:
+.. autoenum:: SignalType
 
 NodeMode
 --------
-.. autoclass:: NodeMode
-   :members:
-   :inherited-members:
+.. autoenum:: NodeMode
 
 TooltipMode
 -----------
-.. autoclass:: TooltipMode
-   :members:
-   :inherited-members:
+.. autoenum:: TooltipMode
 
 PulseMode
 ---------
-.. autoclass:: PulseMode
-   :members:
-   :inherited-members:
+.. autoenum:: PulseMode
 
 TimerUnit
 ---------
-.. autoclass:: TimerUnit
-   :members:
-   :inherited-members:
+.. autoenum:: TimerUnit

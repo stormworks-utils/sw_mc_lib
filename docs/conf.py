@@ -28,6 +28,7 @@ extensions = [
     "sphinx.ext.todo",
     "sphinx.ext.intersphinx",
     "sphinx.ext.viewcode",
+    "enum_tools.autoenum",
 ]
 
 templates_path = ["_templates"]
