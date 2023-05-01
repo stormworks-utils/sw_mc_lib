@@ -38,7 +38,7 @@ class PropertyDropdown(Component):
         options: Optional[list[DropDownOption]] = None,
     ):
         super().__init__(ComponentType.PropertyDropdown, component_id, position, 0.5)
-        self.selected: int = selected_property
+        self.selected_property: int = selected_property
         self.options: list[DropDownOption] = options or []
 
     @staticmethod
@@ -58,7 +58,7 @@ class PropertyDropdown(Component):
         return PropertyDropdown(component_id, position, selected_property, options)
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        attributes: dict[str, str] = {"i": str(self.selected)}
+        attributes: dict[str, str] = {"i": str(self.selected_property)}
         children: list[XMLParserElement] = self._pos_in_to_xml()
         items: XMLParserElement = XMLParserElement("items")
         for option in self.options:

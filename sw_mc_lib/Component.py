@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from itertools import chain
-from typing import Optional
+from typing import Optional, Type
 
 from .Input import Input
 from .NumberProperty import NumberProperty
@@ -42,7 +42,8 @@ class Component(XMLElement, ABC):
                 position = Position.from_xml(child)
             elif child.tag.startswith("in"):
                 input: Input = Input.from_xml(child)
-                inputs[input.index] = input
+                if input.component_id > 0:
+                    inputs[input.index] = input
             else:
                 properties[child.tag] = NumberProperty.from_xml(child)
         if not position:
@@ -59,6 +60,15 @@ class Component(XMLElement, ABC):
         object_element.attributes.update(inner_attributes)
         object_element.children = inner_children
         return XMLParserElement("c", {"type": str(self.type.value)}, [object_element])
+
+    def to_state_xml(self, index: int) -> XMLParserElement:
+        c_element: XMLParserElement = XMLParserElement(
+            f"c{index}", {"id": str(self.component_id)}
+        )
+        inner_attributes, inner_children = self._inner_to_xml()
+        c_element.attributes.update(inner_attributes)
+        c_element.children = inner_children
+        return c_element
 
     def _pos_in_to_xml(
         self,
@@ -85,3 +95,135 @@ class Component(XMLElement, ABC):
             property.name = name
             children.append(property.to_xml())
         return children
+
+    @staticmethod
+    def from_xml(element: XMLParserElement) -> Component:
+        component_type: ComponentType = ComponentType(
+            int(element.attributes.get("type", "0"))
+        )
+        element_class: Optional[Type[Component]] = None
+        match component_type:
+            case ComponentType.Abs:
+                element_class = Abs
+            case ComponentType.Add:
+                element_class = Add
+            case ComponentType.AND:
+                element_class = AND
+            case ComponentType.ArithmeticFunction1In:
+                element_class = ArithmeticFunction1In
+            case ComponentType.ArithmeticFunction3In:
+                element_class = ArithmeticFunction3In
+            case ComponentType.ArithmeticFunction8In:
+                element_class = ArithmeticFunction8In
+            case ComponentType.AudioSwitchbox:
+                element_class = AudioSwitchbox
+            case ComponentType.Blinker:
+                element_class = Blinker
+            case ComponentType.BooleanFunction4In:
+                element_class = BooleanFunction4In
+            case ComponentType.BooleanFunction8In:
+                element_class = BooleanFunction8In
+            case ComponentType.Capacitor:
+                element_class = Capacitor
+            case ComponentType.Clamp:
+                element_class = Clamp
+            case ComponentType.CompositeBinaryToNumber:
+                element_class = CompositeBinaryToNumber
+            case ComponentType.CompositeReadBoolean:
+                element_class = CompositeReadBoolean
+            case ComponentType.CompositeReadNumber:
+                element_class = CompositeReadNumber
+            case ComponentType.CompositeSwitchbox:
+                element_class = CompositeSwitchbox
+            case ComponentType.CompositeWriteBoolean:
+                element_class = CompositeWriteBoolean
+            case ComponentType.CompositeWriteNumber:
+                element_class = CompositeWriteNumber
+            case ComponentType.ConstantNumber:
+                element_class = ConstantNumber
+            case ComponentType.ConstantOn:
+                element_class = ConstantOn
+            case ComponentType.Delta:
+                element_class = Delta
+            case ComponentType.Divide:
+                element_class = Divide
+            case ComponentType.Equal:
+                element_class = Equal
+            case ComponentType.GreaterThan:
+                element_class = GreaterThan
+            case ComponentType.JKFlipFlop:
+                element_class = JKFlipFlop
+            case ComponentType.LessThan:
+                element_class = LessThan
+            case ComponentType.LuaScript:
+                element_class = LuaScript
+            case ComponentType.MemoryRegister:
+                element_class = MemoryRegister
+            case ComponentType.Modulo:
+                element_class = Modulo
+            case ComponentType.Multiply:
+                element_class = Multiply
+            case ComponentType.NAND:
+                element_class = NAND
+            case ComponentType.NOR:
+                element_class = NOR
+            case ComponentType.NOT:
+                element_class = NOT
+            case ComponentType.NumberToCompositeBinary:
+                element_class = NumberToCompositeBinary
+            case ComponentType.NumericalJunction:
+                element_class = NumericalJunction
+            case ComponentType.NumericalSwitchbox:
+                element_class = NumericalSwitchbox
+            case ComponentType.OR:
+                element_class = OR
+            case ComponentType.PIDController:
+                element_class = PIDController
+            case ComponentType.PIDControllerAdvanced:
+                element_class = PIDControllerAdvanced
+            case ComponentType.PropertyDropdown:
+                element_class = PropertyDropdown
+            case ComponentType.PropertyNumber:
+                element_class = PropertyNumber
+            case ComponentType.PropertySlider:
+                element_class = PropertySlider
+            case ComponentType.PropertyText:
+                element_class = PropertyText
+            case ComponentType.PropertyToggle:
+                element_class = PropertyToggle
+            case ComponentType.Pulse:
+                element_class = Pulse
+            case ComponentType.PushToToggle:
+                element_class = PushToToggle
+            case ComponentType.SRLatch:
+                element_class = SRLatch
+            case ComponentType.Subtract:
+                element_class = Subtract
+            case ComponentType.Threshold:
+                element_class = Threshold
+            case ComponentType.TimerRTF:
+                element_class = TimerRTF
+            case ComponentType.TimerRTO:
+                element_class = TimerRTO
+            case ComponentType.TimerTOF:
+                element_class = TimerTOF
+            case ComponentType.TimerTON:
+                element_class = TimerTON
+            case ComponentType.TooltipBoolean:
+                element_class = TooltipBoolean
+            case ComponentType.TooltipNumber:
+                element_class = TooltipNumber
+            case ComponentType.UpDownCounter:
+                element_class = UpDownCounter
+            case ComponentType.VideoSwitchbox:
+                element_class = VideoSwitchbox
+            case ComponentType.XOR:
+                element_class = XOR
+        if not element_class:
+            raise NotImplementedError(
+                f"No Component found for component type {component_type}"
+            )
+        return element_class.from_xml(element)
+
+
+from .Components import *  # noqa: ignore=F403
