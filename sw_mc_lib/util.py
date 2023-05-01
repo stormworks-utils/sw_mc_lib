@@ -9,7 +9,8 @@ def generic_str(
     newlines: bool = True,
 ) -> str:
     """
-    Return a representation of a class that is valid python, and optionally also indented
+    Return a representation of a class that is valid python, and optionally also indented.
+
     :param self: The class that needs a representation
     :param ignored_keywords: Ignore these attributes
     :param explicit_keywords: Include these attributes, regardless of ignores and signatures

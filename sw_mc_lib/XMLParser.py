@@ -34,7 +34,8 @@ class XMLParserElement:
 
 class XMLParser:
     """
-    Parser to parse strings into XML elements
+    Parser to parse strings into XML elements. To parse XML, you probably want to use
+    :func:`sw_mc_lib.XMLParser.parse`.
     """
 
     IDENTIFIER_CHARACTERS: str = string.ascii_letters + string.digits + "_"
@@ -49,6 +50,7 @@ class XMLParser:
     def advance(self) -> None:
         """
         Advance the pointer by one and update line, column and current
+
         :return: None
         """
         self.pos += 1
@@ -64,6 +66,7 @@ class XMLParser:
     def skip_whitespace(self) -> None:
         """
         Skip all kinds of whitespace characters
+
         :return: None
         """
         while self.current and self.current.isspace():
@@ -72,6 +75,7 @@ class XMLParser:
     def read_name(self) -> str:
         """
         Read a name (so a string consisting of IDENTIFIER_CHARACTERS until current is not such a character
+
         :return: name
         """
         name: str = ""
@@ -83,6 +87,7 @@ class XMLParser:
     def read_and_unescape_string(self) -> str:
         """
         Read a n attribute string, so a string constrained either by `'` or `"`
+
         :return: The unescaped resulting string
         """
         res_str: str = ""
@@ -103,6 +108,7 @@ class XMLParser:
     def error(self, expected: str, received: str, line: int, column: int) -> None:
         """
         Raise an error
+
         :param expected: The character or string that has been expected at the position
         :param received: The character or string that has been received instead
         :param line: The line it occurred on
@@ -114,6 +120,7 @@ class XMLParser:
     def eat(self, expected: str) -> None:
         """
         Eat a character, throwing an error if it is unlike the expected character
+
         :param expected: The expected character
         :return: None
         """
@@ -125,6 +132,7 @@ class XMLParser:
     def read_element(self) -> XMLParserElement:
         """
         Read an XML element, with a tag, attributes and children
+
         :return: XML element
         """
         tag: str = self.read_name()
@@ -159,7 +167,8 @@ class XMLParser:
     def parse(self) -> XMLParserElement:
         """
         Parse the string, discarding the XML declaration
-        :return:
+
+        :return: The parsed element
         """
         self.eat("<")
         if self.current == "?":
@@ -176,6 +185,7 @@ class XMLParser:
 def parse(content: str) -> XMLParserElement:
     """
     Parse a string to XML elements
+
     :param content: The string to parse
     :return: The root XML element
     """

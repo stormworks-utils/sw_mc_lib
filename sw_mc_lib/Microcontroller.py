@@ -85,6 +85,7 @@ class Microcontroller(XMLElement):
     def id_counter(self) -> int:
         """
         Stormworks internal counter of what the largest component_id is.
+
         :return: The currently largest component_id
         """
         components = (comp.component_id for comp in self.components)
@@ -95,6 +96,7 @@ class Microcontroller(XMLElement):
     def node_counter(self) -> int:
         """
         Stormworks internal counter of what the largest node_id is.
+
         :return: The currently largest node_id
         """
         nodes = (node.node_id for node in self.nodes)

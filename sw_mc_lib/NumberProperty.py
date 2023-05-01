@@ -9,7 +9,8 @@ from .XMLElement import XMLElement, XMLParserElement
 
 def string_to_sw_float(to_convert: str) -> float:
     """
-    Converts a number string to a float like the game does right now
+    Converts a number string to a float like the game does right now.
+
     :param to_convert: The string containing a float number
     :return: The resulting float
     """
@@ -40,7 +41,8 @@ class NumberProperty(XMLElement):
     @property
     def value(self) -> float:
         """
-        The value of the text field as float property
+        The value of the text field as float property.
+
         :return: Float of text
         """
         return string_to_sw_float(self.text)

@@ -8,6 +8,9 @@ def _escape_string(to_escape: str) -> str:
     Escapes a string so that it results in valid xml. To be used like following:
 
     `abc<>"def\n"` -> `'abc&lt;&gt;"def\n"'`
+
+    :param to_escape: The string that needs to be escaped
+    :return: Escaped string
     """
     to_escape = to_escape.replace("&", "&amp;")
     to_escape = to_escape.replace("<", "&lt;")
@@ -24,9 +27,14 @@ def _escape_string(to_escape: str) -> str:
 
 def _indent(to_indent: str, indentation_character: str, line_breaks: str) -> str:
     """
-    Indents the string by one tab and adds a newline at the end
+    Indents the string by one tab and adds a newline at the end. Will only indent lines with `\r\n`
 
     `<node/>` -> `\t<node/>\n`
+
+    :param to_indent: XML block to indent
+    :param indentation_character: The character(s) to use for indentation
+    :param line_breaks: Either line breaks or empty string
+    :return: Indented text
     """
     return (
         "\r\n".join(
@@ -57,7 +65,12 @@ def format(
 ) -> str:
     """
     Formats a XMLParserElement into a xml string. If indentation is None, there will be no line breaks or indentation.
-    If header is true, it will add a xml declaration at the top of the document
+    If header is true, it will add a xml declaration at the top of the document.
+
+    :param element: The XML element to format
+    :param indentation: The indentation character to use, `None` will not indent at all
+    :param header: Whether to include the XML Header
+    :return: XML string
     """
     line_breaks: str = "\r\n" if indentation is not None else ""
     indentation_character = indentation or ""

@@ -16,6 +16,7 @@ class XMLElement(ABC):
     def to_xml(self) -> XMLParserElement:
         """
         Serialize the element to an XML element.
+
         :return: The XML element
         """
 
@@ -23,7 +24,8 @@ class XMLElement(ABC):
     @abstractmethod
     def from_xml(element: XMLParserElement) -> XMLElement:
         """
-        Deserialize the element from an XML element
+        Deserialize the element from an XML element.
+
         :param element: XML element
         :return: Deserialized element
         """

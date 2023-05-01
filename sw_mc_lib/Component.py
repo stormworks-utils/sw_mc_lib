@@ -66,6 +66,7 @@ class Component(XMLElement, ABC):
     def to_state_xml(self, index: int) -> XMLParserElement:
         """
         Convert this Component to a XML state entity
+
         :param index: The zero based index of the entity
         :return: XML state representation
         """
@@ -86,6 +87,11 @@ class Component(XMLElement, ABC):
         """
         Turn the position and inputs into an element. Will strip all None inputs. Will also rename all numbered inputs
         to their according supplied index, and all named inputs to the supplied name.
+
+        :param inputs: Array of inputs, the order is important, as it defines overrides
+        :param named_inputs: Inputs by name, used for overrides
+        :param properties: Properties by name
+        :return: XML elements for all relevant children
         """
         named_inputs = named_inputs or {}
         properties = properties or {}
@@ -105,11 +111,6 @@ class Component(XMLElement, ABC):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> Component:
-        """
-        Convert the XML element to a matching Component
-        :param element: The XML representation of the component
-        :return: the contained Component
-        """
         # pylint: disable=too-many-statements
         component_type: ComponentType = ComponentType(
             int(element.attributes.get("type", "0"))
