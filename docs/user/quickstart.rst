@@ -30,7 +30,7 @@ These elements can be further parsed into a :class:`Microcontroller <sw_mc_lib.M
 Manipulating a Microcontroller
 ------------------------------
 
-To manipulate the Microcontroller, either modify existing children::
+To manipulate the Microcontroller, either modify existing components::
 
     >>> from sw_mc_lib import ComponentType, Input, Position
     >>> from sw_mc_lib.Components import AND, OR
@@ -38,6 +38,9 @@ To manipulate the Microcontroller, either modify existing children::
     >>> assert and_component.type == ComponentType.AND # functionally the same as
     >>> assert isinstance(and_component, AND)
     >>> and_component.a_input = Input(and_component.component_id)
+
+Or add new ones::
+
     >>> or_component = OR(0, Position())
     >>> mc.add_new_component(or_component)
     >>> or_component.a_input = Input(and_component.component_id)
