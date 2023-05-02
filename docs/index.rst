@@ -14,8 +14,8 @@ Goals
  - Make Microprocessor parsing great again
  - Accurate emulation of the games behaviour
  - In case of a conflict, use the design from the GUI rather than the XML
-   - For composite read/write, this means that properties like `start_channel` are one based like in the gui rather than zero based.
-   - Several names have been changed towards the GUI language.
+    - For composite read/write, this means that properties like `start_channel` are one based like in the gui rather than zero based.
+    - Several names have been changed towards the GUI language.
  - Try to parse reasonably ill-formed Microcontrollers and use defaults where necessary
  - Don't use RegEx (it has other uses, but not this one)
 
