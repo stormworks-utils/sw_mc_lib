@@ -14,5 +14,5 @@ from .Types import (
     TimerUnit,
     TooltipMode,
 )
-from .XMLFormatter import format
+from .XMLFormatter import XMLParserElement, format
 from .XMLParser import parse

@@ -81,6 +81,27 @@ class Microcontroller(XMLElement):
         }
         return XMLParserElement("microprocessor", attributes, [nodes_elem, group_elem])
 
+    def add_new_component(self, component: Component) -> None:
+        """
+        Adds a new :class:`Component <sw_mc_lib.Component.Component>`. Sets the right `component_id`.
+
+        :param component: The component to add, `component_id` may be any value
+        :return: None
+        """
+        component.component_id = self.id_counter + 1
+        self.components.append(component)
+
+    def add_new_node(self, node: Node) -> None:
+        """
+        Adds a new :class:`Node <sw_mc_lib.Node.Node>`. Sets the right `component_id` and `node_id`.
+
+        :param node: The Node to add
+        :return: None
+        """
+        node.component_id = self.id_counter + 1
+        node.node_id = self.node_counter + 1
+        self.nodes.append(node)
+
     @property
     def id_counter(self) -> int:
         """
