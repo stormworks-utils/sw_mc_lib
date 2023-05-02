@@ -14,7 +14,7 @@ sys.path.insert(0, os.path.abspath("../"))
 project = "sw_mc_lib"
 copyright = "2023, Fabian Wunsch"
 author = "Fabian Wunsch"
-release = "0.2.1"
+release = "0.3.0"
 
 # The master toctree document.
 master_doc = "index"

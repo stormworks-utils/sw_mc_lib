@@ -32,8 +32,9 @@ Manipulating a Microcontroller
 
 To manipulate the Microcontroller, either modify existing components::
 
-    >>> from sw_mc_lib import ComponentType, Input, Position
+    >>> from sw_mc_lib import Input, Position
     >>> from sw_mc_lib.Components import AND, OR
+    >>> from sw_mc_lib.Types import ComponentType
     >>> and_component = mc.components[0]
     >>> assert and_component.type == ComponentType.AND # functionally the same as
     >>> assert isinstance(and_component, AND)
