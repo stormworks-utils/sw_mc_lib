@@ -2,17 +2,15 @@ from __future__ import annotations
 
 from typing import Optional
 
-from sw_mc_lib.Component import INNER_TO_XML_RESULT
+from sw_mc_lib.Component import INNER_TO_XML_RESULT, Component
 from sw_mc_lib.Input import Input
 from sw_mc_lib.NumberProperty import NumberProperty
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
 
-from .SubTypes.ResetComponent import ResetComponent
 
-
-class MemoryRegister(ResetComponent):
+class MemoryRegister(Component):
     """
     "Remembers the input value when receiving a signal to the Set node. When the Reset node receives a signal,
     the stored number is cleared to a value that can be customised in the properties panel.
@@ -27,36 +25,29 @@ class MemoryRegister(ResetComponent):
         reset_input: Optional[Input] = None,
         number_to_store_input: Optional[Input] = None,
     ):
-        super().__init__(
-            ComponentType.MemoryRegister, component_id, position, 1.0, reset_property
-        )
+        super().__init__(ComponentType.MemoryRegister, component_id, position, 1.0)
         self.set_input: Optional[Input] = set_input
         self.reset_input: Optional[Input] = reset_input
         self.number_to_store_input: Optional[Input] = number_to_store_input
+        self.reset_property: NumberProperty = reset_property or NumberProperty("0", "r")
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> MemoryRegister:
-        assert element.tag == "c", f"invalid MemoryRegister {element}"
-        assert element.attributes.get("type", "0") == str(
-            ComponentType.MemoryRegister.value
-        ), f"Not an MemoryRegister {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs, properties = MemoryRegister._basic_in_parsing(
-            obj
-        )
-        reset_property = MemoryRegister._basic_reset_parsing(properties)
+        component_id, position, inputs, properties = Component._basic_in_parsing(obj)
         return MemoryRegister(
             component_id,
             position,
-            reset_property,
+            properties.get("r"),
             inputs.get("1"),
             inputs.get("2"),
             inputs.get("3"),
         )
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        children: list[XMLParserElement] = self._pos_in_to_xml(
-            self.set_input, self.reset_input, self.number_to_store_input
+        return {}, self._pos_in_to_xml(
+            self.set_input,
+            self.reset_input,
+            self.number_to_store_input,
+            properties={"r": self.reset_property},
         )
-        children.extend(self._reset_to_xml())
-        return {}, children

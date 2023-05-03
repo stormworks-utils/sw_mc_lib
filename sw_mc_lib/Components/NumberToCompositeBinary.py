@@ -27,14 +27,8 @@ class NumberToCompositeBinary(Component):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> NumberToCompositeBinary:
-        assert element.tag == "c", f"invalid NumberToCompositeBinary {element}"
-        assert element.attributes.get("type", "0") == str(
-            ComponentType.NumberToCompositeBinary.value
-        ), f"Not an NumberToCompositeBinary {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs, _ = NumberToCompositeBinary._basic_in_parsing(
-            obj
-        )
+        component_id, position, inputs, _ = Component._basic_in_parsing(obj)
         return NumberToCompositeBinary(component_id, position, inputs.get("1"))
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:

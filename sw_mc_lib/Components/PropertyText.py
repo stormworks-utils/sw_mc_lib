@@ -25,20 +25,14 @@ class PropertyText(Component):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> PropertyText:
-        assert element.tag == "c", f"invalid PropertyText {element}"
-        assert element.attributes.get("type", "0") == str(
-            ComponentType.PropertyText.value
-        ), f"Not an PropertyText {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, _, _ = PropertyText._basic_in_parsing(obj)
+        component_id, position, _, _ = Component._basic_in_parsing(obj)
         name: str = obj.attributes.get("n", "toggle")
         value_property: str = obj.attributes.get("v", "")
         return PropertyText(component_id, position, name, value_property)
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        attributes: dict[str, str] = {
+        return {
             "n": self.name,
             "v": self.value_property,
-        }
-        children: list[XMLParserElement] = self._pos_in_to_xml()
-        return attributes, children
+        }, self._pos_in_to_xml()

@@ -29,17 +29,8 @@ class AudioSwitchbox(Component):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> AudioSwitchbox:
-        assert element.tag == "c", f"invalid AudioSwitchbox {element}"
-        assert element.attributes.get("type", "0") == str(
-            ComponentType.AudioSwitchbox.value
-        ), f"Not an AudioSwitchbox {element}"
         obj: XMLParserElement = element.children[0]
-        (
-            component_id,
-            position,
-            inputs,
-            _,
-        ) = AudioSwitchbox._basic_in_parsing(obj)
+        component_id, position, inputs, _ = Component._basic_in_parsing(obj)
         return AudioSwitchbox(
             component_id, position, inputs.get("1"), inputs.get("2"), inputs.get("3")
         )

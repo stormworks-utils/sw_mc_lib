@@ -28,12 +28,8 @@ class PropertyToggle(Component):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> PropertyToggle:
-        assert element.tag == "c", f"invalid PropertyToggle {element}"
-        assert element.attributes.get("type", "0") == str(
-            ComponentType.PropertyToggle.value
-        ), f"Not an PropertyToggle {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, _, _ = PropertyToggle._basic_in_parsing(obj)
+        component_id, position, _, _ = Component._basic_in_parsing(obj)
         name: str = obj.attributes.get("n", "toggle")
         on_label: str = obj.attributes.get("on", "on")
         off_label: str = obj.attributes.get("off", "off")
@@ -43,11 +39,9 @@ class PropertyToggle(Component):
         )
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        attributes: dict[str, str] = {
+        return {
             "n": self.name,
             "on": self.on_label,
             "off": self.off_label,
             "v": str(self.value_property).lower(),
-        }
-        children: list[XMLParserElement] = self._pos_in_to_xml()
-        return attributes, children
+        }, self._pos_in_to_xml()

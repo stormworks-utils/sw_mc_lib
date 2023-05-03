@@ -29,12 +29,8 @@ class Pulse(Component):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> Pulse:
-        assert element.tag == "c", f"invalid Pulse {element}"
-        assert element.attributes.get("type", "0") == str(
-            ComponentType.Pulse.value
-        ), f"Not an Pulse {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs, _ = Pulse._basic_in_parsing(obj)
+        component_id, position, inputs, _ = Component._basic_in_parsing(obj)
         mode_property: PulseMode = PulseMode(int(obj.attributes.get("m", "1")))
         return Pulse(component_id, position, mode_property, inputs.get("1"))
 

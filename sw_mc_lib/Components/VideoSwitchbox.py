@@ -29,17 +29,8 @@ class VideoSwitchbox(Component):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> VideoSwitchbox:
-        assert element.tag == "c", f"invalid VideoSwitchbox {element}"
-        assert element.attributes.get("type", "0") == str(
-            ComponentType.VideoSwitchbox.value
-        ), f"Not an VideoSwitchbox {element}"
         obj: XMLParserElement = element.children[0]
-        (
-            component_id,
-            position,
-            inputs,
-            _,
-        ) = VideoSwitchbox._basic_in_parsing(obj)
+        component_id, position, inputs, _ = Component._basic_in_parsing(obj)
         return VideoSwitchbox(
             component_id, position, inputs.get("1"), inputs.get("2"), inputs.get("3")
         )

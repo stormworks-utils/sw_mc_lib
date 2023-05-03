@@ -32,12 +32,8 @@ class TimerRTO(Component):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> TimerRTO:
-        assert element.tag == "c", f"invalid TimerRTO {element}"
-        assert element.attributes.get("type", "0") == str(
-            ComponentType.TimerRTO.value
-        ), f"Not an TimerRTO {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs, _ = TimerRTO._basic_in_parsing(obj)
+        component_id, position, inputs, _ = Component._basic_in_parsing(obj)
         unit_property: TimerUnit = TimerUnit(int(obj.attributes.get("u", "0")))
         return TimerRTO(
             component_id,
@@ -49,4 +45,6 @@ class TimerRTO(Component):
         )
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        return {}, self._pos_in_to_xml(self.timer_enable_input, self.duration_input)
+        return {"u": str(self.unit_property.value)}, self._pos_in_to_xml(
+            self.timer_enable_input, self.duration_input, self.reset_input
+        )

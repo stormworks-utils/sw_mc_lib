@@ -34,12 +34,8 @@ class TooltipBoolean(Component):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> TooltipBoolean:
-        assert element.tag == "c", f"invalid TooltipBoolean {element}"
-        assert element.attributes.get("type", "0") == str(
-            ComponentType.TooltipBoolean.value
-        ), f"Not an TooltipBoolean {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs, _ = TooltipBoolean._basic_in_parsing(obj)
+        component_id, position, inputs, _ = Component._basic_in_parsing(obj)
         label_property: str = obj.attributes.get("l", "")
         on_label_property: str = obj.attributes.get("on", "")
         off_label_property: str = obj.attributes.get("off", "")

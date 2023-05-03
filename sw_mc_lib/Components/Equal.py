@@ -27,12 +27,8 @@ class Equal(Component):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> Equal:
-        assert element.tag == "c", f"invalid Equal {element}"
-        assert element.attributes.get("type", "0") == str(
-            ComponentType.Equal.value
-        ), f"Not an Equal {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs, _ = Equal._basic_in_parsing(obj)
+        component_id, position, inputs, _ = Component._basic_in_parsing(obj)
         return Equal(component_id, position, inputs.get("1"), inputs.get("2"))
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:

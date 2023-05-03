@@ -31,12 +31,8 @@ class TooltipNumber(Component):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> TooltipNumber:
-        assert element.tag == "c", f"invalid TooltipNumber {element}"
-        assert element.attributes.get("type", "0") == str(
-            ComponentType.TooltipNumber.value
-        ), f"Not an TooltipNumber {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs, _ = TooltipNumber._basic_in_parsing(obj)
+        component_id, position, inputs, _ = Component._basic_in_parsing(obj)
         label_property: str = obj.attributes.get("l", "")
         mode_property: TooltipMode = TooltipMode(int(obj.attributes.get("m", "0")))
         return TooltipNumber(

@@ -33,17 +33,8 @@ class BooleanFunction4In(Component):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> BooleanFunction4In:
-        assert element.tag == "c", f"invalid BooleanFunction4In {element}"
-        assert element.attributes.get("type", "0") == str(
-            ComponentType.BooleanFunction4In.value
-        ), f"Not an BooleanFunction4In {element}"
         obj: XMLParserElement = element.children[0]
-        (
-            component_id,
-            position,
-            inputs,
-            _,
-        ) = BooleanFunction4In._basic_in_parsing(obj)
+        component_id, position, inputs, _ = Component._basic_in_parsing(obj)
         function: str = obj.attributes.get("e", "")
         return BooleanFunction4In(
             component_id,
@@ -56,8 +47,6 @@ class BooleanFunction4In(Component):
         )
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        attributes: dict[str, str] = {"e": self.function}
-        children: list[XMLParserElement] = self._pos_in_to_xml(
+        return {"e": self.function}, self._pos_in_to_xml(
             self.x_input, self.y_input, self.z_input, self.w_input
         )
-        return attributes, children

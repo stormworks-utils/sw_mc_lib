@@ -43,12 +43,8 @@ class LuaScript(Component):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> LuaScript:
-        assert element.tag == "c", f"invalid LuaScript {element}"
-        assert element.attributes.get("type", "0") == str(
-            ComponentType.LuaScript.value
-        ), f"Not an LuaScript {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs, _ = LuaScript._basic_in_parsing(obj)
+        component_id, position, inputs, _ = Component._basic_in_parsing(obj)
         script_property: str = obj.attributes.get("script", DEFAULT_SCRIPT)
         return LuaScript(
             component_id, position, script_property, inputs.get("1"), inputs.get("2")

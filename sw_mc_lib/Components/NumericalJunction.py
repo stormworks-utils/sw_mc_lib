@@ -28,17 +28,8 @@ class NumericalJunction(Component):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> NumericalJunction:
-        assert element.tag == "c", f"invalid NumericalJunction {element}"
-        assert element.attributes.get("type", "0") == str(
-            ComponentType.NumericalJunction.value
-        ), f"Not an NumericalJunction {element}"
         obj: XMLParserElement = element.children[0]
-        (
-            component_id,
-            position,
-            inputs,
-            _,
-        ) = NumericalJunction._basic_in_parsing(obj)
+        component_id, position, inputs, _ = Component._basic_in_parsing(obj)
         return NumericalJunction(
             component_id, position, inputs.get("1"), inputs.get("2")
         )

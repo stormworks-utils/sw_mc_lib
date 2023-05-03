@@ -32,25 +32,14 @@ class CompositeReadNumber(Component):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> CompositeReadNumber:
-        assert element.tag == "c", f"invalid CompositeReadNumber {element}"
-        assert element.attributes.get("type", "0") == str(
-            ComponentType.CompositeReadNumber.value
-        ), f"Not an CompositeReadNumber {element}"
         obj: XMLParserElement = element.children[0]
-        (
-            component_id,
-            position,
-            inputs,
-            _,
-        ) = CompositeReadNumber._basic_in_parsing(obj)
+        component_id, position, inputs, _ = Component._basic_in_parsing(obj)
         channel_property: int = int(obj.attributes.get("i", "0")) + 1
         return CompositeReadNumber(
             component_id, position, channel_property, inputs.get("1")
         )
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        attributes: dict[str, str] = {"i": str(self.channel_property - 1)}
-        children: list[XMLParserElement] = self._pos_in_to_xml(
+        return {"i": str(self.channel_property - 1)}, self._pos_in_to_xml(
             self.composite_signal_input
         )
-        return attributes, children

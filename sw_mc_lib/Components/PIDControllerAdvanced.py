@@ -37,17 +37,8 @@ class PIDControllerAdvanced(Component):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> PIDControllerAdvanced:
-        assert element.tag == "c", f"invalid PIDControllerAdvanced {element}"
-        assert element.attributes.get("type", "0") == str(
-            ComponentType.PIDControllerAdvanced.value
-        ), f"Not an PIDControllerAdvanced {element}"
         obj: XMLParserElement = element.children[0]
-        (
-            component_id,
-            position,
-            inputs,
-            _,
-        ) = PIDControllerAdvanced._basic_in_parsing(obj)
+        component_id, position, inputs, _ = Component._basic_in_parsing(obj)
         return PIDControllerAdvanced(
             component_id,
             position,

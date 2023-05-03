@@ -27,12 +27,8 @@ class OR(Component):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> OR:
-        assert element.tag == "c", f"invalid OR {element}"
-        assert element.attributes.get("type", "0") == str(
-            ComponentType.OR.value
-        ), f"Not an OR {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs, _ = OR._basic_in_parsing(obj)
+        component_id, position, inputs, _ = Component._basic_in_parsing(obj)
         return OR(component_id, position, inputs.get("1"), inputs.get("2"))
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:

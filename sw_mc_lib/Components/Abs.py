@@ -25,12 +25,8 @@ class Abs(Component):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> Abs:
-        assert element.tag == "c", f"invalid Abs {element}"
-        assert element.attributes.get("type", "0") == str(
-            ComponentType.Abs.value
-        ), f"Not an Abs {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs, _ = Abs._basic_in_parsing(obj)
+        component_id, position, inputs, _ = Component._basic_in_parsing(obj)
         return Abs(component_id, position, inputs.get("1"))
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:

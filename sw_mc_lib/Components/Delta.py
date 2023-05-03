@@ -22,12 +22,8 @@ class Delta(Component):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> Delta:
-        assert element.tag == "c", f"invalid Delta {element}"
-        assert element.attributes.get("type", "0") == str(
-            ComponentType.Delta.value
-        ), f"Not an Delta {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs, _ = Delta._basic_in_parsing(obj)
+        component_id, position, inputs, _ = Component._basic_in_parsing(obj)
         return Delta(component_id, position, inputs.get("1"))
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:

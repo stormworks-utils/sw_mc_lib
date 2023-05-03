@@ -29,17 +29,13 @@ class NumericalSwitchbox(Component):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> NumericalSwitchbox:
-        assert element.tag == "c", f"invalid NumericalSwitchbox {element}"
-        assert element.attributes.get("type", "0") == str(
-            ComponentType.NumericalSwitchbox.value
-        ), f"Not an NumericalSwitchbox {element}"
         obj: XMLParserElement = element.children[0]
         (
             component_id,
             position,
             inputs,
             _,
-        ) = NumericalSwitchbox._basic_in_parsing(obj)
+        ) = Component._basic_in_parsing(obj)
         return NumericalSwitchbox(
             component_id, position, inputs.get("1"), inputs.get("2"), inputs.get("3")
         )

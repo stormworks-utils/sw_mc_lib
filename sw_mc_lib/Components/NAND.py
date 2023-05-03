@@ -27,12 +27,8 @@ class NAND(Component):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> NAND:
-        assert element.tag == "c", f"invalid NAND {element}"
-        assert element.attributes.get("type", "0") == str(
-            ComponentType.NAND.value
-        ), f"Not an NAND {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs, _ = NAND._basic_in_parsing(obj)
+        component_id, position, inputs, _ = Component._basic_in_parsing(obj)
         return NAND(component_id, position, inputs.get("1"), inputs.get("2"))
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:

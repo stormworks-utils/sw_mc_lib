@@ -29,12 +29,8 @@ class Capacitor(Component):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> Capacitor:
-        assert element.tag == "c", f"invalid Capacitor {element}"
-        assert element.attributes.get("type", "0") == str(
-            ComponentType.Capacitor.value
-        ), f"Not an Capacitor {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs, _ = Capacitor._basic_in_parsing(obj)
+        component_id, position, inputs, _ = Component._basic_in_parsing(obj)
         charge_time_property: float = float(obj.attributes.get("ct", "1"))
         discharge_time_property: float = float(obj.attributes.get("dt", "1"))
         return Capacitor(
@@ -46,9 +42,7 @@ class Capacitor(Component):
         )
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        attributes: dict[str, str] = {
+        return {
             "ct": str(self.charge_time_property),
             "dt": str(self.discharge_time_property),
-        }
-        children: list[XMLParserElement] = self._pos_in_to_xml(self.charge_input)
-        return attributes, children
+        }, self._pos_in_to_xml(self.charge_input)

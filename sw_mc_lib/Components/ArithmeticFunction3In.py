@@ -33,17 +33,8 @@ class ArithmeticFunction3In(Component):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> ArithmeticFunction3In:
-        assert element.tag == "c", f"invalid ArithmeticFunction3In {element}"
-        assert element.attributes.get("type", "0") == str(
-            ComponentType.ArithmeticFunction3In.value
-        ), f"Not an ArithmeticFunction3In {element}"
         obj: XMLParserElement = element.children[0]
-        (
-            component_id,
-            position,
-            inputs,
-            _,
-        ) = ArithmeticFunction3In._basic_in_parsing(obj)
+        component_id, position, inputs, _ = Component._basic_in_parsing(obj)
         function: str = obj.attributes.get("e", "")
         return ArithmeticFunction3In(
             component_id,
@@ -55,8 +46,6 @@ class ArithmeticFunction3In(Component):
         )
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        attributes: dict[str, str] = {"e": self.function}
-        children: list[XMLParserElement] = self._pos_in_to_xml(
+        return {"e": self.function}, self._pos_in_to_xml(
             self.x_input, self.y_input, self.z_input
         )
-        return attributes, children

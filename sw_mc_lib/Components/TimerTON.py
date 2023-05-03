@@ -29,16 +29,14 @@ class TimerTON(Component):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> TimerTON:
-        assert element.tag == "c", f"invalid TimerTON {element}"
-        assert element.attributes.get("type", "0") == str(
-            ComponentType.TimerTON.value
-        ), f"Not an TimerTON {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs, _ = TimerTON._basic_in_parsing(obj)
+        component_id, position, inputs, _ = Component._basic_in_parsing(obj)
         unit_property: TimerUnit = TimerUnit(int(obj.attributes.get("u", "0")))
         return TimerTON(
             component_id, position, unit_property, inputs.get("1"), inputs.get("2")
         )
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        return {}, self._pos_in_to_xml(self.timer_enable_input, self.duration_input)
+        return {"u": str(self.unit_property.value)}, self._pos_in_to_xml(
+            self.timer_enable_input, self.duration_input
+        )

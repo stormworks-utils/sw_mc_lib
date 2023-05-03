@@ -27,12 +27,8 @@ class SRLatch(Component):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> SRLatch:
-        assert element.tag == "c", f"invalid SRLatch {element}"
-        assert element.attributes.get("type", "0") == str(
-            ComponentType.SRLatch.value
-        ), f"Not an SRLatch {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs, _ = SRLatch._basic_in_parsing(obj)
+        component_id, position, inputs, _ = Component._basic_in_parsing(obj)
         return SRLatch(component_id, position, inputs.get("1"), inputs.get("2"))
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:

@@ -41,17 +41,8 @@ class CompositeWriteNumber(Component):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> CompositeWriteNumber:
-        assert element.tag == "c", f"invalid CompositeWriteNumber {element}"
-        assert element.attributes.get("type", "0") == str(
-            ComponentType.CompositeWriteNumber.value
-        ), f"Not an CompositeWriteNumber {element}"
         obj: XMLParserElement = element.children[0]
-        (
-            component_id,
-            position,
-            inputs,
-            _,
-        ) = CompositeWriteNumber._basic_in_parsing(obj)
+        component_id, position, inputs, _ = Component._basic_in_parsing(obj)
         start_channel_property: int = int(obj.attributes.get("offset", "0")) + 1
         channel_count_property: int = int(obj.attributes.get("count", "0"))
         channel_inputs: dict[int, Input] = {

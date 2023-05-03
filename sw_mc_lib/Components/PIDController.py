@@ -42,14 +42,8 @@ class PIDController(Component):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> PIDController:
-        assert element.tag == "c", f"invalid PIDController {element}"
-        assert element.attributes.get("type", "0") == str(
-            ComponentType.PIDController.value
-        ), f"Not an PIDController {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs, properties = PIDController._basic_in_parsing(
-            obj
-        )
+        component_id, position, inputs, properties = Component._basic_in_parsing(obj)
         proportional_property: Optional[NumberProperty] = properties.get("kp")
         integral_property: Optional[NumberProperty] = properties.get("ki")
         derivative_property: Optional[NumberProperty] = properties.get("kd")
@@ -65,10 +59,13 @@ class PIDController(Component):
         )
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        children: list[XMLParserElement] = self._pos_in_to_xml(
-            self.setpoint_input, self.process_variable_input, self.active_input
+        return {}, self._pos_in_to_xml(
+            self.setpoint_input,
+            self.process_variable_input,
+            self.active_input,
+            properties={
+                "kp": self.proportional_property,
+                "ki": self.integral_property,
+                "kd": self.derivative_property,
+            },
         )
-        children.append(self.proportional_property.to_xml())
-        children.append(self.integral_property.to_xml())
-        children.append(self.derivative_property.to_xml())
-        return {}, children

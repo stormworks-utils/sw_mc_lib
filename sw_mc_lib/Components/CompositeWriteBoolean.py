@@ -46,12 +46,7 @@ class CompositeWriteBoolean(Component):
             ComponentType.CompositeWriteBoolean.value
         ), f"Not an CompositeWriteBoolean {element}"
         obj: XMLParserElement = element.children[0]
-        (
-            component_id,
-            position,
-            inputs,
-            _,
-        ) = CompositeWriteBoolean._basic_in_parsing(obj)
+        component_id, position, inputs, _ = Component._basic_in_parsing(obj)
         start_channel_property: int = int(obj.attributes.get("offset", "0")) + 1
         channel_count_property: int = int(obj.attributes.get("count", "0"))
         channel_inputs: dict[int, Input] = {

@@ -29,12 +29,8 @@ class Blinker(Component):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> Blinker:
-        assert element.tag == "c", f"invalid Blinker {element}"
-        assert element.attributes.get("type", "0") == str(
-            ComponentType.Blinker.value
-        ), f"Not an Blinker {element}"
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs, _ = Blinker._basic_in_parsing(obj)
+        component_id, position, inputs, _ = Component._basic_in_parsing(obj)
         blink_on_duration_property: float = float(obj.attributes.get("on", "1"))
         blink_off_duration_property: float = float(obj.attributes.get("off", "1"))
         return Blinker(
@@ -46,11 +42,7 @@ class Blinker(Component):
         )
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        attributes: dict[str, str] = {
+        return {
             "on": str(self.blink_on_duration_property),
             "off": str(self.blink_off_duration_property),
-        }
-        children: list[XMLParserElement] = self._pos_in_to_xml(
-            self.control_signal_input
-        )
-        return attributes, children
+        }, self._pos_in_to_xml(self.control_signal_input)

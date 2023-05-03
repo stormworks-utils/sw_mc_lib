@@ -29,17 +29,8 @@ class CompositeSwitchbox(Component):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> CompositeSwitchbox:
-        assert element.tag == "c", f"invalid CompositeSwitchbox {element}"
-        assert element.attributes.get("type", "0") == str(
-            ComponentType.CompositeSwitchbox.value
-        ), f"Not an CompositeSwitchbox {element}"
         obj: XMLParserElement = element.children[0]
-        (
-            component_id,
-            position,
-            inputs,
-            _,
-        ) = CompositeSwitchbox._basic_in_parsing(obj)
+        component_id, position, inputs, _ = Component._basic_in_parsing(obj)
         return CompositeSwitchbox(
             component_id, position, inputs.get("1"), inputs.get("2"), inputs.get("3")
         )
