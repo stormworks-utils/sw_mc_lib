@@ -30,6 +30,7 @@ class Microcontroller(XMLElement):
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> Microcontroller:
+        # pylint: disable=too-many-locals
         assert element.tag in ("microprocessor", "microprocessor_definition")
         name: str = element.attributes.get("name", "")
         description: str = element.attributes.get("description", "")
@@ -47,6 +48,14 @@ class Microcontroller(XMLElement):
         components: list[Component] = []
         for component in components_elem.children:
             components.append(Component.from_xml(component))
+        component_bridge_elem: XMLParserElement = group_elem.children[2]
+        assert component_bridge_elem.tag == "components_bridge"
+        for child in component_bridge_elem.children:
+            component_id = int(child.children[0].attributes.get("id", "0"))
+            for xml_node in nodes:
+                if xml_node.component_id == component_id:
+                    xml_node.add_component_bridge(child)
+                    break
         return Microcontroller(name, description, width, length, nodes, components)
 
     def to_xml(self) -> XMLParserElement:
@@ -63,13 +72,23 @@ class Microcontroller(XMLElement):
         for component in self.components:
             components_elem.children.append(component.to_xml())
         group_elem.children.append(components_elem)
-        group_elem.children.append(XMLParserElement("components_bridge"))
+        component_bridge_elem: XMLParserElement = XMLParserElement("components_bridge")
+        for node in self.nodes:
+            component_bridge_elem.children.append(node.to_component_bridge())
+        group_elem.children.append(component_bridge_elem)
         group_elem.children.append(XMLParserElement("groups"))
         components_states_elem: XMLParserElement = XMLParserElement("component_states")
         for i, component in enumerate(self.components):
             components_states_elem.children.append(component.to_state_xml(i))
         group_elem.children.append(components_states_elem)
-        group_elem.children.append(XMLParserElement("component_bridge_states"))
+        component_bridge_states_elem: XMLParserElement = XMLParserElement(
+            "component_bridge_states"
+        )
+        for i, node in enumerate(self.nodes):
+            component_bridge_states_elem.children.append(
+                node.to_component_bridge_state(i)
+            )
+        group_elem.children.append(component_bridge_states_elem)
         group_elem.children.append(XMLParserElement("group_states"))
         attributes: dict[str, str] = {
             "name": self.name,

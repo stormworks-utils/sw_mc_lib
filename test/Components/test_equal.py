@@ -22,4 +22,7 @@ class TestEqual(BinopHelper, unittest.TestCase):
     def test_to_xml(self) -> None:
         elem: Equal = Equal(self.COMPONENT_ID, Position(), Input(self.INPUT_1))
         expected: XMLParserElement = self.get_1_arg()
+        expected.children[0].children.append(
+            XMLParserElement("e", {"text": "0.0001", "value": "0.0001"}, [])
+        )
         self.assertEqual(elem.to_xml(), expected)

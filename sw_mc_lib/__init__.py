@@ -1,4 +1,3 @@
-import sw_mc_lib.Components
 import sw_mc_lib.Types
 
 from .Component import Component

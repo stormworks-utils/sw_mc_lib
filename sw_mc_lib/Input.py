@@ -26,7 +26,9 @@ class Input(XMLElement):
         return Input(component_id, node_index, index)
 
     def to_xml(self) -> XMLParserElement:
-        attributes: dict[str, str] = {"component_id": str(self.component_id)}
+        attributes: dict[str, str] = {}
         if self.node_index != 0:
             attributes["node_index"] = str(self.node_index)
+        if self.component_id != 0:
+            attributes["component_id"] = str(self.component_id)
         return XMLParserElement(f"in{self.index}", attributes)

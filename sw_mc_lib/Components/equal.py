@@ -4,6 +4,7 @@ from typing import Optional
 
 from sw_mc_lib.Component import INNER_TO_XML_RESULT, Component
 from sw_mc_lib.Input import Input
+from sw_mc_lib.NumberProperty import NumberProperty
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
@@ -20,16 +21,28 @@ class Equal(Component):
         position: Position,
         a_input: Optional[Input] = None,
         b_input: Optional[Input] = None,
+        epsilon_property: Optional[NumberProperty] = None,
     ):
         super().__init__(ComponentType.Equal, component_id, position, 0.75)
         self.a_input: Optional[Input] = a_input
         self.b_input: Optional[Input] = b_input
+        self.epsilon_property: NumberProperty = epsilon_property or NumberProperty(
+            "0.0001", "e"
+        )
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> Equal:
         obj: XMLParserElement = element.children[0]
-        component_id, position, inputs, _ = Component._basic_in_parsing(obj)
-        return Equal(component_id, position, inputs.get("1"), inputs.get("2"))
+        component_id, position, inputs, properties = Component._basic_in_parsing(obj)
+        return Equal(
+            component_id,
+            position,
+            inputs.get("1"),
+            inputs.get("2"),
+            properties.get("e"),
+        )
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        return {}, self._pos_in_to_xml(self.a_input, self.b_input)
+        return {}, self._pos_in_to_xml(
+            self.a_input, self.b_input, properties={"e": self.epsilon_property}
+        )

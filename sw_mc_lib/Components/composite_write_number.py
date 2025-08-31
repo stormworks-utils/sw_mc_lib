@@ -62,10 +62,8 @@ class CompositeWriteNumber(Component):
         attributes: dict[str, str] = {"count": str(self.channel_count_property)}
         if self.start_channel_property != 1:
             attributes["offset"] = str(self.start_channel_property - 1)
-        inputs: list[Optional[Input]] = []
+        inputs: list[Optional[Input]] = [Input(0)] * self.channel_count_property
         for i, current_input in self.channel_inputs.items():
-            while len(inputs) < i:
-                inputs.append(None)
             inputs[i - 1] = current_input
         children: list[XMLParserElement] = self._pos_in_to_xml(
             *inputs,
@@ -74,4 +72,4 @@ class CompositeWriteNumber(Component):
                 "off": self.start_channel_input,
             },
         )
-        return {}, children
+        return attributes, children

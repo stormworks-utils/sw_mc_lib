@@ -25,10 +25,10 @@ def generic_str(
     ignored_keywords = (ignored_keywords or []) + ["self"]
     for i in self_signature.parameters:
         if i not in ignored_keywords:
-            dir.update(i)
+            dir.add(i)
     if explicit_keywords:
         for i in explicit_keywords:
-            dir.update(i)
+            dir.add(i)
     if dir:
         for i in dir:
             string += f'{"    " if newlines else ""}{i}='
