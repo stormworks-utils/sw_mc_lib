@@ -11,11 +11,11 @@ class SignalType(_Enum):
     Signal types
     """
 
-    Boolean: int = 0
-    Number: int = 1
-    Composite: int = 5
-    Video: int = 6
-    Audio: int = 7
+    Boolean = 0
+    Number = 1
+    Composite = 5
+    Video = 6
+    Audio = 7
 
 
 class NodeMode(_Enum):
@@ -23,8 +23,8 @@ class NodeMode(_Enum):
     Modes of nodes (in/out connections)
     """
 
-    Output: int = 0
-    Input: int = 1
+    Output = 0
+    Input = 1
 
 
 class TooltipMode(_Enum):
@@ -32,9 +32,9 @@ class TooltipMode(_Enum):
     Modes of Tooltips, depending on the error/signal input
     """
 
-    Always: int = 0
-    IfOn: int = 1
-    IfOff: int = 2
+    Always = 0
+    IfOn = 1
+    IfOff = 2
 
 
 class PulseMode(_Enum):
@@ -42,9 +42,9 @@ class PulseMode(_Enum):
     Modes of the Pulse Component, note that OffToOn is the default mode
     """
 
-    OnToOff: int = 0
-    OffToOn: int = 1
-    Always: int = 2
+    OnToOff = 0
+    OffToOn = 1
+    Always = 2
 
 
 class TimerUnit(_Enum):
@@ -52,8 +52,8 @@ class TimerUnit(_Enum):
     Units of timer Components
     """
 
-    Seconds: int = 0
-    Ticks: int = 1
+    Seconds = 0
+    Ticks = 1
 
 
 class ComponentType(_Enum):
@@ -61,63 +61,63 @@ class ComponentType(_Enum):
     Types of Components and their respective ids
     """
 
-    NOT: int = 0
-    AND: int = 1
-    OR: int = 2
-    XOR: int = 3
-    NAND: int = 4
-    NOR: int = 5
-    Add: int = 6
-    Subtract: int = 7
-    Multiply: int = 8
-    Divide: int = 9
-    ArithmeticFunction3In: int = 10
-    Clamp: int = 11
-    Threshold: int = 12
-    MemoryRegister: int = 13
-    Abs: int = 14
-    ConstantNumber: int = 15
-    ConstantOn: int = 16
-    GreaterThan: int = 17
-    LessThan: int = 18
-    PropertySlider: int = 19
-    PropertyDropdown: int = 20
-    NumericalJunction: int = 21
-    NumericalSwitchbox: int = 22
-    PIDController: int = 23
-    SRLatch: int = 24
-    JKFlipFlop: int = 25
-    Capacitor: int = 26
-    Blinker: int = 27
-    PushToToggle: int = 28
-    CompositeReadBoolean: int = 29
-    CompositeWriteBooleanDeprecated: int = 30
-    CompositeReadNumber: int = 31
-    CompositeWriteNumberDeprecated: int = 32
-    PropertyToggle: int = 33
-    PropertyNumber: int = 34
-    Delta: int = 35
-    ArithmeticFunction8In: int = 36
-    UpDownCounter: int = 37
-    Modulo: int = 38
-    PIDControllerAdvanced: int = 39
-    CompositeWriteNumber: int = 40
-    CompositeWriteBoolean: int = 41
-    Equal: int = 42
-    TooltipNumber: int = 43
-    TooltipBoolean: int = 44
-    ArithmeticFunction1In: int = 45
-    BooleanFunction4In: int = 46
-    BooleanFunction8In: int = 47
-    Pulse: int = 48
-    TimerTON: int = 49
-    TimerTOF: int = 50
-    TimerRTO: int = 51
-    TimerRTF: int = 52
-    CompositeSwitchbox: int = 53
-    NumberToCompositeBinary: int = 54
-    CompositeBinaryToNumber: int = 55
-    LuaScript: int = 56
-    VideoSwitchbox: int = 57
-    PropertyText: int = 58
-    AudioSwitchbox: int = 59
+    NOT = 0
+    AND = 1
+    OR = 2
+    XOR = 3
+    NAND = 4
+    NOR = 5
+    Add = 6
+    Subtract = 7
+    Multiply = 8
+    Divide = 9
+    ArithmeticFunction3In = 10
+    Clamp = 11
+    Threshold = 12
+    MemoryRegister = 13
+    Abs = 14
+    ConstantNumber = 15
+    ConstantOn = 16
+    GreaterThan = 17
+    LessThan = 18
+    PropertySlider = 19
+    PropertyDropdown = 20
+    NumericalJunction = 21
+    NumericalSwitchbox = 22
+    PIDController = 23
+    SRLatch = 24
+    JKFlipFlop = 25
+    Capacitor = 26
+    Blinker = 27
+    PushToToggle = 28
+    CompositeReadBoolean = 29
+    CompositeWriteBooleanDeprecated = 30
+    CompositeReadNumber = 31
+    CompositeWriteNumberDeprecated = 32
+    PropertyToggle = 33
+    PropertyNumber = 34
+    Delta = 35
+    ArithmeticFunction8In = 36
+    UpDownCounter = 37
+    Modulo = 38
+    PIDControllerAdvanced = 39
+    CompositeWriteNumber = 40
+    CompositeWriteBoolean = 41
+    Equal = 42
+    TooltipNumber = 43
+    TooltipBoolean = 44
+    ArithmeticFunction1In = 45
+    BooleanFunction4In = 46
+    BooleanFunction8In = 47
+    Pulse = 48
+    TimerTON = 49
+    TimerTOF = 50
+    TimerRTO = 51
+    TimerRTF = 52
+    CompositeSwitchbox = 53
+    NumberToCompositeBinary = 54
+    CompositeBinaryToNumber = 55
+    LuaScript = 56
+    VideoSwitchbox = 57
+    PropertyText = 58
+    AudioSwitchbox = 59
