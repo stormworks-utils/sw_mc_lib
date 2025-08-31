@@ -8,7 +8,8 @@ from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
 
-DEFAULT_SCRIPT: str = """-- Tick function that will be executed every logic tick
+DEFAULT_SCRIPT: str = """\
+-- Tick function that will be executed every logic tick
 function onTick()
 \tvalue = input.getNumber(1)\t\t\t -- Read the first number from the script's composite input
 \toutput.setNumber(1, value * 10)\t\t-- Write a number to the script's composite output
@@ -20,7 +21,8 @@ function onDraw()
 \th = screen.getHeight()\t\t\t\t\t
 \tscreen.setColor(0, 255, 0)\t\t\t -- Set draw color to green
 \tscreen.drawCircleF(w / 2, h / 2, 30)   -- Draw a 30px radius circle in the center of the screen
-end"""
+end\
+"""
 
 
 class LuaScript(Component):

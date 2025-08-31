@@ -1,6 +1,6 @@
 import unittest
 
-from sw_mc_lib.Components.Subtract import ComponentType, Subtract
+from sw_mc_lib.Components.subtract import ComponentType, Subtract
 from sw_mc_lib.XMLParser import XMLParserElement
 
 from .test_utils import BinopHelper, Input, Position

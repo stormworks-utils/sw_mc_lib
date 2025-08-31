@@ -1,6 +1,6 @@
 import unittest
 
-from sw_mc_lib.Components.NOR import NOR, ComponentType
+from sw_mc_lib.Components.nor import NOR, ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
 
 from .test_utils import BinopHelper, Input, Position

@@ -1,6 +1,6 @@
 import unittest
 
-from sw_mc_lib.Components.Multiply import ComponentType, Multiply
+from sw_mc_lib.Components.multiply import ComponentType, Multiply
 from sw_mc_lib.XMLParser import XMLParserElement
 
 from .test_utils import BinopHelper, Input, Position

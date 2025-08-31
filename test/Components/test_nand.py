@@ -1,6 +1,6 @@
 import unittest
 
-from sw_mc_lib.Components.NAND import NAND, ComponentType
+from sw_mc_lib.Components.nand import NAND, ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
 
 from .test_utils import BinopHelper, Input, Position
