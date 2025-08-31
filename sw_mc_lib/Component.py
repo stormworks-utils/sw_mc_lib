@@ -239,4 +239,4 @@ class Component(XMLElement, ABC):
         return element_class.from_xml(element)
 
 
-from .Components import *  # noqa: ignore=F403 pylint: disable=wildcard-import,wrong-import-position
+from .Components import *  # noqa: ignore=F403 pylint: disable=wildcard-import,wrong-import-position, cyclic-import
