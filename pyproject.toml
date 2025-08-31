@@ -5,12 +5,12 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "sw_mc_lib"
-version = "0.3.0"
+version = "0.3.1"
 description = "Library for interaction with Stormworks Microcontrollers"
 readme = "README.md"
 requires-python = ">=3.10"
 keywords = ["stormworks", "lib", "microcontroller"]
-license = {text = "MIT License"}
+license = "MIT"
 authors = [
     {name = "Fabian Wunsch"}
 ]
@@ -19,16 +19,13 @@ classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
     "Intended Audience :: Information Technology",
-    "License :: OSI Approved :: MIT License",
     "Natural Language :: English",
     "Operating System :: OS Independent",
     "Topic :: Games/Entertainment :: Simulation",
     "Topic :: Software Development :: Libraries",
     "Typing :: Typed",
 ]
-dependencies = [
-    "numpy>=1.13"
-]
+dependencies = []
 
 [project.optional-dependencies]
 dev = ["black", "isort", "pip-tools", "mypy", "flake8", "coverage", "pylint"]
@@ -38,4 +35,4 @@ homepage = "https://github.com/stormworks-utils/sw_mc_lib"
 repository = "https://github.com/stormworks-utils/sw_mc_lib"
 
 [tool.setuptools]
-packages = ["sw_mc_lib", "sw_mc_lib.Components", "sw_mc_lib.Components.SubTypes"]
+packages = ["sw_mc_lib", "sw_mc_lib.Components"]

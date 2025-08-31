@@ -1,11 +1,9 @@
 from __future__ import annotations
 
 from typing import Optional
-
-import numpy as np
+import ctypes
 
 from .XMLElement import XMLElement, XMLParserElement
-
 
 def string_to_sw_float(to_convert: str) -> float:
     """
@@ -14,7 +12,7 @@ def string_to_sw_float(to_convert: str) -> float:
     :param to_convert: The string containing a float number
     :return: The resulting float
     """
-    return float(f"{np.float32(to_convert):0.6f}")
+    return float(f"{ctypes.c_float(float(to_convert)).value:0.6f}")
 
 
 class NumberProperty(XMLElement):
