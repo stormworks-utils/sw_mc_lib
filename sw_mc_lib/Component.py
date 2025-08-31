@@ -53,8 +53,7 @@ class Component(XMLElement, ABC):
         return component_id, position, inputs, properties
 
     @abstractmethod
-    def _inner_to_xml(self) -> tuple[dict[str, str], list[XMLParserElement]]:
-        ...
+    def _inner_to_xml(self) -> tuple[dict[str, str], list[XMLParserElement]]: ...
 
     def to_xml(self) -> XMLParserElement:
         object_element = XMLParserElement("object", {"id": str(self.component_id)}, [])

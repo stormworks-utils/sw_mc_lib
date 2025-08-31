@@ -1,9 +1,10 @@
 from __future__ import annotations
 
-from typing import Optional
 import ctypes
+from typing import Optional
 
 from .XMLElement import XMLElement, XMLParserElement
+
 
 def string_to_sw_float(to_convert: str) -> float:
     """
