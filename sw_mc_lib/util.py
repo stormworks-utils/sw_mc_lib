@@ -20,15 +20,16 @@ def generic_str(
     newline_or_space: str = "\n" if newlines else " "
     newline_or_nothing: str = "\n" if newlines else ""
     string: str = f"{self.__class__.__name__}({newline_or_nothing}"
-    dir: set[str] = set()
+    dir: list[str] = []
     self_signature: Signature = signature(self.__init__)
     ignored_keywords = (ignored_keywords or []) + ["self"]
     for i in self_signature.parameters:
         if i not in ignored_keywords:
-            dir.add(i)
+            dir.append(i)
     if explicit_keywords:
         for i in explicit_keywords:
-            dir.add(i)
+            if i not in dir:
+                dir.append(i)
     if dir:
         for i in dir:
             string += f'{"    " if newlines else ""}{i}='
