@@ -23,14 +23,17 @@ def generic_str(
     dir: list[str] = []
     self_signature: Signature = signature(self.__init__)
     ignored_keywords = (ignored_keywords or []) + ["self"]
-    for i in self_signature.parameters:
-        if i not in ignored_keywords:
+    for i, content in self_signature.parameters.items():
+        if i not in ignored_keywords and getattr(self, i, None) != content.default:
             dir.append(i)
     if explicit_keywords:
         for i in explicit_keywords:
             if i not in dir:
                 dir.append(i)
     if dir:
+        elements = [f"{i}={getattr(self, i)!r}" for i in dir]
+        if all('\n' not in i for i in elements) and sum(len(i) for i in elements) < 80:
+            return f"{self.__class__.__name__}({', '.join(elements)})"
         for i in dir:
             string += f'{"    " if newlines else ""}{i}='
             lines = repr(getattr(self, i)).splitlines()
@@ -39,4 +42,6 @@ def generic_str(
                 string += f'{"    "}{j}{newline_or_space}'
             string = f"{string[:-1]},{newline_or_space}"
         string = string[:-1]
+    else:
+        return f"{self.__class__.__name__}()"
     return f"{string[:-1]}{newline_or_nothing})"
