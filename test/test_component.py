@@ -16,12 +16,12 @@ class TestingComponent(Component):
         component_id: int,
         position: Position,
         attributes: dict[str, str],
-        inputs: dict[str, Input],
+        inputs_: dict[str, Input],
         properties: dict[str, NumberProperty],
     ):
         super().__init__(ComponentType.Abs, component_id, position, 1.0)
         self.attributes: dict[str, str] = attributes
-        self.inputs: dict[str, Input] = inputs
+        self.inputs_: dict[str, Input] = inputs_
         self.properties: dict[str, NumberProperty] = properties
 
     @staticmethod
@@ -38,7 +38,7 @@ class TestingComponent(Component):
     def _inner_to_xml(self) -> tuple[dict[str, str], list[XMLParserElement]]:
         input_list: list[Optional[Input]] = []
         named_inputs: dict[str, Optional[Input]] = {}
-        for name, input in self.inputs.items():
+        for name, input in self.inputs_.items():
             if name.isdigit():
                 while len(input_list) < int(name):
                     input_list.append(None)
@@ -81,15 +81,15 @@ class TestComponent(unittest.TestCase):
         expected: list[XMLParserElement] = [pos.to_xml()]
         _, children = test_comp._inner_to_xml()
         self.assertEqual(children, expected)
-        test_comp.inputs["1"] = Input(10)
+        test_comp.inputs_["1"] = Input(10)
         expected.append(Input(10, 0, "1").to_xml())
         _, children = test_comp._inner_to_xml()
         self.assertEqual(children, expected)
-        test_comp.inputs["5"] = Input(500, 2)
+        test_comp.inputs_["5"] = Input(500, 2)
         expected.append(Input(500, 2, "5").to_xml())
         _, children = test_comp._inner_to_xml()
         self.assertEqual(children, expected)
-        test_comp.inputs["abc"] = Input(30)
+        test_comp.inputs_["abc"] = Input(30)
         expected.append(Input(30, 0, "abc").to_xml())
         _, children = test_comp._inner_to_xml()
         self.assertEqual(children, expected)

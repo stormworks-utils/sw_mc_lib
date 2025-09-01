@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
+from inspect import Signature, signature
 from itertools import chain
 from typing import Optional, Type
 
@@ -237,6 +238,25 @@ class Component(XMLElement, ABC):
                 f"No Component found for component type {component_type}"
             )
         return element_class.from_xml(element)
+
+    @property
+    def inputs(self) -> list[Input]:
+        """
+        Get all inputs of this component
+
+        :return: List of all inputs
+        """
+        inputs: list[Input] = []
+        self_signature: Signature = signature(self.__init__)  # type: ignore
+        for name in self_signature.parameters:
+            value = getattr(self, name)
+            if isinstance(value, Input):
+                inputs.append(value)
+            elif isinstance(value, dict):
+                for v in value.values():
+                    if isinstance(v, Input):
+                        inputs.append(v)
+        return inputs
 
 
 from .Components import *  # noqa: ignore=F403 pylint: disable=wildcard-import,wrong-import-position, cyclic-import
