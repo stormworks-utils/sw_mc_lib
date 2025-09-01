@@ -44,6 +44,9 @@ class Microcontroller(XMLElement):
         group_elem: XMLParserElement = element.children[1]
         assert group_elem.tag == "group"
         components_elem: XMLParserElement = group_elem.children[1]
+        if components_elem.tag == "data":
+            group_elem.children.pop(1)
+            components_elem = group_elem.children[1]
         assert components_elem.tag == "components"
         components: list[Component] = []
         for component in components_elem.children:
