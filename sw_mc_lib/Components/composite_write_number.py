@@ -44,9 +44,13 @@ class CompositeWriteNumber(Component):
         obj: XMLParserElement = element.children[0]
         component_id, position, inputs, _ = Component._basic_in_parsing(obj)
         start_channel_property: int = int(obj.attributes.get("offset", "0")) + 1
-        channel_count_property: int = int(obj.attributes.get("count", "0"))
+        channel_count_property: int = int(
+            obj.attributes.get("count", "32")
+        )  # yes, absent means 32
         channel_inputs: dict[int, Input] = {
-            i: current_input for i in range(32) if (current_input := inputs.get(str(i)))
+            i: current_input
+            for i in range(1, 33)
+            if (current_input := inputs.get(str(i)))
         }
         return CompositeWriteNumber(
             component_id,
@@ -59,9 +63,11 @@ class CompositeWriteNumber(Component):
         )
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        attributes: dict[str, str] = {"count": str(self.channel_count_property)}
+        attributes: dict[str, str] = {}
         if self.start_channel_property != 1:
             attributes["offset"] = str(self.start_channel_property - 1)
+        if self.channel_count_property != 32:
+            attributes["count"] = str(self.channel_count_property)
         inputs: list[Optional[Input]] = [Input(0)] * self.channel_count_property
         for i, current_input in self.channel_inputs.items():
             inputs[i - 1] = current_input
