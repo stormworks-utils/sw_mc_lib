@@ -22,10 +22,14 @@ class Blinker(Component):
         blink_on_duration_property: float = 1.0,
         blink_off_duration_property: float = 1.0,
     ):
-        super().__init__(ComponentType.Blinker, component_id, position, 1.0)
+        super().__init__(ComponentType.Blinker, component_id, position)
         self.control_signal_input: Optional[Input] = control_signal_input
         self.blink_on_duration_property: float = blink_on_duration_property
         self.blink_off_duration_property: float = blink_off_duration_property
+
+    @property
+    def height(self) -> float:
+        return 0.5
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> Blinker:

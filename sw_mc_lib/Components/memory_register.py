@@ -25,11 +25,15 @@ class MemoryRegister(Component):
         reset_input: Optional[Input] = None,
         number_to_store_input: Optional[Input] = None,
     ):
-        super().__init__(ComponentType.MemoryRegister, component_id, position, 1.0)
+        super().__init__(ComponentType.MemoryRegister, component_id, position)
         self.set_input: Optional[Input] = set_input
         self.reset_input: Optional[Input] = reset_input
         self.number_to_store_input: Optional[Input] = number_to_store_input
         self.reset_property: NumberProperty = reset_property or NumberProperty("0", "r")
+
+    @property
+    def height(self) -> float:
+        return 1.0
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> MemoryRegister:

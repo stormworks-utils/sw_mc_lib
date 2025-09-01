@@ -21,9 +21,13 @@ class PropertyNumber(Component):
         name: str = "number",
         value_property: Optional[NumberProperty] = None,
     ):
-        super().__init__(ComponentType.PropertyNumber, component_id, position, 0.5)
+        super().__init__(ComponentType.PropertyNumber, component_id, position)
         self.name: str = name
         self.value_property: NumberProperty = value_property or NumberProperty("0", "v")
+
+    @property
+    def height(self) -> float:
+        return 0.5
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> PropertyNumber:

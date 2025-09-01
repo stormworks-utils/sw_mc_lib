@@ -21,11 +21,13 @@ class ArithmeticFunction1In(Component):
         function: str,
         x_input: Optional[Input] = None,
     ):
-        super().__init__(
-            ComponentType.ArithmeticFunction1In, component_id, position, 1.0
-        )
+        super().__init__(ComponentType.ArithmeticFunction1In, component_id, position)
         self.function: str = function
         self.x_input: Optional[Input] = x_input
+
+    @property
+    def height(self) -> float:
+        return 0.5
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> ArithmeticFunction1In:

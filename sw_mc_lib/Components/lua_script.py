@@ -38,10 +38,14 @@ class LuaScript(Component):
         data_input: Optional[Input] = None,
         video_input: Optional[Input] = None,
     ):
-        super().__init__(ComponentType.LuaScript, component_id, position, 0.75)
+        super().__init__(ComponentType.LuaScript, component_id, position)
         self.data_input: Optional[Input] = data_input
         self.video_input: Optional[Input] = video_input
         self.script_property: str = script_property
+
+    @property
+    def height(self) -> float:
+        return 0.75
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> LuaScript:

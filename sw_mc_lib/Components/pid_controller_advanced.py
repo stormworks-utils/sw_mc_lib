@@ -25,15 +25,17 @@ class PIDControllerAdvanced(Component):
         derivative_input: Optional[Input] = None,
         active_input: Optional[Input] = None,
     ):
-        super().__init__(
-            ComponentType.PIDControllerAdvanced, component_id, position, 2.25
-        )
+        super().__init__(ComponentType.PIDControllerAdvanced, component_id, position)
         self.setpoint_input: Optional[Input] = setpoint_input
         self.process_variable_input: Optional[Input] = process_variable_input
         self.proportional_input: Optional[Input] = proportional_input
         self.integral_input: Optional[Input] = integral_input
         self.derivative_input: Optional[Input] = derivative_input
         self.active_input: Optional[Input] = active_input
+
+    @property
+    def height(self) -> float:
+        return 1.75
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> PIDControllerAdvanced:

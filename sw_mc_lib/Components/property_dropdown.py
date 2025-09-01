@@ -44,9 +44,13 @@ class PropertyDropdown(Component):
         selected_property: int = 0,
         options: Optional[list[DropDownOption]] = None,
     ):
-        super().__init__(ComponentType.PropertyDropdown, component_id, position, 0.5)
+        super().__init__(ComponentType.PropertyDropdown, component_id, position)
         self.selected_property: int = selected_property
         self.options: list[DropDownOption] = options or []
+
+    @property
+    def height(self) -> float:
+        return 0.5
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> PropertyDropdown:

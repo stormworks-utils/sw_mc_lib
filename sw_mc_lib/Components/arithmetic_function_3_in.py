@@ -23,13 +23,15 @@ class ArithmeticFunction3In(Component):
         y_input: Optional[Input] = None,
         z_input: Optional[Input] = None,
     ):
-        super().__init__(
-            ComponentType.ArithmeticFunction3In, component_id, position, 1.0
-        )
+        super().__init__(ComponentType.ArithmeticFunction3In, component_id, position)
         self.function: str = function
         self.x_input: Optional[Input] = x_input
         self.y_input: Optional[Input] = y_input
         self.z_input: Optional[Input] = z_input
+
+    @property
+    def height(self) -> float:
+        return 1.0
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> ArithmeticFunction3In:

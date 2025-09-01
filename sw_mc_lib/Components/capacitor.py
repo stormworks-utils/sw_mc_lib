@@ -22,10 +22,14 @@ class Capacitor(Component):
         charge_time_property: float = 1.0,
         discharge_time_property: float = 1.0,
     ):
-        super().__init__(ComponentType.Capacitor, component_id, position, 1.0)
+        super().__init__(ComponentType.Capacitor, component_id, position)
         self.charge_input: Optional[Input] = charge_input
         self.charge_time_property: float = charge_time_property
         self.discharge_time_property: float = discharge_time_property
+
+    @property
+    def height(self) -> float:
+        return 0.5
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> Capacitor:

@@ -24,11 +24,15 @@ class TimerRTO(Component):
         duration_input: Optional[Input] = None,
         reset_input: Optional[Input] = None,
     ):
-        super().__init__(ComponentType.TimerRTO, component_id, position, 0.75)
+        super().__init__(ComponentType.TimerRTO, component_id, position)
         self.timer_enable_input: Optional[Input] = timer_enable_input
         self.duration_input: Optional[Input] = duration_input
         self.reset_input: Optional[Input] = reset_input
         self.unit_property: TimerUnit = unit_property
+
+    @property
+    def height(self) -> float:
+        return 1.0
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> TimerRTO:

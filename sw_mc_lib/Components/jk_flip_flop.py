@@ -21,9 +21,13 @@ class JKFlipFlop(Component):
         set_input: Optional[Input] = None,
         reset_input: Optional[Input] = None,
     ):
-        super().__init__(ComponentType.JKFlipFlop, component_id, position, 0.75)
+        super().__init__(ComponentType.JKFlipFlop, component_id, position)
         self.set_input: Optional[Input] = set_input
         self.reset_input: Optional[Input] = reset_input
+
+    @property
+    def height(self) -> float:
+        return 0.75
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> JKFlipFlop:

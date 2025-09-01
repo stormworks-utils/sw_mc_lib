@@ -23,10 +23,14 @@ class TimerTOF(Component):
         timer_enable_input: Optional[Input] = None,
         duration_input: Optional[Input] = None,
     ):
-        super().__init__(ComponentType.TimerTOF, component_id, position, 0.75)
+        super().__init__(ComponentType.TimerTOF, component_id, position)
         self.timer_enable_input: Optional[Input] = timer_enable_input
         self.duration_input: Optional[Input] = duration_input
         self.unit_property: TimerUnit = unit_property
+
+    @property
+    def height(self) -> float:
+        return 0.75
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> TimerTOF:

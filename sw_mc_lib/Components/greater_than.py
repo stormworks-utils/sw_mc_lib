@@ -21,9 +21,13 @@ class GreaterThan(Component):
         a_input: Optional[Input] = None,
         b_input: Optional[Input] = None,
     ):
-        super().__init__(ComponentType.GreaterThan, component_id, position, 0.75)
+        super().__init__(ComponentType.GreaterThan, component_id, position)
         self.a_input: Optional[Input] = a_input
         self.b_input: Optional[Input] = b_input
+
+    @property
+    def height(self) -> float:
+        return 0.75
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> GreaterThan:

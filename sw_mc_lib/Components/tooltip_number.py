@@ -23,11 +23,15 @@ class TooltipNumber(Component):
         display_number_input: Optional[Input] = None,
         is_error_input: Optional[Input] = None,
     ):
-        super().__init__(ComponentType.TooltipNumber, component_id, position, 0.75)
+        super().__init__(ComponentType.TooltipNumber, component_id, position)
         self.display_number_input: Optional[Input] = display_number_input
         self.is_error_input: Optional[Input] = is_error_input
         self.label_property: str = label_property
         self.mode_property: TooltipMode = mode_property
+
+    @property
+    def height(self) -> float:
+        return 0.75
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> TooltipNumber:

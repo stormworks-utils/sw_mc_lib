@@ -22,9 +22,13 @@ class NumericalJunction(Component):
         value_to_pass_through_input: Optional[Input] = None,
         switch_signal_input: Optional[Input] = None,
     ):
-        super().__init__(ComponentType.NumericalJunction, component_id, position, 0.75)
+        super().__init__(ComponentType.NumericalJunction, component_id, position)
         self.value_to_pass_through_input: Optional[Input] = value_to_pass_through_input
         self.switch_signal_input: Optional[Input] = switch_signal_input
+
+    @property
+    def height(self) -> float:
+        return 0.75
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> NumericalJunction:

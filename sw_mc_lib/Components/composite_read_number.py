@@ -21,14 +21,13 @@ class CompositeReadNumber(Component):
         channel_property: int = 1,
         composite_signal_input: Optional[Input] = None,
     ):
-        super().__init__(
-            ComponentType.CompositeReadNumber,
-            component_id,
-            position,
-            0.5 if channel_property >= 1 else 0.75,
-        )
+        super().__init__(ComponentType.CompositeReadNumber, component_id, position)
         self.channel_property: int = channel_property
         self.composite_signal_input: Optional[Input] = composite_signal_input
+
+    @property
+    def height(self) -> float:
+        return 0.5 if self.channel_property >= 1 else 0.75
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> CompositeReadNumber:

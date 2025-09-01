@@ -12,7 +12,11 @@ class ConstantOn(Component):
     """
 
     def __init__(self, component_id: int, position: Position):
-        super().__init__(ComponentType.ConstantOn, component_id, position, 0.5)
+        super().__init__(ComponentType.ConstantOn, component_id, position)
+
+    @property
+    def height(self) -> float:
+        return 0.5
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> ConstantOn:

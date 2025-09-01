@@ -23,13 +23,17 @@ class PropertySlider(Component):
         value_property: Optional[NumberProperty] = None,
         rounding_property: Optional[NumberProperty] = None,
     ):
-        super().__init__(ComponentType.PropertySlider, component_id, position, 0.5)
+        super().__init__(ComponentType.PropertySlider, component_id, position)
         self.rounding_property: NumberProperty = rounding_property or NumberProperty(
             "0", "int"
         )
         self.min_property: NumberProperty = min_property or NumberProperty("0", "min")
         self.max_property: NumberProperty = max_property or NumberProperty("0", "max")
         self.value_property: NumberProperty = value_property or NumberProperty("0", "v")
+
+    @property
+    def height(self) -> float:
+        return 0.5
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> PropertySlider:

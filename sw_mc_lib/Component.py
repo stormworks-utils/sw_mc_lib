@@ -27,12 +27,16 @@ class Component(XMLElement, ABC):
         component_type: ComponentType,
         component_id: int,
         position: Position,
-        height: float,
     ):
         self.type: ComponentType = component_type
         self.component_id: int = component_id
         self.position: Position = position
-        self.height: float = height
+
+    @property
+    @abstractmethod
+    def height(self) -> float:
+        """The height of this component. May change depending on settings."""
+        raise NotImplementedError
 
     @staticmethod
     def _basic_in_parsing(

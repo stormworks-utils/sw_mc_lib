@@ -20,8 +20,12 @@ class Abs(Component):
         position: Position,
         number_input: Optional[Input] = None,
     ):
-        super().__init__(ComponentType.Abs, component_id, position, 0.5)
+        super().__init__(ComponentType.Abs, component_id, position)
         self.number_input: Optional[Input] = number_input
+
+    @property
+    def height(self) -> float:
+        return 0.5
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> Abs:

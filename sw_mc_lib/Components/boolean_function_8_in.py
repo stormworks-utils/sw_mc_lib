@@ -28,7 +28,7 @@ class BooleanFunction8In(Component):
         c_input: Optional[Input] = None,
         d_input: Optional[Input] = None,
     ):
-        super().__init__(ComponentType.BooleanFunction8In, component_id, position, 2.25)
+        super().__init__(ComponentType.BooleanFunction8In, component_id, position)
         self.function: str = function
         self.x_input: Optional[Input] = x_input
         self.y_input: Optional[Input] = y_input
@@ -38,6 +38,10 @@ class BooleanFunction8In(Component):
         self.b_input: Optional[Input] = b_input
         self.c_input: Optional[Input] = c_input
         self.d_input: Optional[Input] = d_input
+
+    @property
+    def height(self) -> float:
+        return 2.25
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> BooleanFunction8In:

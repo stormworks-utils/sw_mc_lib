@@ -23,10 +23,14 @@ class Threshold(Component):
         max_property: Optional[NumberProperty] = None,
         number_input: Optional[Input] = None,
     ):
-        super().__init__(ComponentType.Threshold, component_id, position, 0.5)
+        super().__init__(ComponentType.Threshold, component_id, position)
         self.number_input: Optional[Input] = number_input
         self.min_property: NumberProperty = min_property or NumberProperty("0", "min")
         self.max_property: NumberProperty = max_property or NumberProperty("0", "max")
+
+    @property
+    def height(self) -> float:
+        return 0.5
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> Threshold:

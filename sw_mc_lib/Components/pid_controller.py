@@ -26,7 +26,7 @@ class PIDController(Component):
         integral_property: Optional[NumberProperty] = None,
         derivative_property: Optional[NumberProperty] = None,
     ):
-        super().__init__(ComponentType.PIDController, component_id, position, 1.0)
+        super().__init__(ComponentType.PIDController, component_id, position)
         self.setpoint_input: Optional[Input] = setpoint_input
         self.process_variable_input: Optional[Input] = process_variable_input
         self.active_input: Optional[Input] = active_input
@@ -39,6 +39,10 @@ class PIDController(Component):
         self.derivative_property: NumberProperty = (
             derivative_property or NumberProperty("0", "kd")
         )
+
+    @property
+    def height(self) -> float:
+        return 1.0
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> PIDController:

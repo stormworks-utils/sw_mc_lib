@@ -25,12 +25,16 @@ class TooltipBoolean(Component):
         mode_property: TooltipMode = TooltipMode.Always,
         display_number_input: Optional[Input] = None,
     ):
-        super().__init__(ComponentType.TooltipBoolean, component_id, position, 0.5)
+        super().__init__(ComponentType.TooltipBoolean, component_id, position)
         self.display_number_input: Optional[Input] = display_number_input
         self.label_property: str = label_property
         self.mode_property: TooltipMode = mode_property
         self.on_label_property: str = on_label_property
         self.off_label_property: str = off_label_property
+
+    @property
+    def height(self) -> float:
+        return 0.5
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> TooltipBoolean:

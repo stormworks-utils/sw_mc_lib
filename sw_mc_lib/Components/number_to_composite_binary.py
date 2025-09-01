@@ -20,10 +20,12 @@ class NumberToCompositeBinary(Component):
         position: Position,
         number_to_convert_input: Optional[Input] = None,
     ):
-        super().__init__(
-            ComponentType.NumberToCompositeBinary, component_id, position, 0.5
-        )
+        super().__init__(ComponentType.NumberToCompositeBinary, component_id, position)
         self.number_to_convert_input: Optional[Input] = number_to_convert_input
+
+    @property
+    def height(self) -> float:
+        return 0.5
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> NumberToCompositeBinary:

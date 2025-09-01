@@ -24,12 +24,16 @@ class BooleanFunction4In(Component):
         z_input: Optional[Input] = None,
         w_input: Optional[Input] = None,
     ):
-        super().__init__(ComponentType.BooleanFunction4In, component_id, position, 1.0)
+        super().__init__(ComponentType.BooleanFunction4In, component_id, position)
         self.function: str = function
         self.x_input: Optional[Input] = x_input
         self.y_input: Optional[Input] = y_input
         self.z_input: Optional[Input] = z_input
         self.w_input: Optional[Input] = w_input
+
+    @property
+    def height(self) -> float:
+        return 1.25
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> BooleanFunction4In:

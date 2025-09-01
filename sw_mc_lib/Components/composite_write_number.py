@@ -25,19 +25,20 @@ class CompositeWriteNumber(Component):
         start_channel_input: Optional[Input] = None,
         channel_inputs: Optional[dict[int, Input]] = None,
     ):
-        height: float = (
-            0.5
-            + channel_count_property * 0.25
-            + (0.25 if start_channel_property == 0 else 0)
-        )
-        super().__init__(
-            ComponentType.CompositeWriteNumber, component_id, position, height
-        )
+        super().__init__(ComponentType.CompositeWriteNumber, component_id, position)
         self.start_channel_property: int = start_channel_property
         self.channel_count_property: int = channel_count_property
         self.composite_signal_input: Optional[Input] = composite_signal_input
         self.start_channel_input: Optional[Input] = start_channel_input
         self.channel_inputs: dict[int, Input] = channel_inputs or {}
+
+    @property
+    def height(self) -> float:
+        return (
+            0.5
+            + self.channel_count_property * 0.25
+            + (0.25 if self.start_channel_property == 0 else 0)
+        )
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> CompositeWriteNumber:

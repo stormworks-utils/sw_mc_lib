@@ -19,9 +19,13 @@ class PropertyText(Component):
         name: str = "Label",
         value_property: str = "",
     ):
-        super().__init__(ComponentType.PropertyText, component_id, position, 0.5)
+        super().__init__(ComponentType.PropertyText, component_id, position)
         self.name: str = name
         self.value_property: str = value_property
+
+    @property
+    def height(self) -> float:
+        return 0.5
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> PropertyText:

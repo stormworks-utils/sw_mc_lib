@@ -19,10 +19,14 @@ class TestingComponent(Component):
         inputs_: dict[str, Input],
         properties: dict[str, NumberProperty],
     ):
-        super().__init__(ComponentType.Abs, component_id, position, 1.0)
+        super().__init__(ComponentType.Abs, component_id, position)
         self.attributes: dict[str, str] = attributes
         self.inputs_: dict[str, Input] = inputs_
         self.properties: dict[str, NumberProperty] = properties
+
+    @property
+    def height(self) -> float:
+        return 1.0
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> TestingComponent:

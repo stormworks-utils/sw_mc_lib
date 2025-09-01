@@ -23,12 +23,16 @@ class Equal(Component):
         b_input: Optional[Input] = None,
         epsilon_property: Optional[NumberProperty] = None,
     ):
-        super().__init__(ComponentType.Equal, component_id, position, 0.75)
+        super().__init__(ComponentType.Equal, component_id, position)
         self.a_input: Optional[Input] = a_input
         self.b_input: Optional[Input] = b_input
         self.epsilon_property: NumberProperty = epsilon_property or NumberProperty(
             "0.0001", "e"
         )
+
+    @property
+    def height(self) -> float:
+        return 0.75
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> Equal:

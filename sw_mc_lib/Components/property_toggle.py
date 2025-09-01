@@ -20,11 +20,15 @@ class PropertyToggle(Component):
         off_label: str = "off",
         value_property: bool = False,
     ):
-        super().__init__(ComponentType.PropertyToggle, component_id, position, 0.5)
+        super().__init__(ComponentType.PropertyToggle, component_id, position)
         self.name: str = name
         self.on_label: str = on_label
         self.off_label: str = off_label
         self.value_property: bool = value_property
+
+    @property
+    def height(self) -> float:
+        return 0.75
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> PropertyToggle:

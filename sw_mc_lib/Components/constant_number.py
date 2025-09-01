@@ -20,8 +20,12 @@ class ConstantNumber(Component):
         position: Position,
         value_property: Optional[NumberProperty] = None,
     ):
-        super().__init__(ComponentType.ConstantNumber, component_id, position, 0.5)
+        super().__init__(ComponentType.ConstantNumber, component_id, position)
         self.value_property: NumberProperty = value_property or NumberProperty("0", "n")
+
+    @property
+    def height(self) -> float:
+        return 0.5
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> ConstantNumber:

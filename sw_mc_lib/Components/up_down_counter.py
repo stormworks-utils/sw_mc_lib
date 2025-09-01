@@ -27,7 +27,7 @@ class UpDownCounter(Component):
         reset_property: Optional[NumberProperty] = None,
         increment_property: Optional[NumberProperty] = None,
     ):
-        super().__init__(ComponentType.UpDownCounter, component_id, position, 1.0)
+        super().__init__(ComponentType.UpDownCounter, component_id, position)
         self.up_input: Optional[Input] = up_input
         self.down_input: Optional[Input] = down_input
         self.reset_input: Optional[Input] = reset_input
@@ -37,6 +37,10 @@ class UpDownCounter(Component):
         self.min_property: NumberProperty = min_property or NumberProperty("0", "min")
         self.max_property: NumberProperty = max_property or NumberProperty("0", "max")
         self.reset_property: NumberProperty = reset_property or NumberProperty("0", "r")
+
+    @property
+    def height(self) -> float:
+        return 1.0
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> UpDownCounter:

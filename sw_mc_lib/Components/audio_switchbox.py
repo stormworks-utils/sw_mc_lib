@@ -22,10 +22,14 @@ class AudioSwitchbox(Component):
         off_value_input: Optional[Input] = None,
         switch_signal_input: Optional[Input] = None,
     ):
-        super().__init__(ComponentType.AudioSwitchbox, component_id, position, 1.0)
+        super().__init__(ComponentType.AudioSwitchbox, component_id, position)
         self.on_value_input: Optional[Input] = on_value_input
         self.off_value_input: Optional[Input] = off_value_input
         self.switch_signal_input: Optional[Input] = switch_signal_input
+
+    @property
+    def height(self) -> float:
+        return 1.0
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> AudioSwitchbox:

@@ -17,8 +17,12 @@ class NOT(Component):
     def __init__(
         self, component_id: int, position: Position, a_input: Optional[Input] = None
     ):
-        super().__init__(ComponentType.NOT, component_id, position, 0.5)
+        super().__init__(ComponentType.NOT, component_id, position)
         self.a_input: Optional[Input] = a_input
+
+    @property
+    def height(self) -> float:
+        return 0.5
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> NOT:

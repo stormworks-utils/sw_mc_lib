@@ -17,8 +17,12 @@ class Delta(Component):
     def __init__(
         self, component_id: int, position: Position, value_input: Optional[Input] = None
     ):
-        super().__init__(ComponentType.Delta, component_id, position, 0.5)
+        super().__init__(ComponentType.Delta, component_id, position)
         self.value_input: Optional[Input] = value_input
+
+    @property
+    def height(self) -> float:
+        return 0.5
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> Delta:

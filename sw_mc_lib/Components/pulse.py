@@ -23,9 +23,13 @@ class Pulse(Component):
         mode_property: PulseMode = PulseMode.OffToOn,
         toggle_signal_input: Optional[Input] = None,
     ):
-        super().__init__(ComponentType.Pulse, component_id, position, 0.5)
+        super().__init__(ComponentType.Pulse, component_id, position)
         self.toggle_signal_input: Optional[Input] = toggle_signal_input
         self.mode_property: PulseMode = mode_property
+
+    @property
+    def height(self) -> float:
+        return 0.5
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> Pulse:
