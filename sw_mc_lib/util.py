@@ -32,7 +32,7 @@ def generic_str(
                 dir.append(i)
     if dir:
         elements = [f"{i}={getattr(self, i)!r}" for i in dir]
-        if all('\n' not in i for i in elements) and sum(len(i) for i in elements) < 80:
+        if all("\n" not in i for i in elements) and sum(len(i) for i in elements) < 80:
             return f"{self.__class__.__name__}({', '.join(elements)})"
         for i in dir:
             string += f'{"    " if newlines else ""}{i}='
