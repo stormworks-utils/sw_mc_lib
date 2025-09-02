@@ -1,9 +1,7 @@
 from __future__ import annotations
 
-from typing import Optional
-
 from sw_mc_lib.Component import INNER_TO_XML_RESULT, Component
-from sw_mc_lib.NumberProperty import NumberProperty
+from sw_mc_lib.NumberProperty import NumberInput, NumberProperty
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
@@ -18,18 +16,24 @@ class PropertySlider(Component):
         self,
         component_id: int,
         position: Position,
-        min_property: Optional[NumberProperty] = None,
-        max_property: Optional[NumberProperty] = None,
-        value_property: Optional[NumberProperty] = None,
-        rounding_property: Optional[NumberProperty] = None,
+        min_property: NumberInput = None,
+        max_property: NumberInput = None,
+        value_property: NumberInput = None,
+        rounding_property: NumberInput = None,
     ):
         super().__init__(ComponentType.PropertySlider, component_id, position)
-        self.rounding_property: NumberProperty = rounding_property or NumberProperty(
-            "0", "int"
+        self.rounding_property: NumberProperty = NumberProperty.from_input(
+            rounding_property, "int"
         )
-        self.min_property: NumberProperty = min_property or NumberProperty("0", "min")
-        self.max_property: NumberProperty = max_property or NumberProperty("0", "max")
-        self.value_property: NumberProperty = value_property or NumberProperty("0", "v")
+        self.min_property: NumberProperty = NumberProperty.from_input(
+            min_property, "min"
+        )
+        self.max_property: NumberProperty = NumberProperty.from_input(
+            max_property, "max"
+        )
+        self.value_property: NumberProperty = NumberProperty.from_input(
+            value_property, "v"
+        )
 
     @property
     def height(self) -> float:

@@ -4,7 +4,7 @@ from typing import Optional
 
 from sw_mc_lib.Component import INNER_TO_XML_RESULT, Component
 from sw_mc_lib.Input import Input
-from sw_mc_lib.NumberProperty import NumberProperty
+from sw_mc_lib.NumberProperty import NumberInput, NumberProperty
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
@@ -20,7 +20,7 @@ class MemoryRegister(Component):
         self,
         component_id: int,
         position: Position,
-        reset_property: Optional[NumberProperty] = None,
+        reset_property: NumberInput = None,
         set_input: Optional[Input] = None,
         reset_input: Optional[Input] = None,
         number_to_store_input: Optional[Input] = None,
@@ -29,7 +29,9 @@ class MemoryRegister(Component):
         self.set_input: Optional[Input] = set_input
         self.reset_input: Optional[Input] = reset_input
         self.number_to_store_input: Optional[Input] = number_to_store_input
-        self.reset_property: NumberProperty = reset_property or NumberProperty("0", "r")
+        self.reset_property: NumberProperty = NumberProperty.from_input(
+            reset_property, "r"
+        )
 
     @property
     def height(self) -> float:

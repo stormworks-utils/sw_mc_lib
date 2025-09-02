@@ -4,7 +4,7 @@ from typing import Optional
 
 from sw_mc_lib.Component import INNER_TO_XML_RESULT, Component
 from sw_mc_lib.Input import Input
-from sw_mc_lib.NumberProperty import NumberProperty
+from sw_mc_lib.NumberProperty import NumberInput, NumberProperty
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
@@ -21,13 +21,13 @@ class Equal(Component):
         position: Position,
         a_input: Optional[Input] = None,
         b_input: Optional[Input] = None,
-        epsilon_property: Optional[NumberProperty] = None,
+        epsilon_property: NumberInput = None,
     ):
         super().__init__(ComponentType.Equal, component_id, position)
         self.a_input: Optional[Input] = a_input
         self.b_input: Optional[Input] = b_input
-        self.epsilon_property: NumberProperty = epsilon_property or NumberProperty(
-            "0.0001", "e"
+        self.epsilon_property: NumberProperty = NumberProperty.from_input(
+            epsilon_property, "e", "0.0001"
         )
 
     @property

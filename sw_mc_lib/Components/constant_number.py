@@ -1,9 +1,7 @@
 from __future__ import annotations
 
-from typing import Optional
-
 from sw_mc_lib.Component import INNER_TO_XML_RESULT, Component
-from sw_mc_lib.NumberProperty import NumberProperty
+from sw_mc_lib.NumberProperty import NumberInput, NumberProperty
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
@@ -18,10 +16,12 @@ class ConstantNumber(Component):
         self,
         component_id: int,
         position: Position,
-        value_property: Optional[NumberProperty] = None,
+        value_property: NumberInput = None,
     ):
         super().__init__(ComponentType.ConstantNumber, component_id, position)
-        self.value_property: NumberProperty = value_property or NumberProperty("0", "n")
+        self.value_property: NumberProperty = NumberProperty.from_input(
+            value_property, "n"
+        )
 
     @property
     def height(self) -> float:

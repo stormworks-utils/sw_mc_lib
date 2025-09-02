@@ -1,9 +1,7 @@
 from __future__ import annotations
 
-from typing import Optional
-
 from sw_mc_lib.Component import INNER_TO_XML_RESULT, Component
-from sw_mc_lib.NumberProperty import NumberProperty
+from sw_mc_lib.NumberProperty import NumberInput, NumberProperty
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
@@ -19,11 +17,13 @@ class PropertyNumber(Component):
         component_id: int,
         position: Position,
         name: str = "number",
-        value_property: Optional[NumberProperty] = None,
+        value_property: NumberInput = None,
     ):
         super().__init__(ComponentType.PropertyNumber, component_id, position)
         self.name: str = name
-        self.value_property: NumberProperty = value_property or NumberProperty("0", "v")
+        self.value_property: NumberProperty = NumberProperty.from_input(
+            value_property, "v"
+        )
 
     @property
     def height(self) -> float:

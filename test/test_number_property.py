@@ -47,3 +47,22 @@ class TestNumberProperty(unittest.TestCase):
         self.assertEqual(string_to_sw_float("1234567.1234567"), 1234567.125)
         self.assertEqual(string_to_sw_float("0.123456789"), 0.123457)
         self.assertEqual(string_to_sw_float("1.23456789"), 1.234568)
+
+    def test_from_input(self):
+        self.assertEqual(NumberProperty("0", "a"), NumberProperty.from_input(None, "a"))
+        self.assertEqual(
+            NumberProperty("1234", "a"),
+            NumberProperty.from_input(1234, "a"),
+        )
+        self.assertEqual(
+            NumberProperty("1234.567", "a"),
+            NumberProperty.from_input(1234.567, "a"),
+        )
+        self.assertEqual(
+            NumberProperty("1234.567", "a"),
+            NumberProperty.from_input("1234.567", "a"),
+        )
+        self.assertEqual(
+            NumberProperty("1234.567", "a"),
+            NumberProperty.from_input(NumberProperty("1234.567"), "a"),
+        )

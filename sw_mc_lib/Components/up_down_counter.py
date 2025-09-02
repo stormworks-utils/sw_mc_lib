@@ -4,7 +4,7 @@ from typing import Optional
 
 from sw_mc_lib.Component import INNER_TO_XML_RESULT, Component
 from sw_mc_lib.Input import Input
-from sw_mc_lib.NumberProperty import NumberProperty
+from sw_mc_lib.NumberProperty import NumberInput, NumberProperty
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
@@ -22,21 +22,27 @@ class UpDownCounter(Component):
         up_input: Optional[Input] = None,
         down_input: Optional[Input] = None,
         reset_input: Optional[Input] = None,
-        min_property: Optional[NumberProperty] = None,
-        max_property: Optional[NumberProperty] = None,
-        reset_property: Optional[NumberProperty] = None,
-        increment_property: Optional[NumberProperty] = None,
+        min_property: NumberInput = None,
+        max_property: NumberInput = None,
+        reset_property: NumberInput = None,
+        increment_property: NumberInput = None,
     ):
         super().__init__(ComponentType.UpDownCounter, component_id, position)
         self.up_input: Optional[Input] = up_input
         self.down_input: Optional[Input] = down_input
         self.reset_input: Optional[Input] = reset_input
-        self.increment_property: NumberProperty = increment_property or NumberProperty(
-            "0", "i"
+        self.increment_property: NumberProperty = NumberProperty.from_input(
+            increment_property, "i"
         )
-        self.min_property: NumberProperty = min_property or NumberProperty("0", "min")
-        self.max_property: NumberProperty = max_property or NumberProperty("0", "max")
-        self.reset_property: NumberProperty = reset_property or NumberProperty("0", "r")
+        self.min_property: NumberProperty = NumberProperty.from_input(
+            min_property, "min"
+        )
+        self.max_property: NumberProperty = NumberProperty.from_input(
+            max_property, "max"
+        )
+        self.reset_property: NumberProperty = NumberProperty.from_input(
+            reset_property, "r"
+        )
 
     @property
     def height(self) -> float:

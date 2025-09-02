@@ -4,7 +4,7 @@ from typing import Optional
 
 from sw_mc_lib.Component import INNER_TO_XML_RESULT, Component
 from sw_mc_lib.Input import Input
-from sw_mc_lib.NumberProperty import NumberProperty
+from sw_mc_lib.NumberProperty import NumberInput, NumberProperty
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLParser import XMLParserElement
@@ -19,14 +19,18 @@ class Threshold(Component):
         self,
         component_id: int,
         position: Position,
-        min_property: Optional[NumberProperty] = None,
-        max_property: Optional[NumberProperty] = None,
+        min_property: NumberInput = None,
+        max_property: NumberInput = None,
         number_input: Optional[Input] = None,
     ):
         super().__init__(ComponentType.Threshold, component_id, position)
         self.number_input: Optional[Input] = number_input
-        self.min_property: NumberProperty = min_property or NumberProperty("0", "min")
-        self.max_property: NumberProperty = max_property or NumberProperty("0", "max")
+        self.min_property: NumberProperty = NumberProperty.from_input(
+            min_property, "min"
+        )
+        self.max_property: NumberProperty = NumberProperty.from_input(
+            max_property, "max"
+        )
 
     @property
     def height(self) -> float:

@@ -49,3 +49,16 @@ class NumberProperty(XMLElement):
     @value.setter
     def value(self, value: float) -> None:
         self.text = str(value)
+
+    @staticmethod
+    def from_input(value: NumberInput, name: str, default: str = "0") -> NumberProperty:
+        """Get a NumberProperty from either a NumberProperty or a number. Generate a default if None."""
+        if isinstance(value, NumberProperty):
+            value.name = name
+            return value
+        if isinstance(value, (int, float, str)):
+            return NumberProperty(str(value), name)
+        return NumberProperty(default, name)
+
+
+NumberInput = Optional[NumberProperty | int | float | str]

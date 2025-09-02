@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Optional
 
 from sw_mc_lib.Component import INNER_TO_XML_RESULT, Component
-from sw_mc_lib.NumberProperty import NumberProperty
+from sw_mc_lib.NumberProperty import NumberInput, NumberProperty
 from sw_mc_lib.Position import Position
 from sw_mc_lib.Types import ComponentType
 from sw_mc_lib.XMLElement import XMLElement
@@ -15,9 +15,11 @@ class DropDownOption(XMLElement):
     A single Option for :class:`sw_mc_lib.Components.PropertyDropDown.PropertyDropDown`
     """
 
-    def __init__(self, label: str, value_property: Optional[NumberProperty]):
+    def __init__(self, label: str, value_property: NumberInput = None):
         self.label: str = label
-        self.value_property: NumberProperty = value_property or NumberProperty("0", "v")
+        self.value_property: NumberProperty = NumberProperty.from_input(
+            value_property, "v"
+        )
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> DropDownOption:
