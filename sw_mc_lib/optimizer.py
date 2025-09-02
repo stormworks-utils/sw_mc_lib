@@ -1,5 +1,7 @@
 from sw_mc_lib import Microcontroller
 from sw_mc_lib.Components import (
+    CompositeWriteBoolean,
+    CompositeWriteNumber,
     PropertyDropdown,
     PropertyNumber,
     PropertySlider,
@@ -52,3 +54,34 @@ def remove_unused(mc: Microcontroller) -> None:
 
     for component in components_by_id.values():
         mc.components.remove(component)
+
+
+def optimize_composite_writes(mc: Microcontroller) -> None:
+    """
+    Optimize composite writes by setting start_channel and channel_count.
+
+    For example, if a composite has two inputs A and B, and both are set to the same value,
+    the second write is redundant and can be removed.
+
+    :param mc: Microcontroller to optimize
+    :return: None
+    """
+    for component in mc.components:
+        if not isinstance(component, (CompositeWriteBoolean, CompositeWriteNumber)):
+            continue
+        max_channel: int = max(component.channel_inputs.keys(), default=0)
+        min_channel: int = min(component.channel_inputs.keys(), default=1)
+        channel_count: int = max_channel - min_channel + 1
+        component.channel_count_property = min(
+            component.channel_count_property, channel_count
+        )
+        start_channel: int = component.start_channel_property
+        if start_channel != 0 and min_channel > 1:
+            diff: int = min_channel - 1
+            keys = list(component.channel_inputs.keys())
+            for channel_id in keys:
+                channel = component.channel_inputs[channel_id]
+                component.channel_inputs[channel_id - diff] = channel
+                del component.channel_inputs[channel_id]
+                channel.index = str(channel_id - diff)
+            component.start_channel_property = start_channel + diff
