@@ -15,6 +15,7 @@ from sw_mc_lib.Components import (
     TooltipBoolean,
     TooltipNumber,
 )
+from sw_mc_lib.Types import ComponentType
 
 
 def remove_unused(mc: Microcontroller) -> None:
@@ -109,12 +110,15 @@ def optimize_functions(mc: Microcontroller) -> None:
                 and component.w_input is None
             ):
                 if component.y_input is None and component.z_input is None:
+                    component.type = ComponentType.ArithmeticFunction1In
                     component.__class__ = ArithmeticFunction1In  # type: ignore
                 else:
+                    component.type = ComponentType.ArithmeticFunction3In
                     component.__class__ = ArithmeticFunction3In  # type: ignore
-            elif isinstance(component, ArithmeticFunction3In):
-                if component.y_input is None and component.z_input is None:
-                    component.__class__ = ArithmeticFunction1In
+        elif isinstance(component, ArithmeticFunction3In):
+            if component.y_input is None and component.z_input is None:
+                component.type = ComponentType.ArithmeticFunction1In
+                component.__class__ = ArithmeticFunction1In  # type: ignore
         elif isinstance(component, BooleanFunction8In):
             if (
                 component.a_input is None
@@ -122,4 +126,5 @@ def optimize_functions(mc: Microcontroller) -> None:
                 and component.c_input is None
                 and component.d_input is None
             ):
+                component.type = ComponentType.BooleanFunction4In
                 component.__class__ = BooleanFunction4In  # type: ignore
