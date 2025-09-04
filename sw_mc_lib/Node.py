@@ -147,6 +147,7 @@ class Node(XMLElement):
         """Convert this Node to a XML component bridge state entity (mc side of the node)"""
         children = []
         if self.input:
+            self.input.index = "1"
             children.append(self.input.to_xml())
         if self.position:
             children.append(self.position.to_xml())
