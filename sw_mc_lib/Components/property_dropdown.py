@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from tkinter.font import names
 from typing import Optional
 
 from sw_mc_lib.Component import INNER_TO_XML_RESULT, Component
