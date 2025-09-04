@@ -31,7 +31,7 @@ class PropertyText(Component):
     def from_xml(element: XMLParserElement) -> PropertyText:
         obj: XMLParserElement = element.children[0]
         component_id, position, _, _ = Component._basic_in_parsing(obj)
-        name: str = obj.attributes.get("n", "toggle")
+        name: str = obj.attributes.get("n", "Label")
         value_property: str = obj.attributes.get("v", "")
         return PropertyText(component_id, position, name, value_property)
 

@@ -20,10 +20,12 @@ class CompositeReadNumber(Component):
         position: Position,
         channel_property: int = 1,
         composite_signal_input: Optional[Input] = None,
+        start_channel_input: Optional[Input] = None,
     ):
         super().__init__(ComponentType.CompositeReadNumber, component_id, position)
         self.channel_property: int = channel_property
         self.composite_signal_input: Optional[Input] = composite_signal_input
+        self.start_channel_input: Optional[Input] = start_channel_input
 
     @property
     def height(self) -> float:
@@ -35,10 +37,10 @@ class CompositeReadNumber(Component):
         component_id, position, inputs, _ = Component._basic_in_parsing(obj)
         channel_property: int = int(obj.attributes.get("i", "0")) + 1
         return CompositeReadNumber(
-            component_id, position, channel_property, inputs.get("1")
+            component_id, position, channel_property, inputs.get("1"), inputs.get("2")
         )
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
         return {"i": str(self.channel_property - 1)}, self._pos_in_to_xml(
-            self.composite_signal_input
+            self.composite_signal_input, self.start_channel_input
         )

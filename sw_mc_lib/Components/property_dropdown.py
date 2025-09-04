@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from tkinter.font import names
 from typing import Optional
 
 from sw_mc_lib.Component import INNER_TO_XML_RESULT, Component
@@ -45,10 +46,12 @@ class PropertyDropdown(Component):
         position: Position,
         selected_property: int = 0,
         options: Optional[list[DropDownOption]] = None,
+        name: str = "value",
     ):
         super().__init__(ComponentType.PropertyDropdown, component_id, position)
         self.selected_property: int = selected_property
         self.options: list[DropDownOption] = options or []
+        self.name: str = name
 
     @property
     def height(self) -> float:
@@ -59,15 +62,16 @@ class PropertyDropdown(Component):
         obj: XMLParserElement = element.children[0]
         component_id, position, _, _ = Component._basic_in_parsing(obj)
         selected_property: int = int(obj.attributes.get("i", "0"))
+        name: str = obj.attributes.get("name", "value")
         options: list[DropDownOption] = []
         for child in obj.children:
             if child.tag == "items":
                 for entry in child.children:
                     options.append(DropDownOption.from_xml(entry))
-        return PropertyDropdown(component_id, position, selected_property, options)
+        return PropertyDropdown(component_id, position, selected_property, options, name)
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        attributes: dict[str, str] = {"i": str(self.selected_property)}
+        attributes: dict[str, str] = {"i": str(self.selected_property), "name": self.name}
         children: list[XMLParserElement] = self._pos_in_to_xml()
         items: XMLParserElement = XMLParserElement("items")
         for option in self.options:

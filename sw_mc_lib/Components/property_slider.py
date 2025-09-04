@@ -20,6 +20,7 @@ class PropertySlider(Component):
         max_property: NumberInput = None,
         value_property: NumberInput = None,
         rounding_property: NumberInput = None,
+        name: str = "value",
     ):
         super().__init__(ComponentType.PropertySlider, component_id, position)
         self.rounding_property: NumberProperty = NumberProperty.from_input(
@@ -34,6 +35,7 @@ class PropertySlider(Component):
         self.value_property: NumberProperty = NumberProperty.from_input(
             value_property, "v"
         )
+        self.name: str = name
 
     @property
     def height(self) -> float:
@@ -54,10 +56,11 @@ class PropertySlider(Component):
             properties.get("max"),
             properties.get("v"),
             properties.get("int"),
+            obj.attributes.get("name", "value"),
         )
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        return {}, self._pos_in_to_xml(
+        return {"name": self.name}, self._pos_in_to_xml(
             properties={
                 "min": self.min_property,
                 "max": self.max_property,
