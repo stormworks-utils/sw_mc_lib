@@ -68,10 +68,15 @@ class PropertyDropdown(Component):
             if child.tag == "items":
                 for entry in child.children:
                     options.append(DropDownOption.from_xml(entry))
-        return PropertyDropdown(component_id, position, selected_property, options, name)
+        return PropertyDropdown(
+            component_id, position, selected_property, options, name
+        )
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        attributes: dict[str, str] = {"i": str(self.selected_property), "name": self.name}
+        attributes: dict[str, str] = {
+            "i": str(self.selected_property),
+            "name": self.name,
+        }
         children: list[XMLParserElement] = self._pos_in_to_xml()
         items: XMLParserElement = XMLParserElement("items")
         for option in self.options:
