@@ -1,5 +1,10 @@
 from sw_mc_lib import Microcontroller
 from sw_mc_lib.Components import (
+    ArithmeticFunction1In,
+    ArithmeticFunction3In,
+    ArithmeticFunction8In,
+    BooleanFunction4In,
+    BooleanFunction8In,
     CompositeWriteBoolean,
     CompositeWriteNumber,
     PropertyDropdown,
@@ -85,3 +90,36 @@ def optimize_composite_writes(mc: Microcontroller) -> None:
                 del component.channel_inputs[channel_id]
                 channel.index = str(channel_id - diff)
             component.start_channel_property = start_channel + diff
+
+
+def optimize_functions(mc: Microcontroller) -> None:
+    """
+    Optimize the microcontroller by making function blocks as small as possible.
+
+    :param mc: Microcontroller to optimize
+    :return: None
+    """
+    for component in mc.components:
+        if isinstance(component, ArithmeticFunction8In):
+            if (
+                component.a_input is None
+                and component.b_input is None
+                and component.c_input is None
+                and component.d_input is None
+                and component.w_input is None
+            ):
+                if component.y_input is None and component.z_input is None:
+                    component.__class__ = ArithmeticFunction1In  # type: ignore
+                else:
+                    component.__class__ = ArithmeticFunction3In  # type: ignore
+            elif isinstance(component, ArithmeticFunction3In):
+                if component.y_input is None and component.z_input is None:
+                    component.__class__ = ArithmeticFunction1In
+        elif isinstance(component, BooleanFunction8In):
+            if (
+                component.a_input is None
+                and component.b_input is None
+                and component.c_input is None
+                and component.d_input is None
+            ):
+                component.__class__ = BooleanFunction4In  # type: ignore
