@@ -26,6 +26,7 @@ class UpDownCounter(Component):
         max_property: NumberInput = None,
         reset_property: NumberInput = None,
         increment_property: NumberInput = None,
+        clamp: bool = False,
     ):
         super().__init__(ComponentType.UpDownCounter, component_id, position)
         self.up_input: Optional[Input] = up_input
@@ -43,6 +44,7 @@ class UpDownCounter(Component):
         self.reset_property: NumberProperty = NumberProperty.from_input(
             reset_property, "r"
         )
+        self.clamp: bool = clamp
 
     @property
     def height(self) -> float:
@@ -62,10 +64,11 @@ class UpDownCounter(Component):
             properties.get("max"),
             properties.get("r"),
             properties.get("i"),
+            obj.attributes.get("m", "0") == "1",
         )
 
     def _inner_to_xml(self) -> INNER_TO_XML_RESULT:
-        return {}, self._pos_in_to_xml(
+        return {"m": str(int(self.clamp))}, self._pos_in_to_xml(
             self.up_input,
             self.down_input,
             self.reset_input,
