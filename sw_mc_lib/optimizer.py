@@ -1,4 +1,4 @@
-from sw_mc_lib import Microcontroller
+from sw_mc_lib import Microcontroller, Component
 from sw_mc_lib.Components import (
     ArithmeticFunction1In,
     ArithmeticFunction3In,
@@ -128,3 +128,36 @@ def optimize_functions(mc: Microcontroller) -> None:
             ):
                 component.type = ComponentType.BooleanFunction4In
                 component.__class__ = BooleanFunction4In  # type: ignore
+
+
+def optimize_tree(mc: Microcontroller) -> None:
+    """
+    Optimize the microcontroller by removing unused components and optimizing functions and composite writes.
+
+    :param mc: Microcontroller to optimize
+    :return: None
+    """
+    found: bool = True
+    while found:
+        found = False
+        known_components: dict[Component, int] = {}
+        replacements: dict[int, int] = {}
+        replaced: list[int] = []
+        for i, component in enumerate(mc.components):
+            if component in known_components:
+                replacements[component.component_id] = known_components[component]
+                replaced.append(i)
+                found = True
+            else:
+                known_components[component] = component.component_id
+
+        if not found:
+            break
+        for component in mc.components:
+            for input in component.inputs:
+                if input.component_id in replacements:
+                    input.component_id = replacements[input.component_id]
+
+        for i in reversed(replaced):
+            mc.components.pop(i)
+

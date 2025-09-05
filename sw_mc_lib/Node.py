@@ -168,3 +168,21 @@ class Node(XMLElement):
             {"id": str(self.node_id), "component_id": str(self.component_id)},
             [node_element],
         )
+
+    def __hash__(self) -> int:
+        return hash((self.node_id, self.component_id, self.label, self.mode, self.type))
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Node):
+            return NotImplemented
+        return (
+            self.node_id == other.node_id
+            and self.component_id == other.component_id
+            and self.label == other.label
+            and self.mode == other.mode
+            and self.type == other.type
+            and self.description == other.description
+            and self.input_position == other.input_position
+            and self.position == other.position
+            and self.input == other.input
+        )

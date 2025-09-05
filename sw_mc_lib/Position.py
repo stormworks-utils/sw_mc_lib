@@ -28,3 +28,11 @@ class Position(XMLElement):
         if self.y != 0:
             attributes["y"] = str(self.y)
         return XMLParserElement("pos", attributes)
+
+    def __hash__(self) -> int:
+        return hash((self.x, self.y))
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Position):
+            return False
+        return self.x == other.x and self.y == other.y

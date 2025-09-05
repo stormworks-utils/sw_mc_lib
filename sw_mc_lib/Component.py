@@ -3,7 +3,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from inspect import Signature, signature
 from itertools import chain
-from typing import Optional, Type
+from typing import Optional, Type, Any
 
 from .Input import Input
 from .NumberProperty import NumberProperty
@@ -261,6 +261,25 @@ class Component(XMLElement, ABC):
                     if isinstance(v, Input):
                         inputs.append(v)
         return inputs
+
+    def __hash__(self) -> int:
+        result: int = hash(self.type)
+        self_signature: Signature = signature(self.__init__)  # type: ignore
+        for name in self_signature.parameters:
+            value = getattr(self, name)
+            result ^= hash(value)
+        return result
+
+    def __eq__(self, other: Any) -> bool:
+        if not isinstance(other, Component):
+            return False
+        if self.type != other.type:
+            return False
+        self_signature: Signature = signature(self.__init__)  # type: ignore
+        for name in self_signature.parameters:
+            if getattr(self, name) != getattr(other, name):
+                return False
+        return True
 
 
 from .Components import *  # noqa: ignore=F403 pylint: disable=wildcard-import,wrong-import-position, cyclic-import

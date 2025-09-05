@@ -60,5 +60,13 @@ class NumberProperty(XMLElement):
             return NumberProperty(str(value), name)
         return NumberProperty(default, name)
 
+    def __hash__(self) -> int:
+        return hash(self.text)
+
+    def __eq__(self, other: NumberProperty) -> bool:
+        if not isinstance(other, NumberProperty):
+            return False
+        return self.text == other.text
+
 
 NumberInput = Optional[NumberProperty | int | float | str]

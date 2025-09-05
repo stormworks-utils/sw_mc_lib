@@ -32,3 +32,11 @@ class Input(XMLElement):
         if self.component_id != 0:
             attributes["component_id"] = str(self.component_id)
         return XMLParserElement(f"in{self.index}", attributes)
+
+    def __hash__(self) -> int:
+        return hash((self.component_id, self.node_index))
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Input):
+            return False
+        return self.component_id == other.component_id and self.node_index == other.node_index
