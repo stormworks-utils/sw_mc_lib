@@ -39,4 +39,7 @@ class Input(XMLElement):
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, Input):
             return False
-        return self.component_id == other.component_id and self.node_index == other.node_index
+        return (
+            self.component_id == other.component_id
+            and self.node_index == other.node_index
+        )

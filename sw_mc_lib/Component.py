@@ -3,7 +3,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from inspect import Signature, signature
 from itertools import chain
-from typing import Optional, Type, Any
+from typing import Any, Optional, Type
 
 from .Input import Input
 from .NumberProperty import NumberProperty

@@ -1,4 +1,4 @@
-from sw_mc_lib import Microcontroller, Component
+from sw_mc_lib import Component, Microcontroller
 from sw_mc_lib.Components import (
     ArithmeticFunction1In,
     ArithmeticFunction3In,
@@ -160,4 +160,3 @@ def optimize_tree(mc: Microcontroller) -> None:
 
         for i in reversed(replaced):
             mc.components.pop(i)
-

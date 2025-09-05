@@ -63,7 +63,7 @@ class NumberProperty(XMLElement):
     def __hash__(self) -> int:
         return hash(self.text)
 
-    def __eq__(self, other: NumberProperty) -> bool:
+    def __eq__(self, other: object) -> bool:
         if not isinstance(other, NumberProperty):
             return False
         return self.text == other.text
