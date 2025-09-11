@@ -144,3 +144,18 @@ class Microcontroller(XMLElement):
         """
         nodes = (node.node_id for node in self.nodes)
         return max(chain(nodes, (0,)))
+
+    def clone(self) -> Microcontroller:
+        """
+        Creates a deep copy of this microcontroller.
+
+        :return: A deep copy of this microcontroller.
+        """
+        return Microcontroller(
+            self.name,
+            self.description,
+            self.width,
+            self.length,
+            [node.clone() for node in self.nodes],
+            [component.clone() for component in self.components],
+        )

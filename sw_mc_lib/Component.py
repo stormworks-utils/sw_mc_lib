@@ -3,7 +3,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from inspect import Signature, signature
 from itertools import chain
-from typing import Any, Optional, Type
+from typing import Optional, Type
 
 from .Input import Input
 from .NumberProperty import NumberProperty
@@ -270,16 +270,13 @@ class Component(XMLElement, ABC):
             result ^= hash(value)
         return result
 
-    def __eq__(self, other: Any) -> bool:
-        if not isinstance(other, Component):
-            return False
-        if self.type != other.type:
-            return False
-        self_signature: Signature = signature(self.__init__)  # type: ignore
-        for name in self_signature.parameters:
-            if getattr(self, name) != getattr(other, name):
-                return False
-        return True
+    def clone(self) -> Component:
+        """
+        Create a deep copy of the element.
+
+        :return: The deep copy
+        """
+        return self.from_xml(self.to_xml())
 
 
 from .Components import *  # noqa: ignore=F403 pylint: disable=wildcard-import,wrong-import-position, cyclic-import

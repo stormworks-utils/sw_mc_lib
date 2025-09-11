@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Any, Generator
+from inspect import Signature, signature
+from typing import Any
 
 from .util import generic_str
 from .XMLParser import XMLParserElement
@@ -36,10 +37,8 @@ class XMLElement(ABC):
     def __eq__(self, other: Any) -> bool:
         if not isinstance(other, self.__class__):
             return False
+        self_signature: Signature = signature(self.__init__)  # type: ignore
         return all(
-            callable(getattr(self, i)) or getattr(self, i) == getattr(other, i)
-            for i in self.__dir()
+            hasattr(other, name) and getattr(self, name) == getattr(other, name)
+            for name in self_signature.parameters.keys()
         )
-
-    def __dir(self) -> Generator[str, None, None]:
-        return (i for i in dir(self) if not i.startswith("__"))
