@@ -73,7 +73,10 @@ def optimize_composite_writes(mc: Microcontroller) -> None:
     :return: None
     """
     for component in mc.components:
-        if not isinstance(component, (CompositeWriteBoolean, CompositeWriteNumber)):
+        if (
+            not isinstance(component, (CompositeWriteBoolean, CompositeWriteNumber))
+            or component.start_channel_property == 0
+        ):
             continue
         max_channel: int = max(component.channel_inputs.keys(), default=0)
         min_channel: int = min(component.channel_inputs.keys(), default=1)
@@ -82,7 +85,7 @@ def optimize_composite_writes(mc: Microcontroller) -> None:
             component.channel_count_property, channel_count
         )
         start_channel: int = component.start_channel_property
-        if start_channel != 0 and min_channel > 1:
+        if min_channel > 1:
             diff: int = min_channel - 1
             keys = list(component.channel_inputs.keys())
             for channel_id in keys:
