@@ -40,4 +40,4 @@ class PropertyNumber(Component):
         children: list[XMLParserElement] = self._pos_in_to_xml(
             properties={"v": self.value_property}
         )
-        return {}, children
+        return {"n": self.name}, children
