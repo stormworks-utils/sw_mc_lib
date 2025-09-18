@@ -19,6 +19,20 @@ class XMLParserElement:
         self.attributes: dict[str, str] = attributes or {}
         self.children: list[XMLParserElement] = children or []
 
+    def get_child_by_tag(self, tag: str) -> Optional[XMLParserElement]:
+        """Get the first child with the given tag, or None if there is none"""
+        for child in self.children:
+            if child.tag == tag:
+                return child
+        return None
+
+    def get_child_by_tag_strict(self, tag: str) -> XMLParserElement:
+        """Get the first child with the given tag, or raise ValueError if there is none"""
+        for child in self.children:
+            if child.tag == tag:
+                return child
+        raise ValueError(f"No child with tag {tag}")
+
     def __eq__(self, other: Any) -> bool:
         if isinstance(other, XMLParserElement):
             return (
