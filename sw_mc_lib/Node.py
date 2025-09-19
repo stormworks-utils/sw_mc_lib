@@ -186,7 +186,3 @@ class Node(XMLElement):
             and self.position == other.position
             and self.input == other.input
         )
-
-    def clone(self) -> Node:
-        """Clone this node by converting to and from XML"""
-        return self.from_xml(self.to_xml())

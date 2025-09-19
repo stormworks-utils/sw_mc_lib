@@ -267,16 +267,13 @@ class Component(XMLElement, ABC):
         self_signature: Signature = signature(self.__init__)  # type: ignore
         for name in self_signature.parameters:
             value = getattr(self, name)
-            result ^= hash(value)
+            if isinstance(value, list):
+                result ^= hash(tuple(value))
+            elif isinstance(value, dict):
+                result ^= hash(tuple(sorted(value.items())))
+            else:
+                result ^= hash(value)
         return result
-
-    def clone(self) -> Component:
-        """
-        Create a deep copy of the element.
-
-        :return: The deep copy
-        """
-        return self.from_xml(self.to_xml())
 
 
 from .Components import *  # noqa: ignore=F403 pylint: disable=wildcard-import,wrong-import-position, cyclic-import

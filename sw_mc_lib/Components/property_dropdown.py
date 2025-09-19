@@ -33,6 +33,14 @@ class DropDownOption(XMLElement):
     def to_xml(self) -> XMLParserElement:
         return XMLParserElement("i", {"l": self.label}, [self.value_property.to_xml()])
 
+    def __hash__(self) -> int:
+        return hash((self.label, self.value_property))
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, DropDownOption):
+            return NotImplemented
+        return self.label == other.label and self.value_property == other.value_property
+
 
 class PropertyDropdown(Component):
     """
