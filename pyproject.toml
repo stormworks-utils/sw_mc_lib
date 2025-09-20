@@ -36,3 +36,8 @@ repository = "https://github.com/stormworks-utils/sw_mc_lib"
 
 [tool.setuptools]
 packages = ["sw_mc_lib", "sw_mc_lib.Components"]
+include-package-data = true
+
+[tool.setuptools.package-data]
+"sw_mc_lib" = ["py.typed", "blank_image.png"]
+"sw_mc_lib.Components" = ["py.typed"]
