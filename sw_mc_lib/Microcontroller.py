@@ -1,6 +1,10 @@
 from __future__ import annotations
 
 from itertools import chain
+from pathlib import Path
+from typing import Optional
+
+from PIL import Image, ImageDraw, ImageStat
 
 from .Component import Component
 from .Node import Node
@@ -12,6 +16,80 @@ from .XMLElement import XMLElement, XMLParserElement
 # Vehicles lack these elements.
 # They are completely redundant.
 ADD_STATE: bool = False
+
+
+class MCImage:
+    """
+    A Stormworks Microcontroller Image
+    """
+
+    def __init__(self, pixels: Optional[list[list[bool]]] = None) -> None:
+        if pixels is not None:
+            if len(pixels) != 16 or any(len(row) != 16 for row in pixels):
+                raise ValueError("pixels must be a 16x16 list of booleans")
+        self.pixels = pixels or [[False] * 16 for _ in range(16)]
+
+    @staticmethod
+    def from_png(path: Path, threshold: Optional[int] = None) -> MCImage:
+        """
+        Load the image from a PNG file. The image must be 16x16 pixels, and only black and white pixels are supported.
+
+        :param path: Path to the PNG file
+        :param threshold: Optional threshold to convert greyscale to black and white. If None, the mean pixel value is used.
+        :return: None
+        """
+        img = Image.open(path).convert("L").resize((16, 16))
+        stat = ImageStat.Stat(img)
+        if threshold is None:
+            threshold = max(int(stat.mean[0]), 1)
+        pixels = [
+            [img.getpixel((x, y)) >= threshold for x in range(16)] for y in range(16)  # type: ignore
+        ]
+        img.close()
+        return MCImage(pixels)
+
+    def to_png(self, path: Path) -> None:
+        """
+        Save the image to a PNG file.
+
+        :param path: Path to the PNG file
+        :return: None
+        """
+        img = Image.new("L", (16, 16))
+        for y in range(16):
+            for x in range(16):
+                img.putpixel((x, y), 255 if self.pixels[y][x] else 0)
+        img.save(path)
+
+    def to_sw_png(self, path: Path) -> None:
+        """
+        Save the image to a PNG file in the Stormworks format. This is a 32x32 image with a 1 pixel border.
+
+        :param path: Path to the PNG file
+        :return: None
+        """
+        img = Image.open(Path(__file__).parent / "blank_image.png")
+        x_offset = 150
+        y_offset = 150
+        draw = ImageDraw.Draw(img)
+        for y in range(16):
+            for x in range(16):
+                x_pos = x_offset + x * 13
+                y_pos = y_offset + y * 13
+                color = "#a9a9a9" if self.pixels[y][x] else "#636363"
+                draw.rectangle((x_pos, y_pos, x_pos + 12, y_pos + 12), fill=color)
+        img.save(path)
+
+    def __repr__(self) -> str:
+        return f"MCImage(pixels={self.pixels!r})"
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, MCImage):
+            return False
+        return self.pixels == other.pixels
+
+    def __hash__(self) -> int:
+        return hash(tuple(tuple(row) for row in self.pixels))
 
 
 class Microcontroller(XMLElement):
@@ -27,6 +105,7 @@ class Microcontroller(XMLElement):
         length: int,
         nodes: list[Node],
         components: list[Component],
+        image: Optional[MCImage] = None,
     ):
         self.name: str = name
         self.description: str = description
@@ -34,6 +113,7 @@ class Microcontroller(XMLElement):
         self.length: int = length
         self.nodes: list[Node] = nodes
         self.components: list[Component] = components
+        self.image: MCImage = image or MCImage()
 
     @staticmethod
     def from_xml(element: XMLParserElement) -> Microcontroller:
@@ -43,6 +123,12 @@ class Microcontroller(XMLElement):
         description: str = element.attributes.get("description", "")
         width: int = int(element.attributes.get("width", "0"))
         length: int = int(element.attributes.get("length", "0"))
+        image_rows: list[list[bool]] = []
+        for i in range(15, -1, -1):
+            row_str = element.attributes.get(f"sym{i}", "0")
+            row = [(int(row_str) & (1 << j)) != 0 for j in range(16)]
+            image_rows.append(row)
+        image = MCImage(image_rows)
         nodes: list[Node] = []
         nodes_elem: XMLParserElement = element.children[0]
         assert nodes_elem.tag == "nodes"
@@ -66,7 +152,7 @@ class Microcontroller(XMLElement):
                 if xml_node.component_id == component_id:
                     xml_node.add_component_bridge(child)
                     break
-        return Microcontroller(name, description, width, length, nodes, components)
+        return Microcontroller(name, description, width, length, nodes, components, image)
 
     def to_xml(self) -> XMLParserElement:
         nodes_elem: XMLParserElement = XMLParserElement("nodes")
@@ -103,6 +189,11 @@ class Microcontroller(XMLElement):
                 )
             group_elem.children.append(component_bridge_states_elem)
             group_elem.children.append(XMLParserElement("group_states"))
+        image_rows: dict[str, str] = {}
+        for i, row in enumerate(self.image.pixels):
+            row_value = sum((1 << j) for j, pixel in enumerate(row) if pixel)
+            if row_value != 0:
+                image_rows[f"sym{15 - i}"] = str(row_value)
         attributes: dict[str, str] = {
             "name": self.name,
             "description": self.description,
@@ -110,6 +201,7 @@ class Microcontroller(XMLElement):
             "length": str(self.length),
             "id_counter": str(self.id_counter),
             "id_counter_node": str(self.node_counter),
+            **image_rows,
         }
         return XMLParserElement("microprocessor", attributes, [nodes_elem, group_elem])
 

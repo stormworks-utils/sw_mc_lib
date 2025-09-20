@@ -17,15 +17,18 @@ def read_mc_from_file(path: Path) -> Microcontroller:
     return Microcontroller.from_xml(element)
 
 
-def write_mc_to_file(mc: Microcontroller, path: Path) -> None:
+def write_mc_to_file(mc: Microcontroller, path: Path, write_thumbnail: bool = True) -> None:
     """
     Write a Microcontroller to a file
 
     :param mc: The Microcontroller to write
     :param path: The path to the file
+    :param write_thumbnail: Whether to write the thumbnail image
     :return: None
     """
     element = mc.to_xml()
     formatted = XMLFormatter.format(element, header=True)
     with path.open("w") as file:
         file.write(formatted)
+    if write_thumbnail:
+        mc.image.to_sw_png(path.with_suffix(".png"))
