@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from importlib.resources import files
 from itertools import chain
 from pathlib import Path
 from typing import Optional
@@ -68,7 +69,8 @@ class MCImage:
         :param path: Path to the PNG file
         :return: None
         """
-        img = Image.open(Path(__file__).parent / "blank_image.png")
+        with files(__package__).joinpath("blank_image.png").open("rb") as image:
+            img = Image.open(image)
         x_offset = 150
         y_offset = 150
         draw = ImageDraw.Draw(img)
