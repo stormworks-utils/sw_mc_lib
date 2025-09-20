@@ -17,7 +17,9 @@ def read_mc_from_file(path: Path) -> Microcontroller:
     return Microcontroller.from_xml(element)
 
 
-def write_mc_to_file(mc: Microcontroller, path: Path, write_thumbnail: bool = True) -> None:
+def write_mc_to_file(
+    mc: Microcontroller, path: Path, write_thumbnail: bool = True
+) -> None:
     """
     Write a Microcontroller to a file
 

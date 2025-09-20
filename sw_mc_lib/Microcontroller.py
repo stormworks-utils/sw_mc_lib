@@ -152,7 +152,9 @@ class Microcontroller(XMLElement):
                 if xml_node.component_id == component_id:
                     xml_node.add_component_bridge(child)
                     break
-        return Microcontroller(name, description, width, length, nodes, components, image)
+        return Microcontroller(
+            name, description, width, length, nodes, components, image
+        )
 
     def to_xml(self) -> XMLParserElement:
         nodes_elem: XMLParserElement = XMLParserElement("nodes")

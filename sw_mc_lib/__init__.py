@@ -2,7 +2,7 @@ import sw_mc_lib.Types
 
 from .Component import Component
 from .Input import Input
-from .Microcontroller import Microcontroller
+from .Microcontroller import MCImage, Microcontroller
 from .Node import Node, NodePosition
 from .NumberProperty import NumberProperty
 from .Position import Position
