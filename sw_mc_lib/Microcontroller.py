@@ -7,6 +7,7 @@ from typing import Optional
 
 from PIL import Image, ImageDraw, ImageStat
 
+import _resources
 from .Component import Component
 from .Node import Node
 from .XMLElement import XMLElement, XMLParserElement
@@ -69,8 +70,7 @@ class MCImage:
         :param path: Path to the PNG file
         :return: None
         """
-        with files(__package__).joinpath("blank_image.png").open("rb") as image:
-            img = Image.open(image)
+        img = Image.open(_resources.get_blank_image())
         x_offset = 150
         y_offset = 150
         draw = ImageDraw.Draw(img)
